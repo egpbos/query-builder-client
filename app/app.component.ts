@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
+
 @Component({
-  selector: 'my-app',
-  template: '<h1>My First Angular App 2</h1>'
+    moduleId: module.id,
+    selector: "my-app",
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css']
 })
-export class AppComponent { }
+
+export class AppComponent {//implements OnInit {
+    title = 'Storyteller QueryBuilder';
+}

@@ -1,0 +1,10 @@
+<h3>Top Heroes</h3>
+<div class="grid grid-pad">
+  <div *ngFor="let typeshierarchy of typeshierarchies" class="col-1-4">
+    <div class="type">
+      <h4>{{typeshierarchy.name}}</h4>
+      <p>{{typeshierarchy.instance_count}}</p>
+      <p>{{typeshierarchy.mention_count}}</p>
+    </div>
+  </div>
+</div>
