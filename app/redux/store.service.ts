@@ -4,10 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { Headers, Http, Response } from '@angular/http';
 // import { TreeNode } from '../tree-node/tree-node';
 // import { treeNodeReducer } from '../tree-node/tree-node-reducer';
-import { typesHierarchyReducer } from '../typeshierarchy/typeshierarchy.reducer';
+import { entityNodeReducer } from '../entity-node/entity-node.reducer';
 
 @Injectable()
 export class ReduxStoreService {
+  private dataUrl = 'http://localhost:5000/';  // URL to web api
 
   private dispatcher = new Subject();
   private treeNodes = {};
@@ -19,44 +20,19 @@ export class ReduxStoreService {
   }
 
   private handleAction(action) {
-    // if (action.name === 'LOAD_NODES') {
-    //   if (this.nodes[action.key]) {
-    //     this.treeNodes[action.key].next(this.nodes[action.key]);
-    //   }
-    //   else {
-    //     // this._http.get(action.url)
-    //     //        .toPromise()
-    //     //        .then(response => response.json().data as Hero[])
-    //     //        .catch(this.handleError);
-
-    //     this._http
-    //       .get(action.url)
-    //       .catch(this.handleError)
-    //       .map((res: Response) => res.json())
-    //       .subscribe(res => {
-    //         this.nodes[action.key] = treeNodeReducer(res, action);
-    //         this.treeNodes[action.key].next(this.nodes[action.key]);
-    //       });          
-    //   }
-    // }
-    if (action.name === 'LOAD_TYPES') {
-      if (this.nodes[action.url]) {
-        this.treeNodes[action.url].next(this.nodes[action.url]);
+    if (action.name === 'LOAD_CHILDREN') {
+      if (this.nodes[action.node.url]) {
+        this.treeNodes[action.node.url].next(this.nodes[action.node.url]);
       }
       else {
-        // this._http.get(action.url)
-        //        .toPromise()
-        //        .then(response => response.json().data as Hero[])
-        //        .catch(this.handleError);
-
         this._http
-          .get(action.url)
+          .get(this.dataUrl + action.node.fetch_url)
           .map(
             (res: Response) => res.json()
           )
           .subscribe(res => {
-            this.nodes[action.url] = typesHierarchyReducer(res, action);
-            this.treeNodes[action.url].next(this.nodes[action.url]);
+            this.nodes[action.node.url] = entityNodeReducer(res, action);
+            this.treeNodes[action.node.url].next(this.nodes[action.node.url]);
           });
       }
     }

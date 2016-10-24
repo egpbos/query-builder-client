@@ -8,15 +8,15 @@ import './utils/rxjs-extensions';
 
 
 // Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService }  from './utils/in-memory-data.service';
-import { InMemoryDataTypesService }  from './data/in-memory-data-types.service';
+// import { InMemoryDataTypesService }  from './data/in-memory-data-types.service';
 
 
 import { AppComponent } from './app.component';
 
 // import { HeroService } from './hero/hero.service';
-import { TypesHierarchyService } from './typeshierarchy/typeshierarchy.service';
+import { EntityNodeService } from './entity-node/entity-node.service';
 
 // import { HeroesComponent } from './heroes/heroes.component';
 // import { HeroDetailComponent } from './detail/hero-detail.component';
@@ -26,7 +26,8 @@ import { TypesHierarchyService } from './typeshierarchy/typeshierarchy.service';
 
 import { ReduxStoreService } from './redux/store.service';
 // import { TreeNodeService } from './tree-node/tree-node.service';
-import { CountryDemoComponent } from './country-demo/country-demo.component';
+// import { CountryDemoComponent } from './country-demo/country-demo.component';
+import { QuerybuilderComponent } from './querybuilder/querybuilder.component';
 import { TreeViewComponent } from './treeview/treeview.component';
 
 
@@ -36,7 +37,7 @@ import { TreeViewComponent } from './treeview/treeview.component';
     FormsModule,
     HttpModule,
     // InMemoryWebApiModule.forRoot(InMemoryDataService),
-    InMemoryWebApiModule.forRoot(InMemoryDataTypesService),
+    // InMemoryWebApiModule.forRoot(InMemoryDataTypesService),
     RouterModule.forRoot([
       {
         path: '',
@@ -45,7 +46,7 @@ import { TreeViewComponent } from './treeview/treeview.component';
       },
       {
         path: 'dashboard',
-        component: CountryDemoComponent
+        component: QuerybuilderComponent
       },
       // {
       //   path: 'detail/:id',
@@ -63,13 +64,13 @@ import { TreeViewComponent } from './treeview/treeview.component';
     // HeroDetailComponent,
     // HeroesComponent,
     // HeroSearchComponent
-    CountryDemoComponent,
+    QuerybuilderComponent,
     TreeViewComponent,
     // TypeComponent
   ],
   providers: [
     // HeroService,
-    TypesHierarchyService,
+    EntityNodeService,
     // TreeNodeService,
     ReduxStoreService
   ],

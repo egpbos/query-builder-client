@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "dbserver": "node dbserver.js",
     "lite": "lite-server",
     "postinstall": "typings install",
     "tsc": "tsc",
@@ -30,8 +31,11 @@
   },
   "devDependencies": {
     "concurrently": "^3.0.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
     "lite-server": "^2.2.2",
+    "sqlite3": "^3.1.6",
     "typescript": "^2.0.3",
-    "typings":"^1.4.0"
+    "typings": "^1.4.0"
   }
 }

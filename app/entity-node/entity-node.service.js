@@ -10,28 +10,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var store_service_1 = require('../redux/store.service');
-var TypesHierarchyService = (function () {
-    function TypesHierarchyService(_store) {
+var EntityNodeService = (function () {
+    function EntityNodeService(_store) {
         this._store = _store;
     }
-    TypesHierarchyService.prototype.loadTreeNodes = function (root) {
-        if (root.children !== null) {
+    EntityNodeService.prototype.loadTreeNodes = function (root) {
+        console.log(root);
+        if (root.children_count > 0) {
             this._store.dispatchAction({
-                children: root.children,
-                instance_count: root.instance_count,
-                instances: root.instances,
-                mention_count: root.mention_count,
-                name: 'LOAD_TYPES',
-                type: root.type,
-                url: root.url
+                name: 'LOAD_CHILDREN',
+                node: {
+                    fetch_url: 'children/' + root.id,
+                    children_count: root.children_count,
+                    instance_count: root.instance_count,
+                    mention_count: root.mention_count,
+                    name: root.name,
+                    type: root.type,
+                    url: root.url,
+                    id: root.id
+                }
             });
         }
     };
-    TypesHierarchyService = __decorate([
+    EntityNodeService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [store_service_1.ReduxStoreService])
-    ], TypesHierarchyService);
-    return TypesHierarchyService;
+    ], EntityNodeService);
+    return EntityNodeService;
 }());
-exports.TypesHierarchyService = TypesHierarchyService;
-//# sourceMappingURL=typeshierarchy.service.js.map
+exports.EntityNodeService = EntityNodeService;
+//# sourceMappingURL=entity-node.service.js.map

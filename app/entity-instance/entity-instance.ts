@@ -1,4 +1,4 @@
-export class Instance {
+export class EntityInstance {
   constructor (
     mention_count: number,
     name: string,

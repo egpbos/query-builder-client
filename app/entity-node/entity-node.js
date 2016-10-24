@@ -1,26 +1,27 @@
 "use strict";
-var TypesHierarchy = (function () {
-    function TypesHierarchy(children, instance_count, instances, mention_count, name, type, url) {
-        this.children = children;
+var EntityNode = (function () {
+    function EntityNode(fetch_url, children_count, instance_count, mention_count, name, type, url, id) {
+        this.fetch_url = fetch_url;
+        this.children_count = children_count;
         this.instance_count = instance_count;
-        this.instances = instances;
         this.mention_count = mention_count;
         this.name = name;
         this.type = type;
         this.url = url;
+        this.id = id;
         this.showIcon = false;
         this.expanded = false;
         this.icon = null;
-        if (children.length !== 0) {
+        if (children_count > 0) {
             this.showIcon = true;
             this.icon = this.getIcon();
         }
     }
-    TypesHierarchy.prototype.expand = function () {
+    EntityNode.prototype.expand = function () {
         this.expanded = !this.expanded;
         this.icon = this.getIcon();
     };
-    TypesHierarchy.prototype.getIcon = function () {
+    EntityNode.prototype.getIcon = function () {
         if (this.showIcon === true) {
             if (this.expanded) {
                 return '- ';
@@ -29,7 +30,7 @@ var TypesHierarchy = (function () {
         }
         return null;
     };
-    return TypesHierarchy;
+    return EntityNode;
 }());
-exports.TypesHierarchy = TypesHierarchy;
-//# sourceMappingURL=typeshierarchy.js.map
+exports.EntityNode = EntityNode;
+//# sourceMappingURL=entity-node.js.map

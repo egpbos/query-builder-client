@@ -1,20 +1,21 @@
-import { Instance }  from '../instance/instance';
+import { EntityInstance }  from '../entity-instance/entity-instance';
 
-export class TypesHierarchy {
+export class EntityNode {
   private showIcon = false;
   private expanded = false;
   private icon = null;
 
   constructor(
-    public children: TypesHierarchy[],
-    public instance_count: number,
-    public instances: Instance[],
+    public fetch_url: string,
+    public children_count: number,
+    public instance_count: number,    
     public mention_count: number,
     public name: string,
     public type: string,
-    public url: string
+    public url: string,
+    public id: number
   ) {
-    if (children.length !== 0) {
+    if (children_count > 0) {
       this.showIcon = true;
       this.icon = this.getIcon();
     }

@@ -10,26 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 // import { TreeNode } from '../tree-node/tree-node';
-var typeshierarchy_1 = require('../typeshierarchy/typeshierarchy');
+var entity_node_1 = require('../entity-node/entity-node');
 // import { ReduxStoreService } from '../redux/store.service';
 // import { TreeNodeService } from '../tree-node/tree-node.service';
-var CountryDemoComponent = (function () {
-    function CountryDemoComponent() {
+var QuerybuilderComponent = (function () {
+    function QuerybuilderComponent() {
         this.node = null;
     }
-    CountryDemoComponent.prototype.ngOnInit = function () {
+    QuerybuilderComponent.prototype.ngOnInit = function () {
         // this.node = new TreeNode('root', 'app/data/tree-view-data/countries.json', '');
-        this.node = new typeshierarchy_1.TypesHierarchy(new Array(), 0, new Array(), 0, 'root', '', '/');
+        this.node = new entity_node_1.EntityNode('node/1', 1, 0, 0, '', '', '', 1);
     };
-    CountryDemoComponent = __decorate([
+    QuerybuilderComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'country-demo',
-            templateUrl: 'country-demo.component.html',
+            // selector: 'querybuilder',
+            templateUrl: 'querybuilder.component.html',
         }), 
         __metadata('design:paramtypes', [])
-    ], CountryDemoComponent);
-    return CountryDemoComponent;
+    ], QuerybuilderComponent);
+    return QuerybuilderComponent;
 }());
-exports.CountryDemoComponent = CountryDemoComponent;
-//# sourceMappingURL=country-demo.component.js.map
+exports.QuerybuilderComponent = QuerybuilderComponent;
+//# sourceMappingURL=querybuilder.component.js.map

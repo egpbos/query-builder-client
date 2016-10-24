@@ -9,9 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var typeshierarchy_1 = require('../typeshierarchy/typeshierarchy');
+var entity_node_1 = require('../entity-node/entity-node');
 var store_service_1 = require('../redux/store.service');
-var typeshierarchy_service_1 = require('../typeshierarchy/typeshierarchy.service');
+var entity_node_service_1 = require('../entity-node/entity-node.service');
 var TreeViewComponent = (function () {
     function TreeViewComponent(_store, _treeNodeService) {
         this._store = _store;
@@ -30,7 +30,7 @@ var TreeViewComponent = (function () {
     };
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', typeshierarchy_1.TypesHierarchy)
+        __metadata('design:type', entity_node_1.EntityNode)
     ], TreeViewComponent.prototype, "root", void 0);
     TreeViewComponent = __decorate([
         core_1.Component({
@@ -38,7 +38,7 @@ var TreeViewComponent = (function () {
             selector: 'lazy-tree-view',
             templateUrl: 'treeview.component.html'
         }), 
-        __metadata('design:paramtypes', [store_service_1.ReduxStoreService, typeshierarchy_service_1.TypesHierarchyService])
+        __metadata('design:paramtypes', [store_service_1.ReduxStoreService, entity_node_service_1.EntityNodeService])
     ], TreeViewComponent);
     return TreeViewComponent;
 }());

@@ -13,52 +13,30 @@ var Subject_1 = require('rxjs/Subject');
 var http_1 = require('@angular/http');
 // import { TreeNode } from '../tree-node/tree-node';
 // import { treeNodeReducer } from '../tree-node/tree-node-reducer';
-var typeshierarchy_reducer_1 = require('../typeshierarchy/typeshierarchy.reducer');
+var entity_node_reducer_1 = require('../entity-node/entity-node.reducer');
 var ReduxStoreService = (function () {
     function ReduxStoreService(_http) {
         var _this = this;
         this._http = _http;
+        this.dataUrl = 'http://localhost:5000/'; // URL to web api
         this.dispatcher = new Subject_1.Subject();
         this.treeNodes = {};
         this.nodes = {};
         this.dispatcher.subscribe(function (action) { return _this.handleAction(action); });
     }
     ReduxStoreService.prototype.handleAction = function (action) {
-        // if (action.name === 'LOAD_NODES') {
-        //   if (this.nodes[action.key]) {
-        //     this.treeNodes[action.key].next(this.nodes[action.key]);
-        //   }
-        //   else {
-        //     // this._http.get(action.url)
-        //     //        .toPromise()
-        //     //        .then(response => response.json().data as Hero[])
-        //     //        .catch(this.handleError);
         var _this = this;
-        //     this._http
-        //       .get(action.url)
-        //       .catch(this.handleError)
-        //       .map((res: Response) => res.json())
-        //       .subscribe(res => {
-        //         this.nodes[action.key] = treeNodeReducer(res, action);
-        //         this.treeNodes[action.key].next(this.nodes[action.key]);
-        //       });          
-        //   }
-        // }
-        if (action.name === 'LOAD_TYPES') {
-            if (this.nodes[action.url]) {
-                this.treeNodes[action.url].next(this.nodes[action.url]);
+        if (action.name === 'LOAD_CHILDREN') {
+            if (this.nodes[action.node.url]) {
+                this.treeNodes[action.node.url].next(this.nodes[action.node.url]);
             }
             else {
-                // this._http.get(action.url)
-                //        .toPromise()
-                //        .then(response => response.json().data as Hero[])
-                //        .catch(this.handleError);
                 this._http
-                    .get(action.url)
+                    .get(this.dataUrl + action.node.fetch_url)
                     .map(function (res) { return res.json(); })
                     .subscribe(function (res) {
-                    _this.nodes[action.url] = typeshierarchy_reducer_1.typesHierarchyReducer(res, action);
-                    _this.treeNodes[action.url].next(_this.nodes[action.url]);
+                    _this.nodes[action.node.url] = entity_node_reducer_1.entityNodeReducer(res, action);
+                    _this.treeNodes[action.node.url].next(_this.nodes[action.node.url]);
                 });
             }
         }
