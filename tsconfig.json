@@ -1,4 +1,5 @@
 {
+    "compileOnSave": false,
     "compilerOptions": {
         "jsx": "react",
         "noImplicitAny": true,
@@ -7,7 +8,8 @@
         "target": "es6"
     },
     "files": [
-        "src/index.tsx"
+        "src/index.tsx",
+        "src/components/entity-render.tsx"
     ],
     "exclude": [
         "build",
