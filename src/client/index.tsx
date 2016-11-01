@@ -6,6 +6,19 @@ import Node            from './components/node';
 import NodeListReducer from './reducers/node-list-reducer';
 
 
+import * as axios from 'axios';
+
+
+
+axios.get('http://localhost:5000/children/1')
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+console.error('Do something here to wrangle the data returned by the database into the format that the rest of the React app expects.');
 
 
 let nodes = [
@@ -19,7 +32,6 @@ let nodes = [
     new Node({isinstance: false, isentity: true, name: 'eightnode', level: 2, isexpandable: false, isexpanded: false}),
     new Node({isinstance: true, isentity: false, name: 'ninthnode', level: 2, isexpandable: false, isexpanded: false})
 ];
-
 
 
 
