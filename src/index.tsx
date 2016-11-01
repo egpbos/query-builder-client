@@ -26,11 +26,22 @@ let nodes = [
 let store = createStore(NodeListReducer, nodes);
 
 
-ReactDOM.render(<NodeListRender nodes={store.getState()}/>, document.getElementById('container'));
 
-window.setTimeout(function(){
-    console.log(store.getState());
+window.setTimeout(function() {
     store.dispatch({type: 'TOGGLE_ISEXPANDED', payload: 'sixthnode'});
-    console.log(store.getState());
 }, 2000);
+
+
+
+// Log the initial state
+console.log(store.getState());
+
+// Every time the state changes, log it
+// Note that subscribe() returns a function for unregistering the listener
+let unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+);
+
+ReactDOM.render(<NodeListRender nodes={store.getState()} />, document.getElementById('container'));
+
 
