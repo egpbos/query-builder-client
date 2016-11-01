@@ -1,7 +1,11 @@
 import * as React      from 'react';
 import * as ReactDOM   from 'react-dom';
+import { createStore } from 'redux';
 import NodeListRender  from './components/node-list-render';
 import Node            from './components/node';
+import NodeListReducer from './reducers/node-list-reducer';
+
+
 
 
 let nodes = [
@@ -18,4 +22,15 @@ let nodes = [
 
 
 
-ReactDOM.render(<NodeListRender nodes={nodes} />, document.getElementById('container'));
+
+let store = createStore(NodeListReducer, nodes);
+
+
+ReactDOM.render(<NodeListRender nodes={store.getState()}/>, document.getElementById('container'));
+
+window.setTimeout(function(){
+    console.log(store.getState());
+    store.dispatch({type: 'TOGGLE_ISEXPANDED', payload: 'sixthnode'});
+    console.log(store.getState());
+}, 2000);
+
