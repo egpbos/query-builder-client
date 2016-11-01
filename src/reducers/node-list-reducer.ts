@@ -15,7 +15,7 @@ export default function (state: StateType, action: any) {
             case 'TOGGLE_ISEXPANDED':
                 return state.map((node) => {
                     if (action.payload === node.name) {
-                        return Object.assign(new Node(node), {isexpanded: !node.isexpanded});
+                        return Object.assign(node.clone(), {isexpanded: !node.isexpanded});
                     } else {
                         return node;
                     }
