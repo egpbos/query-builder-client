@@ -12,7 +12,7 @@
     "clean-sites": "npm run clean-cover & npm run clean-tsdoc",
     "clean-tsdoc": "trash docs/sites/tsdoc/",
     "cover": "npm run test && npm run remap-istanbul-json && npm run remap-istanbul-html",
-    "csslint": "cat src/*.css > dist/querybuilder.css && csslint --config=.csslintrc --format=compact dist/querybuilder.css",
+    "csslint": "cat src/components/*.css > dist/querybuilder.css && csslint --config=.csslintrc --format=compact dist/querybuilder.css",
     "dist": "browserify src/index.tsx --debug --standalone querybuilder -p [ tsify --project . ] > build/querybuilder-with-source-maps.js",
     "everything": "npm run tsdoc && npm run cover",
     "exorcist": "<build/querybuilder-with-source-maps.js exorcist dist/querybuilder.js.map > dist/querybuilder.js",
