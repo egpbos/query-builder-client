@@ -8,8 +8,10 @@
         "target": "es6"
     },
     "files": [
-        "src/index.tsx",
-        "src/components/entity-render.tsx"
+        "src/components/node-list-render.tsx",
+        "src/components/node-render.tsx",
+        "src/components/node.ts",
+        "src/index.tsx"
     ],
     "exclude": [
         "build",

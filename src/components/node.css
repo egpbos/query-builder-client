@@ -1,0 +1,22 @@
+.node {
+    background-color: #eee;
+}
+
+.node-bullet {
+    background-color: transparent;
+    float: left;
+    width: 10px;
+}
+
+.node-content {
+    margin-left: 10px;
+    width: 200px;
+}
+
+.entity {
+    background-color: #0080FF;
+}
+
+.instance {
+    background-color: #FF8000;
+}
