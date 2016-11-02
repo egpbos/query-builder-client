@@ -4,13 +4,20 @@
 
 /* the packages */ 
 node_modules
-bower_components
 
 /* all the Typescript generated stufff */
 app/*.js.map
 app/*.js
-typings/
 
 /* test reports */
 test/reports
 e2e/reports
+
+/* build files */
+build/
+
+/* distributable files */
+dist/
+
+
+ 

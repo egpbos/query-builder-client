@@ -1,16 +1,25 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false
-  },
-  "files": [
-    "typings/index.d.ts",
-    "app/main.ts"
-  ]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "jsx": "react",
+        "noImplicitAny": true,
+        "outDir": "build",
+        "sourceMap": true,
+        "target": "es6"
+    },
+    "files": [
+        "src/components/node-list-render.tsx",
+        "src/components/node-render.tsx",
+        "src/components/node.ts",
+        "src/reducers/node-list-reducer.ts",
+        "src/index.tsx"
+    ],
+    "exclude": [
+        "build",
+        "dist",
+        "docs",
+        "node_modules",
+        "test"
+    ]
 }
+
