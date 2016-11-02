@@ -27,34 +27,3 @@ The proposed system will have 3 main components:
 
 
 
-**notes**
-
-At the very core of the app, we'll need a class Instance and a class Entity,
-both inherit from a new class Node. Entity is basically the equivalent of a
-folder if the tree were a directory tree, while Instance is a file. Either way
-they are used to store the state of the node, i.e. the ontology tree is a tree
-of Nodes.
-
-Node|Instance|Entity are purely TS classes, they are not a React component, just
-a convenient way of storing the state, which is then visualized using another
-class, which is a React component. Let's call it NodeRender and InstanceRender
-or something.
-
-Question: NodeRender and InstanceRender would render a ``<ul></ul>``?
-
-So you would have
-
-src/
-    components/
-        entity-render.tsx
-        entity.ts
-        instance-render.tsx
-        instance.ts
-        node-render.tsx
-        node.ts
-    reducers/
-        <not sure yet what goes here>
-    index.tsx
-test/
-    <something here>
-
