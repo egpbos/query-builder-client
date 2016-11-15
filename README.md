@@ -12,14 +12,14 @@ The proposed system will consist of 4 main parts:
 fault-tolerant, and Semantic Web grounded storage system to jointly store,
 manage, retrieve, and semantically query, both structured and unstructured
 data (see https://knowledgestore.fbk.eu/).
-1. QueryBuilder
+1. QueryBuilder (this repository)
     - written in React.js
     - gets a list of all possible concepts, actors or events from the server (or
  KnowledgeStore, tbd later)
     - helps the user to compose a sparql query to run against the KnowledgeStore
  by selecting items of interest, be it concepts, actors or events.
     - has a button that submits the query string to the Server
-2. Server
+2. Server (https://github.com/NLeSC-Storyteller/query-builder-server)
     - express.js + SQL database (currently sqlite3)
     - upon receiving a new query string from QueryBuilder, the Server
         - stores the received query in a database
@@ -31,7 +31,7 @@ serves as a url, so users can go to a website
 http://mywebsite.nl/id/sdkjjrew9034kjre90kjnk for example, upon which the
 corresponding results are retrieved from the database without the need to rerun
 the calculations.
-3. UncertaintyVisualization
+3. UncertaintyVisualization (https://github.com/NLeSC/UncertaintyVisualization/)
     - written in Angular 1 (legacy)
     - allows the user to select from a list of previously run queries
 (communicates with Server) to select one for visualization.
