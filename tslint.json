@@ -1,51 +1,12 @@
 {
-  "rules": {
-    "class-name": true,
-    "curly": true,
-    "eofline": false,
-    "forin": true,
-    "indent": [true, 4],
-    "label-position": true,
-    "label-undefined": true,
-    "max-line-length": [true, 140],
-    "no-arg": true,
-    "no-bitwise": true,
-    "no-console": [true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
+    "extends": [
+        "@nlesc/tslint-config-react-app"
     ],
-    "no-construct": true,
-    "no-debugger": true,
-    "no-duplicate-key": true,
-    "no-duplicate-variable": true,
-    "no-empty": true,
-    "no-eval": true,
-    "no-string-literal": false,
-    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
-    "no-require-imports": false,
-    "no-trailing-whitespace": true,
-    "no-unused-variable": false,
-    "no-unreachable": true,
-    "no-use-before-declare": true,
-    "one-line": [true,
-      "check-open-brace",
-      "check-catch",
-      "check-else",
-      "check-whitespace"
-    ],
-    "quotemark": [true, "single"],
-    "radix": true,
-    "semicolon": true,
-    "triple-equals": [true, "allow-null-check"],
-    "variable-name": false,
-    "whitespace": [true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator"
-    ]
-  }
+    "rules": {
+        "no-console": false,
+        "indent": [true, 4],
+        "react-a11y-event-has-role": false,
+        "no-http-string": [true, "http://localhost/?."],
+        "react-this-binding-issue": false
+    }
 }
