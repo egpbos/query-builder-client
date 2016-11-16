@@ -10,7 +10,7 @@ import * as axios from 'axios';
 
 
 
-axios.get('http://localhost:5000/children/1')
+axios.get('http://localhost:5000/root')
   .then(function (response) {
     console.log(response.data);
   })
