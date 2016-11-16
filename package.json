@@ -45,7 +45,9 @@
     "url": "https://github.com/nlesc-storyteller/QueryBuilder.git"
   },
   "devDependencies": {
+    "@nlesc/tslint-config-react-app": "^1.0.1",
     "@types/axios": "^0.9.33",
+    "@types/isomorphic-fetch": "0.0.31",
     "@types/react": "^0.14.44",
     "@types/react-dom": "^0.14.18",
     "@types/redux": "^3.6.31",
@@ -57,6 +59,7 @@
     "csslint": "^1.0.2",
     "exorcist": "^0.4.0",
     "express": "^4.14.0",
+    "isomorphic-fetch": "^2.2.1",
     "istanbul": "^0.4.4",
     "jasmine-core": "^2.4.1",
     "jshint": "^2.9.3",
