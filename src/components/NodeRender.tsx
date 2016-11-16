@@ -1,25 +1,30 @@
-import * as React from 'react';
-import Node from './node';
+import * as React         from 'react';
+import { Dispatch }       from 'redux';
+
+import { Action }         from '../Action';
+import { DatabaseRecord } from '../DatabaseRecord';
+import { Node }           from '../Node';
 
 type props = {
-    node: Node
+    node: Node,
+    dispatch: Dispatch<Action>
 };
 type state = {
 };
 
-export default class NodeRender extends React.Component<props, state> {
+export class NodeRender extends React.Component<props, state> {
 
     constructor () {
         super();
+        this.onClickHandler = this.onClickHandler.bind(this);
     }
 
-
-    public determineNodeClass(node: Node): string {
+    public determineNodeClass(dbrecord: DatabaseRecord): string {
 
         let nodeclass = '';
-        if (node.isinstance) {
+        if (dbrecord.is_instance) {
             nodeclass += 'instance';
-        } else if (node.isentity) {
+        } else if (dbrecord.is_entity) {
             nodeclass += 'entity';
         } else {
             throw new Error('Unknown clause');
@@ -27,28 +32,31 @@ export default class NodeRender extends React.Component<props, state> {
         return nodeclass;
     }
 
+    public onClickHandler() {
+        const node = this.props.node;
+        console.log(node.dbrecord.name);
+        const action = {
+            type: 'TOGGLE_ISEXPANDED',
+            payload: node.dbrecord.id
+        };
+        this.props.dispatch(action);
+    }
 
     public render() {
 
-        let node = this.props.node;
+        const node = this.props.node;
+        const indent = {paddingLeft: (Node.paddingPerLevel * node.dbrecord.level).toString() + 'px'};
+        const nodeclass = this.determineNodeClass(node.dbrecord);
 
-        let indent = {'paddingLeft': (Node.paddingPerLevel * node.level).toString() + 'px'};
-
-        let nodeclass = this.determineNodeClass(node);
-
-        let tsx = (
+        return (
             <div className={nodeclass} style={indent}>
-                <div className='bullet' onClick={() => node.onClickHandler(node.name)}>
-                    {node.isexpandable ? '+' : '\u2022'}
+                <div className="bullet" onClick={this.onClickHandler}>
+                    {node.dbrecord.is_expandable ? '+' : '\u2022'}
                 </div>
-                <div className='content' >
-                    {node.name}
+                <div className="content" >
+                    {node.dbrecord.name}
                 </div>
             </div>
         );
-        return tsx;
     }
-
 }
-
-

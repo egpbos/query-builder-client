@@ -1,21 +1,19 @@
 
-import Node from '../components/node';
+import { Node } from '../Node';
 
-type StateType = Array<Node> ;
-let initialState: StateType = [];
+type StateType = Node[] ;
+const initialState: StateType = [];
 
-
-export default function (state: StateType, action: any) {
-
-    if (typeof state === 'undefined') {
+export const nodeListReducer = (state: StateType, action: any) => {
+    console.log('in reducer');
+    if (state === undefined) {
         return initialState;
     } else {
-
         switch (action.type) {
             case 'TOGGLE_ISEXPANDED':
                 return state.map((node) => {
-                    if (action.payload === node.name) {
-                        return Object.assign(node.clone(), {isexpanded: !node.isexpanded});
+                    if (action.payload === node.dbrecord.id) {
+                        return Object.assign({}, node, {isexpanded: !node.isexpanded});
                     } else {
                         return node;
                     }
@@ -25,6 +23,4 @@ export default function (state: StateType, action: any) {
             }
         }
     }
-}
-
-
+};
