@@ -8,10 +8,10 @@
         "target": "es6"
     },
     "files": [
-        "src/components/node-list-render.tsx",
-        "src/components/node-render.tsx",
-        "src/components/node.ts",
-        "src/reducers/node-list-reducer.ts",
+        "src/components/NodeListRender.tsx",
+        "src/components/NodeRender.tsx",
+        "src/components/Node.ts",
+        "src/reducers/nodeListReducer.ts",
         "src/index.tsx"
     ],
     "exclude": [
