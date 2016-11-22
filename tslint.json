@@ -3,7 +3,7 @@
         "@nlesc/tslint-config-react-app"
     ],
     "rules": {
-        "no-console": false,
+        "no-console": [false],
         "indent": [true, 4],
         "react-a11y-event-has-role": false,
         "no-http-string": [true, "http://localhost/?."]
