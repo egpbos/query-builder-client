@@ -1,4 +1,7 @@
 {
+    "linterOptions": {
+        "typeCheck": true
+    },
     "extends": [
         "@nlesc/tslint-config-react-app"
     ],

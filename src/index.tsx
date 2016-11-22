@@ -7,6 +7,8 @@ import { NodeList }        from './components/NodeList';
 import { NodeLogic }       from './components/NodeLogic';
 import { nodeListReducer } from './reducers/nodeListReducer';
 
+import './index.css';
+
 // // for example, get the children of node 5
 const url: string = 'http://localhost:5000/node/5/children';
 
@@ -45,5 +47,5 @@ fetch(url, {method: 'get'})
 
 ReactDOM.render(
     <NodeList nodes={store.getState()} dispatch={store.dispatch} />,
-    document.getElementById('container')
+    document.getElementById('root')
 );

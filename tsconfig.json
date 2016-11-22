@@ -1,18 +1,19 @@
 {
-    "compileOnSave": false,
     "compilerOptions": {
-        "jsx": "react",
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "preserve",
+        "module": "es6",
+        "moduleResolution": "node",
+        "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,
-        "outDir": "build",
-        "sourceMap": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": true,
+        "strictNullChecks": true,
         "target": "es6"
     },
     "exclude": [
-        "build",
-        "dist",
-        "docs",
-        "node_modules",
-        "test"
+        "node_modules/**/*"
     ]
 }
-
