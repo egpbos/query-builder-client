@@ -2,17 +2,17 @@ import * as React     from 'react';
 import { Dispatch }   from 'redux';
 
 import { Action }     from '../Action';
-import { Node }       from '../Node';
+import { NodeLogic }  from './NodeLogic';
 import { NodeRender } from './NodeRender';
 
 type props = {
-    nodes: Node[];
+    nodes: NodeLogic[];
     dispatch: Dispatch<Action>;
 };
 type state = {
 };
 
-export class NodeListRender extends React.Component<props, state> {
+export class NodeList extends React.Component<props, state> {
 
     constructor () {
         super();
@@ -20,7 +20,7 @@ export class NodeListRender extends React.Component<props, state> {
 
     public render() {
 
-        const nodeList = this.props.nodes.map((node: Node, nodeindex: number) => {
+        const nodeList = this.props.nodes.map((node: NodeLogic, nodeindex: number) => {
             return <NodeRender node={node} key={nodeindex} dispatch={this.props.dispatch}/>;
         });
 

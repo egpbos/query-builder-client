@@ -1,8 +1,8 @@
-import { DatabaseRecord } from './DatabaseRecord';
+import { DatabaseRecord } from '../DatabaseRecord';
 
-export class Node {
+export class NodeLogic {
 
-    static paddingPerLevel: number = 130;
+    static paddingPerLevel: number = 30;
     public dbrecord: DatabaseRecord;
     public isexpanded: boolean;
 
@@ -14,6 +14,19 @@ export class Node {
             this.dbrecord = dbrecord;
         }
         this.isexpanded = isexpanded;
+    }
+
+    public class(): string {
+
+        let nodeclass = '';
+        if (this.dbrecord.is_instance) {
+            nodeclass += 'instance';
+        } else if (this.dbrecord.is_entity) {
+            nodeclass += 'entity';
+        } else {
+            throw new Error('Unknown clause');
+        }
+        return nodeclass;
     }
 
 }

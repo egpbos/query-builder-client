@@ -6,7 +6,6 @@
         "no-console": false,
         "indent": [true, 4],
         "react-a11y-event-has-role": false,
-        "no-http-string": [true, "http://localhost/?."],
-        "react-this-binding-issue": false
+        "no-http-string": [true, "http://localhost/?."]
     }
 }

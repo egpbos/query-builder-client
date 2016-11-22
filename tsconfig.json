@@ -7,13 +7,6 @@
         "sourceMap": true,
         "target": "es6"
     },
-    "files": [
-        "src/components/NodeListRender.tsx",
-        "src/components/NodeRender.tsx",
-        "src/components/Node.ts",
-        "src/reducers/nodeListReducer.ts",
-        "src/index.tsx"
-    ],
     "exclude": [
         "build",
         "dist",
