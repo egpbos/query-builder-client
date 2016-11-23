@@ -44,7 +44,12 @@ export class NodeRender extends React.Component<props, state> {
         const node = this.props.node;
         const indent = {paddingLeft: (NodeLogic.paddingPerLevel * node.dbrecord.level).toString() + 'px'};
         const nodeclass = node.getClass();
-        const bullet = node.dbrecord.is_expandable ? '+' : '\u2022';
+        let bullet: string;
+        if (node.dbrecord.is_expandable && !node.isexpanded) {
+            bullet = '+';
+        } else {
+            bullet = '\u2022';
+        }
 
         return (
             <div className={nodeclass} style={indent}>
