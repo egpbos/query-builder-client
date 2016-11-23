@@ -6,6 +6,8 @@
         "@nlesc/tslint-config-react-app"
     ],
     "rules": {
+        "member-ordering": [false],
+        "ordered-imports": [false],
         "no-for-in-array": false,
         "restrict-plus-operands": false,
         "no-console": [false],
