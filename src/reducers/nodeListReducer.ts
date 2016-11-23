@@ -37,20 +37,19 @@ export const nodeListReducer = (state: StateType, action: any) => {
                     return begin.concat(middle).concat(end);
 
                 }
-            case 'FETCH_CHILD_NODES': {
+            case 'FETCH_CHILD_NODES':
                 // should fire a query to get child nodes of node action.payload
                 console.log('in FETCH_CHILD_NODES');
                 const node: NodeLogic = action.payload.node;
                 // beware: side effects happen here:
                 node.fetchChildNodes(action.payload.dispatch);
                 return state;
-            }
             case 'TOGGLE_ISEXPANDED':
                 console.log('in TOGGLE_ISEXPANDED');
                 return state.map((node) => {
                     if (action.payload === node.dbrecord.id) {
-                        //return Object.assign({}, node, {isexpanded: !node.isexpanded});
-                        return Object.assign(new NodeLogic(node.dbrecord), node, {isexpanded: !node.isexpanded});
+                        const newNode = new NodeLogic(node.dbrecord);
+                        return Object.assign(newNode, node, {isexpanded: !node.isexpanded});
                     } else {
                         return node;
                     }
