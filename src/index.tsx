@@ -1,49 +1,32 @@
-import * as fetch          from 'isomorphic-fetch';
 import * as React          from 'react';
 import * as ReactDOM       from 'react-dom';
 import { createStore }     from 'redux';
 
-import { NodeList }        from './components/NodeList';
+import { App }             from './components/App';
 import { NodeLogic }       from './components/NodeLogic';
+import { DatabaseRecord }  from './DatabaseRecord';
 import { nodeListReducer } from './reducers/nodeListReducer';
 
-// // for example, get the children of node 5
-const url: string = 'http://localhost:5000/node/5/children';
+const dbrecord: DatabaseRecord = {
+    child_of: 0,
+    id: 1,
+    is_entity: true,
+    is_expandable: true,
+    is_instance: false,
+    level: 0,
+    mention_count: 84027,
+    name: 'www.w3.org/2002/07/owl#Thing',
+    url: 'http://dbpedia.org/ontology/www.w3.org/2002/07/owl#Thing'
+} as DatabaseRecord;
 
-const store = createStore(nodeListReducer, []);
+const nodes: NodeLogic[] = [new NodeLogic(dbrecord)];
 
-const handleTheStatus = (response: Response) => {
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw new Error('Error when trying to retrieve the data. ' +
-            'status text: \"' + response.statusText + '".');
-    }
-};
+const store = createStore(nodeListReducer, nodes);
 
-const handleTheData = (dbrecords: any) => {
+// Every time the state changes, log it
+store.subscribe(() => {
+    console.log(store.getState());
+    ReactDOM.render(<App store={store}/>, document.getElementById('container'));
+});
 
-    const nodes: NodeLogic[] = [];
-    for (const dbrecord of dbrecords) {
-        nodes.push(new NodeLogic(dbrecord));
-    }
-
-    store.dispatch({
-            type: 'ADD_NODES',
-            payload: nodes
-        });
-};
-
-const handleAnyErrors = (err: Error) => {
-    console.error('Errors occured.', err.message, err.stack );
-};
-
-fetch(url, {method: 'get'})
-    .then(handleTheStatus)
-    .then(handleTheData)
-    .catch(handleAnyErrors);
-
-ReactDOM.render(
-    <NodeList nodes={store.getState()} dispatch={store.dispatch} />,
-    document.getElementById('container')
-);
+ReactDOM.render(<App store={store}/>, document.getElementById('container'));

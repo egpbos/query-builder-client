@@ -20,18 +20,29 @@ export class NodeRender extends React.Component<props, state> {
 
     public onClickHandler() {
         const node = this.props.node;
-        const action = {
+        const toggleExpandAction = {
             type: 'TOGGLE_ISEXPANDED',
             payload: node.dbrecord.id
         };
-        this.props.dispatch(action);
+        this.props.dispatch(toggleExpandAction);
+
+        if (node.isexpanded === false) {
+            const fetchChildNodesAction = {
+                type: 'FETCH_CHILD_NODES',
+                payload: {
+                    node,
+                    dispatch: this.props.dispatch
+                }
+            };
+            this.props.dispatch(fetchChildNodesAction);
+        }
     }
 
     public render() {
 
         const node = this.props.node;
         const indent = {paddingLeft: (NodeLogic.paddingPerLevel * node.dbrecord.level).toString() + 'px'};
-        const nodeclass = node.class();
+        const nodeclass = node.getClass();
         const bullet = node.dbrecord.is_expandable ? '+' : '\u2022';
 
         return (

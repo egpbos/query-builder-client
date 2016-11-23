@@ -1,3 +1,5 @@
+import * as fetch         from 'isomorphic-fetch';
+
 import { DatabaseRecord } from '../DatabaseRecord';
 
 export class NodeLogic {
@@ -16,7 +18,7 @@ export class NodeLogic {
         this.isexpanded = isexpanded;
     }
 
-    public class(): string {
+    public getClass(): string {
 
         let nodeclass = '';
         if (this.dbrecord.is_instance) {
@@ -28,5 +30,42 @@ export class NodeLogic {
         }
         return nodeclass;
     }
+
+    public fetchChildNodes(dispatch: any) {
+        const handleTheStatus = (response: Response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error when trying to retrieve the data. ' +
+                    'status text: \"' + response.statusText + '".');
+            }
+        };
+
+        const handleTheData = (dbrecords: any) => {
+
+            const nodes: NodeLogic[] = [];
+            for (const dbrecord of dbrecords) {
+                nodes.push(new NodeLogic(dbrecord));
+            }
+
+            const addNodesAction = {
+                type: 'ADD_NODES',
+                payload: nodes
+            };
+            console.log('should dispatch ', addNodesAction);
+            dispatch(addNodesAction);
+        };
+
+        const handleAnyErrors = (err: Error) => {
+            console.error('Errors occured.', err.message, err.stack );
+        };
+
+        const url: string = 'http://localhost:5000/node/' + this.dbrecord.id.toString() + '/children';
+
+        fetch(url, {method: 'get'})
+                .then(handleTheStatus)
+                .then(handleTheData)
+                .catch(handleAnyErrors);
+    };
 
 }
