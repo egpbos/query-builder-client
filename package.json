@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "private": false,
   "devDependencies": {
+    "@types/whatwg-fetch": "0.0.32",
     "@nlesc/react-scripts": "0.1.0",
     "@types/react": "^0.14.50",
-    "@types/react-dom": "^0.14.19",
-    "@types/whatwg-fetch": "0.0.32"
+    "@types/react-dom": "^0.14.19"
   },
   "dependencies": {
     "react": "^15.4.0",

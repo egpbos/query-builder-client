@@ -6,6 +6,8 @@
         "@nlesc/tslint-config-react-app"
     ],
     "rules": {
+        "no-for-in-array": false,
+        "restrict-plus-operands": false,
         "no-console": [false],
         "indent": [true, 4],
         "react-a11y-event-has-role": false,
