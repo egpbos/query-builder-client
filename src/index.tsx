@@ -1,4 +1,4 @@
-import * as fetch          from 'isomorphic-fetch';
+import 'whatwg-fetch';
 import * as React          from 'react';
 import * as ReactDOM       from 'react-dom';
 import { createStore }     from 'redux';

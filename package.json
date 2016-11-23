@@ -5,15 +5,15 @@
   "private": false,
   "devDependencies": {
     "@nlesc/react-scripts": "0.1.0",
-    "@types/isomorphic-fetch": "0.0.31",
     "@types/react": "^0.14.50",
-    "@types/react-dom": "^0.14.19"
+    "@types/react-dom": "^0.14.19",
+    "@types/whatwg-fetch": "0.0.32"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "whatwg-fetch": "^2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
