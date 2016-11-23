@@ -14,14 +14,10 @@ type state = {
 
 export class NodeList extends React.Component<props, state> {
 
-    constructor () {
-        super();
-    }
-
     public render() {
 
-        const nodeList = this.props.nodes.map((node: NodeLogic, nodeindex: number) => {
-            return <NodeRender node={node} key={nodeindex} dispatch={this.props.dispatch}/>;
+        const nodeList = this.props.nodes.map((node: NodeLogic) => {
+            return <NodeRender node={node} key={node.dbrecord.id} dispatch={this.props.dispatch}/>;
         });
 
         return (

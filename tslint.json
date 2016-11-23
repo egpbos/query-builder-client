@@ -13,6 +13,8 @@
         "no-console": [false],
         "indent": [true, 4],
         "react-a11y-event-has-role": false,
-        "no-http-string": [true, "http://localhost/?."]
+        "no-http-string": [true, "http://localhost/?.", "http://dbpedia.org/?."],
+        "prefer-type-cast": false,
+        "no-angle-bracket-type-assertion": true
     }
 }

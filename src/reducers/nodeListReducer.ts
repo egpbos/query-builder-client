@@ -1,5 +1,4 @@
-
-import { NodeLogic } from '../components/NodeLogic';
+import { NodeLogic }      from '../components/NodeLogic';
 
 type StateType = NodeLogic[] ;
 const initialState: StateType = [];
@@ -9,17 +8,8 @@ export const nodeListReducer = (state: StateType, action: any) => {
         return initialState;
     } else {
         switch (action.type) {
-            case 'TOGGLE_ISEXPANDED':
-                console.log('in reducer');
-                return state.map((node) => {
-                    if (action.payload === node.dbrecord.id) {
-                        return Object.assign({}, node, {isexpanded: !node.isexpanded});
-                    } else {
-                        return node;
-                    }
-                });
             case 'ADD_NODES':
-                console.log('adding nodes');
+                console.log('in ADD_NODES');
                 // who is the parent common to all nodes from payload
                 const payloadNodes: NodeLogic[] = action.payload;
                 const firstParentId: number = payloadNodes[0].dbrecord.child_of;
@@ -47,6 +37,22 @@ export const nodeListReducer = (state: StateType, action: any) => {
                     return begin.concat(middle).concat(end);
 
                 }
+            case 'FETCH_CHILD_NODES': {
+                // should fire a query to get child nodes of node action.payload
+                console.log('in FETCH_CHILD_NODES');
+                const node: NodeLogic = action.payload.node;
+                node.fetchChildNodes(action.payload.dispatch);
+            }
+            case 'TOGGLE_ISEXPANDED':
+                console.log('in TOGGLE_ISEXPANDED');
+                return state.map((node) => {
+                    if (action.payload === node.dbrecord.id) {
+                        //return Object.assign({}, node, {isexpanded: !node.isexpanded});
+                        return Object.assign(new NodeLogic(node.dbrecord), node, {isexpanded: !node.isexpanded});
+                    } else {
+                        return node;
+                    }
+                });
             default: {
                 return state;
             }
