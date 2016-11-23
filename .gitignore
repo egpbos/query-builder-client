@@ -1,23 +1,21 @@
-/* ignore editor specific stuff */
-.vs
-.vscode
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-/* the packages */ 
+# dependencies
 node_modules
 
-/* all the Typescript generated stufff */
-app/*.js.map
-app/*.js
+# testing
+coverage
 
-/* test reports */
-test/reports
-e2e/reports
+# production
+build
 
-/* build files */
-build/
+# misc
+.DS_Store
+.env
+npm-debug.log
 
-/* distributable files */
-dist/
+# awesome typescript loader cache
+.awcache
 
-
- 
+# Editor
+.vscode

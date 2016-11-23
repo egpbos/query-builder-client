@@ -26,7 +26,7 @@ const store = createStore(nodeListReducer, nodes);
 // Every time the state changes, log it
 store.subscribe(() => {
     console.log(store.getState());
-    ReactDOM.render(<App store={store}/>, document.getElementById('container'));
+    ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 });
 
-ReactDOM.render(<App store={store}/>, document.getElementById('container'));
+ReactDOM.render(<App store={store}/>, document.getElementById('root'));

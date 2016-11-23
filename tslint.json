@@ -1,9 +1,16 @@
 {
+    "linterOptions": {
+        "typeCheck": true
+    },
     "extends": [
         "@nlesc/tslint-config-react-app"
     ],
     "rules": {
-        "no-console": false,
+        "member-ordering": [false],
+        "ordered-imports": [false],
+        "no-for-in-array": false,
+        "restrict-plus-operands": false,
+        "no-console": [false],
         "indent": [true, 4],
         "react-a11y-event-has-role": false,
         "no-http-string": [true, "http://localhost/?.", "http://dbpedia.org/?."],

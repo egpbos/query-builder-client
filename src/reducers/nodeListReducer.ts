@@ -41,7 +41,9 @@ export const nodeListReducer = (state: StateType, action: any) => {
                 // should fire a query to get child nodes of node action.payload
                 console.log('in FETCH_CHILD_NODES');
                 const node: NodeLogic = action.payload.node;
+                // beware: side effects happen here:
                 node.fetchChildNodes(action.payload.dispatch);
+                return state;
             }
             case 'TOGGLE_ISEXPANDED':
                 console.log('in TOGGLE_ISEXPANDED');

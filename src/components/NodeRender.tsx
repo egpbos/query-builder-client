@@ -3,6 +3,7 @@ import { Dispatch }       from 'redux';
 
 import { Action }         from '../Action';
 import { NodeLogic }      from './NodeLogic';
+import './node.css';
 
 type props = {
     node: NodeLogic,

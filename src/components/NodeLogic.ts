@@ -1,4 +1,4 @@
-import * as fetch         from 'isomorphic-fetch';
+import 'whatwg-fetch';
 
 import { DatabaseRecord } from '../DatabaseRecord';
 
