@@ -3,6 +3,8 @@ import { Dispatch }       from 'redux';
 
 import { Action }         from '../Action';
 import { NodeLogic }      from './NodeLogic';
+
+import classNames from 'classnames';
 import './node.css';
 
 type props = {
@@ -40,10 +42,10 @@ export class NodeRender extends React.Component<props, state> {
     }
 
     public render() {
-
         const node = this.props.node;
         const indent = {paddingLeft: (NodeLogic.paddingPerLevel * node.dbrecord.level).toString() + 'px'};
-        const nodeclass = node.getClass();
+        // const nodeclass = node.getClass();
+
         let bullet: string;
         if (node.dbrecord.is_expandable && !node.isexpanded) {
             bullet = '+';
@@ -51,8 +53,14 @@ export class NodeRender extends React.Component<props, state> {
             bullet = '\u2022';
         }
 
+        const classes = classNames({
+            'mdl-cell': true,
+            'mdl-cell--1-col': !node.dbrecord.is_expandable,
+            'mdl-cell--12-col': node.dbrecord.is_expandable
+        });
+
         return (
-            <div className={nodeclass} style={indent}>
+            <div className={classes} style={indent}>
                 <div className="bullet" onClick={this.onClickHandler}>
                     {bullet}
                 </div>

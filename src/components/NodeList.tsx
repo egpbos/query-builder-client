@@ -21,7 +21,7 @@ export class NodeList extends React.Component<props, state> {
         });
 
         return (
-            <div>
+            <div className={'mdl-grid content-grid'}>
                 {nodeList}
             </div>
         );
