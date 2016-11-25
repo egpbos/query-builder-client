@@ -12,10 +12,7 @@ export class Node extends React.Component<TNode, any> {
 
     public render() {
         console.log(this.props.dbrecord);
-        const {bullet, indent, name, nodeclass, dbrecord} = this.props;
-        const onclick = () => {
-            console.log('should dispatch an action to expand the Node with dbrecord.id === ' + dbrecord.id.toString());
-        };
+        const {bullet, indent, name, nodeclass, onclick} = this.props;
         return (
             <div className={nodeclass} style={indent}>
                 <div className="bullet" onClick={onclick}>

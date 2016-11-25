@@ -15,7 +15,11 @@ export class Nodes extends React.Component<TProps, any> {
 
     render() {
         const nodes = this.props.nodes.map((node: TNode) => {
-            return <Node {...node} />;
+            const onclick = () => {
+                console.log('should dispatch an action to expand the Node ' +
+                    'with dbrecord.id === ' + node.dbrecord.id.toString());
+            };
+            return <Node {...node} onclick={onclick}/>;
         });
 
         return (

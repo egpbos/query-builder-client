@@ -19,5 +19,5 @@ export type TNode = {
     key: number;
     name: string;
     nodeclass: string;
-    onclick: (id: number) => void;
+    onclick: () => void;
 }
