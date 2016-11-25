@@ -1,21 +1,23 @@
 import * as React       from 'react';
 import * as ReactDOM    from 'react-dom';
-import { Provider }     from 'react-redux';
 import { createStore }  from 'redux';
 
-import { NodeList }     from './components/NodeList';
-import { IStore }       from './interfaces';
-import { nodelist }     from './nodelist';
+import { Nodes }        from './components/Nodes';
 import { nodesReducer } from './reducers/nodesReducer';
 
-const initstate: IStore = {
-    nodes: nodelist
-};
+// some test data:
+import { nodelist }     from './nodelist';
+
+const initstate: any = nodelist;
+
 const store = createStore(nodesReducer, initstate);
 
+// whenever the store has changed, print the new state
+store.subscribe(() => {
+    console.log(store.getState());
+});
+
 ReactDOM.render(
-    <Provider store={store}>
-        <NodeList nodelist={nodelist} />
-    </Provider>,
+    <Nodes nodes={store.getState()}/>,
     document.getElementById('root')
 );

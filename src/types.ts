@@ -1,4 +1,4 @@
-export interface IDatabaseRecord {
+export type TDatabaseRecord = {
     child_of: number;
     id: number;
     is_entity: boolean;
@@ -10,9 +10,9 @@ export interface IDatabaseRecord {
     url: string;
 }
 
-export interface INode {
+export type TNode = {
     bullet: string;
-    dbrecord: IDatabaseRecord;
+    dbrecord: TDatabaseRecord;
     id: number;
     isexpanded: boolean;
     indent: any;
@@ -20,8 +20,4 @@ export interface INode {
     name: string;
     nodeclass: string;
     onclick: (id: number) => void;
-}
-
-export interface IStore {
-    nodes: INode[];
 }

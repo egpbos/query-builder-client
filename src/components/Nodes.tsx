@@ -1,26 +1,26 @@
 import * as React    from 'react';
 
-import { INode }     from '../interfaces';
+import { TNode }     from '../types';
 import { Node }      from './Node';
 
-type props = {
-    nodelist: INode[];
+type TProps = {
+    nodes: TNode[];
 }
 
-export class NodeList extends React.Component<props, any> {
+export class Nodes extends React.Component<TProps, any> {
 
     constructor() {
         super();
     }
 
     render() {
-        const nodelist = this.props.nodelist.map((node: INode) => {
+        const nodes = this.props.nodes.map((node: TNode) => {
             return <Node {...node} />;
         });
 
         return (
             <div>
-                {nodelist}
+                {nodes}
             </div>
         );
     }

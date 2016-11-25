@@ -1,6 +1,6 @@
-import { INode } from '../interfaces';
+import { TNode } from '../types';
 
-export const nodesReducer = (nodes: any, action: any) => {
+export const nodesReducer = (nodes: TNode[], action: any) => {
     if (nodes === undefined) {
         throw new Error('Initial state is undefined');
     } else {
@@ -43,7 +43,7 @@ export const nodesReducer = (nodes: any, action: any) => {
             //     return state;
             case 'EXPAND_BUTTON_WAS_CLICKED':
                 console.log('in EXPAND_BUTTON_WAS_CLICKED');
-                return nodes.map((node: INode) => {
+                return nodes.map((node: TNode) => {
                     if (action.payload === node.dbrecord.id) {
                         console.log('node = ', node.dbrecord.id);
                         return Object.assign({}, node, {isexpanded: true});

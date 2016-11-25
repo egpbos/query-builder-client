@@ -1,6 +1,6 @@
-import { INode } from '../src/interfaces';
+import { TNode } from '../src/types';
 
-export const nodelist: INode[] = [{
+export const nodelist: TNode[] = [{
     bullet: '#',
     dbrecord: {
         child_of: 12,

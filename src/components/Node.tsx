@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import { INode }  from '../interfaces';
+import { TNode }  from '../types';
 
 import './node.css';
 
-export class Node extends React.Component<INode, any> {
+export class Node extends React.Component<TNode, any> {
 
     constructor() {
         super();
@@ -12,13 +12,13 @@ export class Node extends React.Component<INode, any> {
 
     public render() {
         console.log(this.props.dbrecord);
-        const bullet = this.props.bullet;
-        const indent = this.props.indent;
-        const name = this.props.name;
-        const nodeclass = this.props.nodeclass;
+        const {bullet, indent, name, nodeclass, dbrecord} = this.props;
+        const onclick = () => {
+            console.log('should dispatch an action to expand the Node with dbrecord.id === ' + dbrecord.id.toString());
+        };
         return (
             <div className={nodeclass} style={indent}>
-                <div className="bullet" >
+                <div className="bullet" onClick={onclick}>
                     {bullet}
                 </div>
                 <div className="content" >
