@@ -1,0 +1,18 @@
+import { connect } from 'react-redux';
+import Node from './Node';
+
+const mapStateToProps = (state) => {
+    return {
+      node: state.nodes[0]
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    };
+};
+
+export const VisibleNode = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Node);

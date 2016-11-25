@@ -1,31 +1,26 @@
-import * as React     from 'react';
-import { Dispatch }   from 'redux';
-
-import { Action }     from '../Action';
-import { NodeLogic }  from './NodeLogic';
-import { NodeRender } from './NodeRender';
+import * as React    from 'react';
+import { INode }     from '../interfaces';
+import { Node }      from './Node';
 
 type props = {
-    nodes: NodeLogic[];
-    dispatch: Dispatch<Action>;
-};
-type state = {
-};
+    nodelist: INode[];
+}
 
-export class NodeList extends React.Component<props, state> {
+export class NodeList extends React.Component<props, any> {
 
-    public render() {
+    constructor() {
+        super();
+    }
 
-        const nodeList = this.props.nodes.map((node: NodeLogic) => {
-            return <NodeRender node={node} key={node.dbrecord.id} dispatch={this.props.dispatch}/>;
+    render() {
+        const nodelist = this.props.nodelist.map((node: INode) => {
+            return <Node {...node} />;
         });
 
         return (
             <div>
-                {nodeList}
+                {nodelist}
             </div>
         );
-
     }
-
 }

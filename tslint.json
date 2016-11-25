@@ -15,6 +15,8 @@
         "react-a11y-event-has-role": false,
         "no-http-string": [true, "http://localhost/?.", "http://dbpedia.org/?."],
         "prefer-type-cast": false,
-        "no-angle-bracket-type-assertion": true
+        "no-angle-bracket-type-assertion": true,
+        "jsx-no-lambda": false,
+        "react-this-binding-issue": false
     }
 }

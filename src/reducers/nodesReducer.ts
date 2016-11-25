@@ -1,9 +1,9 @@
-import { NodeLogic }      from '../components/NodeLogic';
+import { Node } from '../components/Node';
 
-type StateType = NodeLogic[] ;
+type StateType = Node[];
 const initialState: StateType = [];
 
-export const nodeListReducer = (state: StateType, action: any) => {
+export const nodesReducer = (state: StateType, action: any) => {
     if (state === undefined) {
         return initialState;
     } else {
@@ -11,9 +11,9 @@ export const nodeListReducer = (state: StateType, action: any) => {
             case 'ADD_NODES':
                 console.log('in ADD_NODES');
                 // who is the parent common to all nodes from payload
-                const payloadNodes: NodeLogic[] = action.payload;
+                const payloadNodes: Node[] = action.payload;
                 const firstParentId: number = payloadNodes[0].dbrecord.child_of;
-                const sameParent = (node: NodeLogic) => {
+                const sameParent = (node: Node) => {
                     return firstParentId === node.dbrecord.child_of;
                 };
                 const payloadNodesHaveCommonParent = payloadNodes.every(sameParent);
@@ -21,7 +21,7 @@ export const nodeListReducer = (state: StateType, action: any) => {
                     throw new Error('Payload nodes don\'t have one common parent');
                 }
                 // get position of parent in old state
-                const parentIndex = state.findIndex((node: NodeLogic) => {
+                const parentIndex = state.findIndex((node: Node) => {
                     return node.dbrecord.id === firstParentId;
                 });
                 if (parentIndex === -1) {
@@ -40,7 +40,7 @@ export const nodeListReducer = (state: StateType, action: any) => {
             case 'FETCH_CHILD_NODES':
                 // should fire a query to get child nodes of node action.payload
                 console.log('in FETCH_CHILD_NODES');
-                const node: NodeLogic = action.payload.node;
+                const node: Node = action.payload.node;
                 // beware: side effects happen here:
                 node.fetchChildNodes(action.payload.dispatch);
                 return state;
@@ -48,7 +48,7 @@ export const nodeListReducer = (state: StateType, action: any) => {
                 console.log('in TOGGLE_ISEXPANDED');
                 return state.map((node) => {
                     if (action.payload === node.dbrecord.id) {
-                        const newNode = new NodeLogic(node.dbrecord);
+                        const newNode = new Node(node.dbrecord);
                         return Object.assign(newNode, node, {isexpanded: !node.isexpanded});
                     } else {
                         return node;
