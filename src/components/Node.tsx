@@ -1,5 +1,8 @@
 import * as React from 'react';
+
 import { INode }  from '../interfaces';
+
+import './node.css';
 
 export class Node extends React.Component<INode, any> {
 

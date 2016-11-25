@@ -14,9 +14,14 @@ export interface INode {
     bullet: string;
     dbrecord: IDatabaseRecord;
     id: number;
+    isexpanded: boolean;
     indent: any;
     key: number;
     name: string;
     nodeclass: string;
     onclick: (id: number) => void;
+}
+
+export interface IStore {
+    nodes: INode[];
 }
