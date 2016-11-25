@@ -8,6 +8,7 @@ export class Node extends React.Component<INode, any> {
     }
 
     public render() {
+        console.log(this.props.dbrecord);
         const bullet = this.props.bullet;
         const indent = this.props.indent;
         const name = this.props.name;
