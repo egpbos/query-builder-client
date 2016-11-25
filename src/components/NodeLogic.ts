@@ -3,12 +3,14 @@ import 'whatwg-fetch';
 import { DatabaseRecord } from '../DatabaseRecord';
 
 export class NodeLogic {
-
-    static paddingPerLevel: number = 30;
     public dbrecord: DatabaseRecord;
     public isexpanded: boolean;
+    public isselected: boolean;
 
-    constructor(dbrecord: DatabaseRecord, isexpanded: boolean = false) {
+    constructor(
+        dbrecord: DatabaseRecord, 
+        isexpanded: boolean = false, 
+        isselected: boolean = false) {
 
         if ((dbrecord.is_entity && dbrecord.is_instance) || (!dbrecord.is_entity && !dbrecord.is_instance)) {
             throw new Error('is_entity and is_instance cannot both be false or true');
@@ -16,10 +18,10 @@ export class NodeLogic {
             this.dbrecord = dbrecord;
         }
         this.isexpanded = isexpanded;
+        this.isselected = isselected;
     }
 
     public getClass(): string {
-
         let nodeclass = '';
         if (this.dbrecord.is_instance) {
             nodeclass += 'instance';
@@ -42,7 +44,6 @@ export class NodeLogic {
         };
 
         const handleTheData = (dbrecords: any) => {
-
             const nodes: NodeLogic[] = [];
             for (const dbrecord of dbrecords) {
                 nodes.push(new NodeLogic(dbrecord));

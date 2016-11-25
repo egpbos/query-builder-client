@@ -1,21 +1,37 @@
-.bullet {
+/*.bullet {
     background-color: transparent;
     float: left;
     width: 10px;
-}
+}*/
 
-.content {
+/*.content {
     margin-left: 10px;
     width: 200px;
-}
+}*/
 
-.entity {
+/*.entity {
     font-weight: bold;
     padding-bottom: 3px;
     padding-top: 3px;
-}
+}*/
 
-.instance {
+/*.instance {
     padding-bottom: 3px;
     padding-top: 3px;
+}*/
+
+.category {
+  background: #ffffff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.categoryText {
+
+}
+
+.allSelector {
+  width: 100px;
 }

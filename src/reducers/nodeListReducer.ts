@@ -54,6 +54,24 @@ export const nodeListReducer = (state: StateType, action: any) => {
                         return node;
                     }
                 });
+            case 'TOGGLE_ISSELECTED':
+                console.log('in TOGGLE_ISSELECTED');
+                return state.map((node) => {
+                    if (action.payload === node.dbrecord.id) {                        
+                        return Object.assign(node, {isselected: !node.isselected});
+                    } else {
+                        return node;
+                    }
+                });
+            case 'TOGGLE_MASSSELECTED':
+                console.log('in TOGGLE_MASSSELECTED');
+                return state.map((node) => {
+                    if (action.payload === node.dbrecord.id) {                        
+                        return Object.assign(node, {isselected: !node.isselected});
+                    } else {
+                        return node;
+                    }
+                });
             default: {
                 return state;
             }

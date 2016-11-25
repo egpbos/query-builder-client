@@ -1,6 +1,6 @@
 import '../node_modules/react-mdl/extra/material.css';
 import '../node_modules/react-mdl/extra/material.js';
-import './index.css'
+import './index.css';
 
 import * as React          from 'react';
 import * as ReactDOM       from 'react-dom';
