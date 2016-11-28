@@ -6,13 +6,14 @@ import { createStore } from 'redux';
 
 import { Nodes }       from './components/Nodes';
 import { reducers }    from './reducers/reducers';
+import { TStore }      from './types';
 
-// // some test data:
-// import { nodelist }     from './nodelist';
-// 
-// const initstate: any = nodelist;
+// some test data:
+import { nodelist }     from './nodelist';
 
-const store = createStore(reducers);
+const initstate: TStore = {nodes: nodelist};
+
+const store = createStore(reducers, initstate);
 
 // whenever the store has changed, print the new state
 store.subscribe(() => {

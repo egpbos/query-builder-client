@@ -1,13 +1,11 @@
-import { TNode }        from '../types';
+import { TStore }       from '../types';
 import { nodesReducer } from './nodesReducer';
 
-type StateType = {
-    nodes: TNode[]
-};
-const initstate: StateType = {
+const initstate: TStore = {
     nodes: []
 };
-export const reducers = (state: StateType = initstate, action: any) => {
+
+export const reducers = (state: TStore = initstate, action: any) => {
     return {
         nodes: nodesReducer(state.nodes, action)
     };

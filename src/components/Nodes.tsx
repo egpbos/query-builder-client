@@ -42,7 +42,7 @@ export class Nodes extends React.Component<any, any> {
                 console.log('should dispatch an action to expand the Node ' +
                     'with dbrecord.id === ' + node.dbrecord.id.toString());
             };
-            return <Node {...node} onclick={onclick}/>;
+            return <Node {...node} onclick={onclick} />;
         });
 
         return (

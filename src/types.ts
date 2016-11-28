@@ -21,3 +21,7 @@ export type TNode = {
     nodeclass: string;
     onclick: () => void;
 }
+
+export type TStore = {
+    nodes: TNode[]
+}
