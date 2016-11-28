@@ -1,18 +1,18 @@
-import * as React       from 'react';
-import * as ReactDOM    from 'react-dom';
-import { connect }      from 'react-redux';
-import { Provider }     from 'react-redux';
-import { createStore }  from 'redux';
+import * as React      from 'react';
+import * as ReactDOM   from 'react-dom';
+import { connect }     from 'react-redux';
+import { Provider }    from 'react-redux';
+import { createStore } from 'redux';
 
-import { Nodes }        from './components/Nodes';
-import { nodesReducer } from './reducers/nodesReducer';
+import { Nodes }       from './components/Nodes';
+import { reducers }    from './reducers/reducers';
 
-// some test data:
-import { nodelist }     from './nodelist';
+// // some test data:
+// import { nodelist }     from './nodelist';
+// 
+// const initstate: any = nodelist;
 
-const initstate: any = nodelist;
-
-const store = createStore(nodesReducer, initstate);
+const store = createStore(reducers);
 
 // whenever the store has changed, print the new state
 store.subscribe(() => {
