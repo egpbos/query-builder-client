@@ -49,6 +49,10 @@ export const nodesReducer = (nodes: TNode[], action: any) => {
                         return node;
                     }
                 });
+            case 'CHANGE_HEADERTEXT':
+                console.log('in CHANGE_HEADERTEXT');
+                console.log(action.payload);
+                return nodes;
             default: {
                 return nodes;
             }

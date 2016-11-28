@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React     from 'react';
 
-import { TNode }  from '../types';
+import { TNode }      from '../types';
 
 import './node.css';
 
@@ -11,11 +11,17 @@ export class Node extends React.Component<TNode, any> {
     }
 
     public render() {
-        console.log(this.props.dbrecord);
-        const {bullet, indent, name, nodeclass, onclick} = this.props;
+        const {dbrecord, indent, isexpanded, name, nodeclass} = this.props;
+
+        let bullet: string;
+        if (dbrecord.is_expandable && isexpanded === false) {
+            bullet = '+';
+        } else {
+            bullet = '\u2022';
+        }
         return (
             <div className={nodeclass} style={indent}>
-                <div className="bullet" onClick={onclick}>
+                <div className="bullet" onClick={() => {console.log('clicked id = ', dbrecord.id); console.log(this.props); }} >
                     {bullet}
                 </div>
                 <div className="content" >

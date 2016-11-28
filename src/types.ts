@@ -11,15 +11,11 @@ export type TDatabaseRecord = {
 }
 
 export type TNode = {
-    bullet: string;
     dbrecord: TDatabaseRecord;
-    id: number;
     isexpanded: boolean;
     indent: any;
-    key: number;
     name: string;
     nodeclass: string;
-    onclick: () => void;
 }
 
 export type TStore = {
