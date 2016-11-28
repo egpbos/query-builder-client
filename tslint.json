@@ -15,6 +15,7 @@
         "prefer-type-cast": false,
         "no-angle-bracket-type-assertion": true,
         "jsx-no-lambda": false,
-        "react-this-binding-issue": false
+        "react-this-binding-issue": false,
+        "function-name": false
     }
 }

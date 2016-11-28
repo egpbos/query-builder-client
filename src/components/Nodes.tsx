@@ -1,9 +1,11 @@
 import * as React    from 'react';
+import { connect }   from 'react-redux';
 
 import { TNode }     from '../types';
+import { TStore }    from '../types';
 import { Node }      from './Node';
 
-export class Nodes extends React.Component<any, any> {
+class UnconnectedNodes extends React.Component<any, any> {
 
     constructor() {
         super();
@@ -18,7 +20,7 @@ export class Nodes extends React.Component<any, any> {
         onChange: React.PropTypes.func.isRequired
     };
 
-    static mapStateToProps(state: any) {
+    static mapStateToProps(state: TStore) {
         return {
             nodes: state.nodes
         };
@@ -52,3 +54,7 @@ export class Nodes extends React.Component<any, any> {
         );
     }
 }
+
+// export just the connected component
+export const Nodes = connect(UnconnectedNodes.mapStateToProps,
+                             UnconnectedNodes.mapDispatchToProps)(UnconnectedNodes);

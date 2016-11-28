@@ -1,6 +1,5 @@
 import * as React      from 'react';
 import * as ReactDOM   from 'react-dom';
-import { connect }     from 'react-redux';
 import { Provider }    from 'react-redux';
 import { createStore } from 'redux';
 
@@ -20,15 +19,9 @@ store.subscribe(() => {
     console.log(store.getState());
 });
 
-// Connected Component
-const ConnectedNodes = connect(
-    Nodes.mapStateToProps,
-    Nodes.mapDispatchToProps
-)(Nodes);
-
 ReactDOM.render(
     <Provider store={store}>
-        <ConnectedNodes />
+        <Nodes />
     </Provider>,
     document.getElementById('root')
 );
