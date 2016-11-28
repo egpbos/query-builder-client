@@ -3,6 +3,7 @@ import { connect }   from 'react-redux';
 
 import { TNode }     from '../types';
 import { TStore }    from '../types';
+import { addNodes }  from './../actions/addNodes';
 import { Node }      from './Node';
 
 class UnconnectedNodes extends React.Component<any, any> {
@@ -29,12 +30,15 @@ class UnconnectedNodes extends React.Component<any, any> {
     static mapDispatchToProps(dispatch: any) {
         const action = {
             type: 'CHANGE_HEADERTEXT',
-            payload: 'changed from Nodes.mapDispatchToProps()'
+            payload: 'changed from UnconnectedNodes.mapDispatchToProps()'
         };
         return {
             onChange: () => {
-                    dispatch(action);
-                }
+                dispatch(action);
+            },
+            addNodes: () => {
+                    dispatch(addNodes);
+            }
         };
     }
 
@@ -44,7 +48,7 @@ class UnconnectedNodes extends React.Component<any, any> {
                 console.log('should dispatch an action to expand the Node ' +
                     'with dbrecord.id === ' + node.dbrecord.id.toString());
             };
-            return <Node {...node} onclick={onclick} />;
+            return <Node {...node} onclick={onclick} key={node.dbrecord.id} />;
         });
 
         return (
@@ -55,6 +59,6 @@ class UnconnectedNodes extends React.Component<any, any> {
     }
 }
 
-// export just the connected component
+// Export just the connected component
 export const Nodes = connect(UnconnectedNodes.mapStateToProps,
                              UnconnectedNodes.mapDispatchToProps)(UnconnectedNodes);

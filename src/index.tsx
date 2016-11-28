@@ -8,9 +8,9 @@ import { reducers }    from './reducers/reducers';
 import { TStore }      from './types';
 
 // some test data:
-import { nodelist }     from './nodelist';
+import { rootnode }     from './rootnode';
 
-const initstate: TStore = {nodes: nodelist};
+const initstate: TStore = {nodes: rootnode};
 
 const store = createStore(reducers, initstate);
 
