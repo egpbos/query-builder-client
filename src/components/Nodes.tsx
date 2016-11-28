@@ -3,7 +3,6 @@ import { connect }    from 'react-redux';
 
 import { TNode }      from '../types';
 import { TStore }     from '../types';
-import { addNodes }   from './../actions/addNodes';
 import { expandNode } from './../actions/expandNode';
 import { Node }       from './Node';
 
@@ -25,11 +24,8 @@ class UnconnectedNodes extends React.Component<any, any> {
 
     static mapDispatchToProps(dispatch: any) {
         return {
-            addNodes: () => {
-                dispatch(addNodes);
-            },
-            expandNode: () => {
-                dispatch(expandNode);
+            expand: (node: TNode) => {
+                dispatch(expandNode(node));
             }
         };
     }
