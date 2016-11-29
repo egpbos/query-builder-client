@@ -1,11 +1,11 @@
-import * as React        from 'react';
-import { connect }       from 'react-redux';
+import * as React             from 'react';
+import { connect }            from 'react-redux';
 
-import { expandNode }    from '../actions';
-import { fetchChildren } from '../actions';
-import { Node }          from '../components';
-import { TNode }         from '../types';
-import { TStore }        from '../types';
+import { expandNode }         from '../actions';
+import { fetchChildrenThunk } from '../actions';
+import { Node }               from '../components';
+import { TNode }              from '../types';
+import { TStore }             from '../types';
 
 class UnconnectedNodes extends React.Component<any, any> {
 
@@ -31,7 +31,7 @@ class UnconnectedNodes extends React.Component<any, any> {
                 dispatch(expandNode(id));
             },
             fetchChildren: (id: number) => {
-                dispatch(fetchChildren(id));
+                dispatch(fetchChildrenThunk(id));
             }
         };
     }
