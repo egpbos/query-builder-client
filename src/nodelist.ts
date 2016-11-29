@@ -1,7 +1,6 @@
 import { TNode } from '../src/types';
 
 export const nodelist: TNode[] = [{
-    bullet: '#',
     dbrecord: {
         child_of: 12,
         id: 6959,
@@ -13,15 +12,8 @@ export const nodelist: TNode[] = [{
         name: 'Cross Lander USA Inc',
         url: 'Cross Lander USA Inc'
     },
-    id: 1,
-    indent: {paddingLeft: '0px'},
-    isexpanded: false,
-    key: 1,
-    name: 'thename',
-    nodeclass: 'entity',
-    onclick: () => {console.log('blah entity'); }
+    isexpanded: false
     }, {
-    bullet: '@',
     dbrecord: {
         child_of: 7209,
         id: 7210,
@@ -33,15 +25,8 @@ export const nodelist: TNode[] = [{
         name: 'BroadcastNetwork',
         url: 'http://dbpedia.org/ontology/BroadcastNetwork'
     },
-    id: 2,
-    indent: {paddingLeft: '0px'},
-    isexpanded: false,
-    key: 2,
-    name: 'thename2',
-    nodeclass: 'instance',
-    onclick: () => {console.log('blah instance'); }
+    isexpanded: false
     }, {
-    bullet: '%',
     dbrecord: {
         child_of: 7509,
         id: 7521,
@@ -53,11 +38,5 @@ export const nodelist: TNode[] = [{
         name: 'AIK Banka',
         url: 'AIK Banka'
     },
-    id: 3,
-    indent: {paddingLeft: '30px'},
-    isexpanded: false,
-    key: 3,
-    name: 'thename2',
-    nodeclass: 'instance',
-    onclick: () => {console.log('blah instance'); }
+    isexpanded: false
 }];
