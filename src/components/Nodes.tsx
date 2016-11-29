@@ -1,11 +1,11 @@
-import * as React     from 'react';
-import { connect }    from 'react-redux';
+import * as React        from 'react';
+import { connect }       from 'react-redux';
 
-import { expandNode } from '../actions/expandNode';
-import { fetchChildren } from '../actions/fetchChildren';
-import { TNode }      from '../types';
-import { TStore }     from '../types';
-import { Node }       from './Node';
+import { expandNode }    from '../actions';
+import { fetchChildren } from '../actions';
+import { Node }          from '../components';
+import { TNode }         from '../types';
+import { TStore }        from '../types';
 
 class UnconnectedNodes extends React.Component<any, any> {
 
