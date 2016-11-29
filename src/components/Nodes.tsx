@@ -1,9 +1,9 @@
 import * as React     from 'react';
 import { connect }    from 'react-redux';
 
+import { expandNode } from '../actions/expandNode';
 import { TNode }      from '../types';
 import { TStore }     from '../types';
-import { expandNode } from './../actions/expandNode';
 import { Node }       from './Node';
 
 class UnconnectedNodes extends React.Component<any, any> {
@@ -13,7 +13,8 @@ class UnconnectedNodes extends React.Component<any, any> {
     }
 
     static propTypes = {
-        nodes: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
+        nodes: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        onClickExpand: React.PropTypes.func
     };
 
     static mapStateToProps(state: TStore) {
@@ -24,15 +25,15 @@ class UnconnectedNodes extends React.Component<any, any> {
 
     static mapDispatchToProps(dispatch: any) {
         return {
-            expand: (node: TNode) => {
-                dispatch(expandNode(node));
+            onClickExpand: (id: number) => {
+                dispatch(expandNode(id));
             }
         };
     }
 
     render() {
         const nodes = this.props.nodes.map((node: TNode) => {
-            return <Node {...node} key={node.dbrecord.id} />;
+            return <Node {...node} onClickExpand={this.props.onClickExpand} key={node.dbrecord.id} />;
         });
 
         return (

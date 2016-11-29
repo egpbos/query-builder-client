@@ -12,8 +12,8 @@ export type TDatabaseRecord = {
 
 export type TNode = {
     dbrecord: TDatabaseRecord;
-    isexpanded: boolean;
     indent: any;
+    isexpanded: boolean;
     name: string;
     nodeclass: string;
 }

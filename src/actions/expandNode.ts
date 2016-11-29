@@ -1,8 +1,7 @@
-import { TNode } from '../types';
 
-export const expandNode = (node: TNode) => {
+export const expandNode = (id: number) => {
     return {
-        type: 'EXPAND_WAS_CLICKED',
-        payload: node
+        type: 'EXPAND_BUTTON_WAS_CLICKED',
+        payload: id
     };
 };

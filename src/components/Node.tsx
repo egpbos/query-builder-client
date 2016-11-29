@@ -1,15 +1,26 @@
 import * as React     from 'react';
 
-import { TNode }      from '../types';
+import { TDatabaseRecord } from '../types';
 
 import './node.css';
 
-export class Node extends React.Component<TNode, any> {
+interface INodeOwnProps {
+    dbrecord: TDatabaseRecord;
+    indent: any;
+    isexpanded: boolean;
+    name: string;
+    nodeclass: string;
+}
+interface INodeDispatchProps {
+    onClickExpand: (id: number) => void;
+}
 
-    // static propTypes = {
-    //     expand: React.PropTypes.func.isRequired
-    // };
-    // 
+export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, any> {
+
+    static propTypes = {
+        onClickExpand: React.PropTypes.func
+    };
+
     constructor() {
         super();
         this.expand = this.expand.bind(this);
@@ -18,16 +29,14 @@ export class Node extends React.Component<TNode, any> {
     }
 
     public expand() {
-        console.log('from Node.expand():', this.props);
-        //this.props.expand(this.props.dbrecord.id);
+        this.props.onClickExpand(this.props.dbrecord.id);
     }
 
     public fetchChildren() {
-        console.log('from Node.fetchChildren():', this.props);
+        //
     }
 
     public onClick() {
-        console.log('from Node.onClick():', this.props);
         const {dbrecord, isexpanded} = this.props;
         if (dbrecord.is_expandable && isexpanded === false) {
             this.expand();
