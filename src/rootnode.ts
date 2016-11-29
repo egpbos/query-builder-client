@@ -12,8 +12,5 @@ export const rootnode: TNode[] = [{
         name: 'www.w3.org/2002/07/owl#Thing',
         url: 'http://dbpedia.org/ontology/www.w3.org/2002/07/owl#Thing'
     },
-    indent: {paddingLeft: '0px'},
-    isexpanded: false,
-    name: 'thename',
-    nodeclass: 'entity'
+    isexpanded: false
 }];
