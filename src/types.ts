@@ -12,10 +12,7 @@ export type TDatabaseRecord = {
 
 export type TNode = {
     dbrecord: TDatabaseRecord;
-    indent: any;
     isexpanded: boolean;
-    name: string;
-    nodeclass: string;
 }
 
 export type TStore = {
