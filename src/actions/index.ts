@@ -1,4 +1,3 @@
-export { addNodes }           from './addNodes';
-export { expandNode }         from './expandNode';
-export { fetchChildren }      from './fetchChildren';
-export { fetchChildrenThunk } from './fetchChildrenThunk';
+export { addNodes }               from './addNodes';
+export { expandButtonWasClicked } from './expandButtonWasClicked';
+export { childrenRequestedThunk } from './childrenRequestedThunk';

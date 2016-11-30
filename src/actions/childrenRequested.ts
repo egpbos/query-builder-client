@@ -1,5 +1,5 @@
 
-export const fetchChildren = (id: number) => {
+export const childrenRequested = (id: number) => {
     return {
         type: 'CHILDREN_REQUESTED',
         payload: id

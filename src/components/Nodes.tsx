@@ -1,11 +1,11 @@
-import * as React             from 'react';
-import { connect }            from 'react-redux';
+import * as React                 from 'react';
+import { connect }                from 'react-redux';
 
-import { expandNode }         from '../actions';
-import { fetchChildrenThunk } from '../actions';
-import { Node }               from '../components';
-import { TNode }              from '../types';
-import { TStore }             from '../types';
+import { expandButtonWasClicked } from '../actions';
+import { fetchChildrenThunk }     from '../actions';
+import { Node }                   from '../components';
+import { TNode }                  from '../types';
+import { TStore }                 from '../types';
 
 class UnconnectedNodes extends React.Component<any, any> {
 
@@ -28,7 +28,7 @@ class UnconnectedNodes extends React.Component<any, any> {
     static mapDispatchToProps(dispatch: any) {
         return {
             onClickExpand: (id: number) => {
-                dispatch(expandNode(id));
+                dispatch(expandButtonWasClicked(id));
             },
             fetchChildren: (id: number) => {
                 dispatch(fetchChildrenThunk(id));
