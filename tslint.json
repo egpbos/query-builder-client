@@ -14,8 +14,8 @@
         "no-http-string": [true, "http://localhost/?.", "http://dbpedia.org/?."],
         "prefer-type-cast": false,
         "no-angle-bracket-type-assertion": true,
-        "jsx-no-lambda": false,
-        "react-this-binding-issue": false,
+        "jsx-no-lambda": true,
+        "react-this-binding-issue": true,
         "function-name": false
     }
 }
