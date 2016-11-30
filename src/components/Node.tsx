@@ -42,7 +42,7 @@ export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, an
             this.expand();
             this.fetchChildren();
         } else if (dbrecord.is_expandable && isexpanded === true) {
-            console.log('this.collapse();');
+            console.error('this.collapse();');
         } else {
             // do nothing
         }
