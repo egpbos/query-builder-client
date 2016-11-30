@@ -7,7 +7,9 @@ import { EXPAND_BUTTON_WAS_CLICKED } from '../actions/authorized-actions';
 import { TNode } from '../types';
 import { TDatabaseRecord } from '../types';
 
-export const nodesReducer = (nodes: TNode[], action: any) => {
+const initstate: TNode[] = [];
+
+export const nodesReducer = (nodes: TNode[] = initstate, action: any) => {
     switch (action.type) {
         case CHILDREN_RECEIVED:
 
