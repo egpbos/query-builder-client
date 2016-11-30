@@ -2,7 +2,7 @@ import * as React                 from 'react';
 import { connect }                from 'react-redux';
 
 import { expandButtonWasClicked } from '../actions';
-import { fetchChildrenThunk }     from '../actions';
+import { childrenRequestedThunk } from '../actions';
 import { Node }                   from '../components';
 import { TNode }                  from '../types';
 import { TStore }                 from '../types';
@@ -31,7 +31,7 @@ class UnconnectedNodes extends React.Component<any, any> {
                 dispatch(expandButtonWasClicked(id));
             },
             fetchChildren: (id: number) => {
-                dispatch(fetchChildrenThunk(id));
+                dispatch(childrenRequestedThunk(id));
             }
         };
     }
