@@ -31,7 +31,7 @@ class UnconnectedNodes extends React.Component<any, any> {
                 dispatch(expandButtonWasClicked(id));
             },
             fetchChildren: (id: number) => {
-                childrenRequestedThunk(dispatch, id);
+                dispatch(childrenRequestedThunk(id));
             }
         };
     }

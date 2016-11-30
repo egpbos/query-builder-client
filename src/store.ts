@@ -14,4 +14,4 @@ store.subscribe(() => {
 });
 
 const rootnode = 0;
-childrenRequestedThunk(store.dispatch, rootnode);
+store.dispatch(childrenRequestedThunk(rootnode));
