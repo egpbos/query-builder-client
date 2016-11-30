@@ -15,11 +15,6 @@ interface INodeDispatchProps {
 
 export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, any> {
 
-    static propTypes = {
-        onClickExpand: React.PropTypes.func,
-        fetchChildren: React.PropTypes.func
-    };
-
     constructor() {
         super();
 

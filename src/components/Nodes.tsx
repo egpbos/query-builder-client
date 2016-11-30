@@ -7,17 +7,19 @@ import { Node }                   from '../components';
 import { TNode }                  from '../types';
 import { TStore }                 from '../types';
 
-class UnconnectedNodes extends React.Component<any, any> {
+interface IOwnProps {
+    nodes: TNode[];
+}
+interface IDispatchProps {
+    onClickExpand: (id: number) => void;
+    fetchChildren: (id: number) => void;
+}
+
+class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
 
     constructor() {
         super();
     }
-
-    static propTypes = {
-        nodes: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        onClickExpand: React.PropTypes.func,
-        fetchChildren: React.PropTypes.func
-    };
 
     static mapStateToProps(state: TStore) {
         return {
