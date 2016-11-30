@@ -16,6 +16,7 @@
         "no-angle-bracket-type-assertion": true,
         "jsx-no-lambda": true,
         "react-this-binding-issue": true,
-        "function-name": false
+        "function-name": false,
+        "no-suspicious-comment": true
     }
 }
