@@ -20,13 +20,13 @@ export const childrenRequestedThunk = (id: number) => {
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
-                    childof: dbrecord.child_of,
+                    childof: dbrecord.childof,
                     id: dbrecord.id,
-                    isentity: dbrecord.is_entity === 1 ? true : false,
-                    isleaf: dbrecord.is_expandable === 1 ? false : true,
-                    isinstance: dbrecord.is_instance === 1 ? true : false,
+                    isentity: dbrecord.isentity === 1 ? true : false,
+                    isleaf: dbrecord.isleaf === 1 ? true : false,
+                    isinstance: dbrecord.isinstance === 1 ? true : false,
                     level: dbrecord.level,
-                    mentioncount: dbrecord.mention_count,
+                    mentioncount: dbrecord.mentioncount,
                     name: dbrecord.name,
                     url: dbrecord.url,
                     isexpanded: false

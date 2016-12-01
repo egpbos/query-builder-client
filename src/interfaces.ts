@@ -1,11 +1,11 @@
 export interface IDatabaseRecord {
-    child_of: number;
+    childof: number;
     id: number;
-    is_entity: number;
-    is_expandable: number;
-    is_instance: number;
+    isentity: number;
+    isinstance: number;
+    isleaf: number;
     level: number;
-    mention_count: number;
+    mentioncount: number;
     name: string;
     url: string;
 }
