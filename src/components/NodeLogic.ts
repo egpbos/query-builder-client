@@ -8,7 +8,7 @@ export enum SelectionState {
     Selected,
 }
 
-export class NodeLogic {    
+export class NodeLogic {
     public dbrecord: DatabaseRecord;
     public isexpanded: boolean;
     public selectedState: SelectionState;

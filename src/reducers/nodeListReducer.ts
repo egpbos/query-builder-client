@@ -55,34 +55,48 @@ export const nodeListReducer = (state: StateType, action: any) => {
                         return node;
                     }
                 });
+            case 'CHILD_SELECTION_CHANGE':
+                return state.map((node) => {
+                    if (action.payload === node.dbrecord.id) {
+                        const newNode = new NodeLogic(node.dbrecord, node.parent);
+
+                        let allSelected = true;
+                        let someSelected = false;
+
+                        node.children.forEach((child) => {
+                            if (child !== node) {
+                                if (child.selectedState === SelectionState.Selected) {
+                                    someSelected = true;
+                                } else if (child.selectedState === SelectionState.Partial) {
+                                    someSelected = true;
+                                } else {
+                                    allSelected = false;
+                                }
+                            }
+                        });
+                        console.log('someSelected: ' + someSelected + ' allSelected: ' + allSelected);
+
+                        if (allSelected) {
+                            return Object.assign(newNode, node, { selectedState : SelectionState.Selected });
+                        } else if (someSelected) {
+                            return Object.assign(newNode, node, { selectedState : SelectionState.Partial });
+                        } else {
+                            return Object.assign(newNode, node, { selectedState : SelectionState.Unselected });
+                        }
+                    } else {
+                        return node;
+                    }
+                });
             case 'TOGGLE_ISSELECTED':
                 console.log('in TOGGLE_ISSELECTED');
                 return state.map((node) => {
                     if (action.payload === node.dbrecord.id) {
-                        let allSelected = true;
-                        let someSelected = false;
-                        //For all siblings
-                        if (node.parent !== null) {
-                            node.parent.children.forEach((sibling) => {
-                                if (sibling !== node) {
-                                    if (sibling.selectedState === SelectionState.Selected) {
-                                        someSelected = true;
-                                    } else if (sibling.selectedState === SelectionState.Partial) {
-                                        someSelected = true;
-                                    } else {
-                                        allSelected = false;
-                                    }
-                                }
-                            });
-                            console.log('someSelected: '+ someSelected + ' allSelected: ' +allSelected);
-                        }
-
                         const newNode = new NodeLogic(node.dbrecord, node.parent);
                         if (node.selectedState === SelectionState.Selected || node.selectedState === SelectionState.Partial) {
                             return Object.assign(newNode, node, { selectedState : SelectionState.Unselected });
                         } else {
                             return Object.assign(newNode, node, { selectedState : SelectionState.Selected });
-                        }                        
+                        }
                     } else {
                         return node;
                     }
