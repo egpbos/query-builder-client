@@ -1,19 +1,15 @@
-import * as React     from 'react';
+import * as React          from 'react';
 
-import { TDatabaseRecord } from '../types';
+import { TNode }           from '../types';
 
 import './node.css';
 
-interface INodeOwnProps {
-    dbrecord: TDatabaseRecord;
-    isexpanded: boolean;
-}
 interface INodeDispatchProps {
     onClickExpand: (id: number) => void;
     fetchChildren: (id: number) => void;
 }
 
-export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, any> {
+export class Node extends React.Component<TNode & INodeDispatchProps, any> {
 
     constructor() {
         super();
@@ -24,19 +20,19 @@ export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, an
     }
 
     public expand() {
-        this.props.onClickExpand(this.props.dbrecord.id);
+        this.props.onClickExpand(this.props.id);
     }
 
     public fetchChildren() {
-        this.props.fetchChildren(this.props.dbrecord.id);
+        this.props.fetchChildren(this.props.id);
     }
 
     public onClick() {
-        const {dbrecord, isexpanded} = this.props;
-        if (dbrecord.is_expandable && isexpanded === false) {
+        const {isleaf, isexpanded} = this.props;
+        if (isleaf !== true && isexpanded === false) {
             this.expand();
             this.fetchChildren();
-        } else if (dbrecord.is_expandable && isexpanded === true) {
+        } else if (isleaf !== true && isexpanded === true) {
             console.error('this.collapse();');
         } else {
             // do nothing
@@ -44,16 +40,16 @@ export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, an
     }
 
     public render() {
-        const {dbrecord, isexpanded} = this.props;
+        const {level, isentity, isinstance, isleaf, isexpanded, name} = this.props;
 
         const indent = {
-            paddingLeft: (dbrecord.level * 30).toString() + 'px'
+            paddingLeft: (level * 30).toString() + 'px'
         };
 
         let nodeclass: string;
-        if (dbrecord.is_entity === true) {
+        if (isentity === true) {
             nodeclass = 'entity';
-        } else if (dbrecord.is_instance === true) {
+        } else if (isinstance === true) {
             nodeclass = 'instance';
         } else {
             throw new Error('Apparently, node is not an instance and not ' +
@@ -61,7 +57,7 @@ export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, an
         }
 
         let bullet: string;
-        if (dbrecord.is_expandable && isexpanded === false) {
+        if (isleaf !== true && isexpanded === false) {
             bullet = '+';
         } else {
             bullet = '\u2022';
@@ -72,7 +68,7 @@ export class Node extends React.Component<INodeOwnProps & INodeDispatchProps, an
                     {bullet}
                 </div>
                 <div className="content" >
-                    {dbrecord.name}
+                    {name}
                 </div>
             </div>
         );

@@ -1,9 +1,9 @@
 export type TDatabaseRecord = {
     child_of: number;
     id: number;
-    is_entity: boolean;
-    is_expandable: boolean;
-    is_instance: boolean;
+    is_entity: number;
+    is_expandable: number;
+    is_instance: number;
     level: number;
     mention_count: number;
     name: string;
@@ -11,7 +11,15 @@ export type TDatabaseRecord = {
 }
 
 export type TNode = {
-    dbrecord: TDatabaseRecord;
+    childof: number;
+    id: number;
+    isentity: boolean;
+    isleaf: boolean;
+    isinstance: boolean;
+    level: number;
+    mentioncount: number;
+    name: string;
+    url: string;
     isexpanded: boolean;
 }
 

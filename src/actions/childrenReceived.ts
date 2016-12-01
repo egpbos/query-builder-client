@@ -1,10 +1,10 @@
 import { CHILDREN_RECEIVED }  from './authorized-actions';
 
-import { TDatabaseRecord }  from '../types';
+import { TNode }              from '../types';
 
-export const childrenReceived = (dbrecords: TDatabaseRecord[]) => {
+export const childrenReceived = (nodes: TNode[]) => {
     return {
         type: CHILDREN_RECEIVED,
-        payload: { dbrecords }
+        payload: { nodes }
     };
 };

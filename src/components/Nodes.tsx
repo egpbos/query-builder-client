@@ -45,7 +45,7 @@ class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
                     {...node}
                     onClickExpand={this.props.onClickExpand}
                     fetchChildren={this.props.fetchChildren}
-                    key={node.dbrecord.id}
+                    key={node.id}
                 />
             );
             });
