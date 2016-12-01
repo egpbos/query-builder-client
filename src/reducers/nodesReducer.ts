@@ -1,14 +1,15 @@
 import 'whatwg-fetch';
 
-import { CHILDREN_RECEIVED }         from '../actions/authorized-actions';
-import { CHILDREN_REQUESTED }        from '../actions/authorized-actions';
-import { EXPAND_BUTTON_WAS_CLICKED } from '../actions/authorized-actions';
+import { CHILDREN_RECEIVED }          from '../actions';
+import { CHILDREN_REQUESTED }         from '../actions';
+import { EXPAND_BUTTON_WAS_CLICKED }  from '../actions';
+import { IGenericAction }             from '../actions';
 
-import { TNode } from '../types';
+import { INode }   from '../interfaces';
 
-const initstate: TNode[] = [];
+const initstate: INode[] = [];
 
-export const nodesReducer = (nodes: TNode[] = initstate, action: any) => {
+export const nodesReducer = (nodes: INode[] = initstate, action: IGenericAction) => {
     switch (action.type) {
         case CHILDREN_RECEIVED:
 
@@ -16,7 +17,7 @@ export const nodesReducer = (nodes: TNode[] = initstate, action: any) => {
 
             // who is the parent common to all nodes from payload
             const firstParentId: number = payloadNodes[0].childof;
-            const parentIsTheSame = (payloadNode: TNode) => {
+            const parentIsTheSame = (payloadNode: INode) => {
                 return firstParentId === payloadNode.childof;
             };
             const payloadNodesHaveCommonParent = payloadNodes.every(parentIsTheSame);
@@ -25,7 +26,7 @@ export const nodesReducer = (nodes: TNode[] = initstate, action: any) => {
             }
 
             // get position of parent in old state
-            const parentIndex = nodes.findIndex((node: TNode) => {
+            const parentIndex = nodes.findIndex((node: INode) => {
                 return node.id === firstParentId;
             });
 
@@ -47,7 +48,7 @@ export const nodesReducer = (nodes: TNode[] = initstate, action: any) => {
             return nodes;
         case EXPAND_BUTTON_WAS_CLICKED:
             const { id } = action.payload;
-            return nodes.map((node: TNode) => {
+            return nodes.map((node: INode) => {
                 if (id === node.id) {
                     return Object.assign({}, node, {isexpanded: true});
                 } else {

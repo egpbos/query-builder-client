@@ -1,4 +1,4 @@
-export type TDatabaseRecord = {
+export interface IDatabaseRecord {
     child_of: number;
     id: number;
     is_entity: number;
@@ -10,7 +10,7 @@ export type TDatabaseRecord = {
     url: string;
 }
 
-export type TNode = {
+export interface INode {
     childof: number;
     id: number;
     isentity: boolean;
@@ -23,6 +23,6 @@ export type TNode = {
     isexpanded: boolean;
 }
 
-export type TStore = {
-    nodes: TNode[]
+export interface IStore {
+    nodes: INode[];
 }

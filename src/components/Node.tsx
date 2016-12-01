@@ -1,6 +1,6 @@
 import * as React          from 'react';
 
-import { TNode }           from '../types';
+import { INode }           from '../interfaces';
 
 import './node.css';
 
@@ -9,7 +9,7 @@ interface INodeDispatchProps {
     fetchChildren: (id: number) => void;
 }
 
-export class Node extends React.Component<TNode & INodeDispatchProps, any> {
+export class Node extends React.Component<INode & INodeDispatchProps, {}> {
 
     constructor() {
         super();

@@ -1,14 +1,16 @@
-import * as React                 from 'react';
-import { connect }                from 'react-redux';
+import * as React                       from 'react';
+import { connect }                      from 'react-redux';
+import { Dispatch }                     from 'redux';
 
-import { expandButtonWasClicked } from '../actions';
-import { childrenRequestedThunk } from '../actions';
-import { Node }                   from '../components';
-import { TNode }                  from '../types';
-import { TStore }                 from '../types';
+import { expandButtonWasClicked }       from '../actions';
+import { childrenRequestedThunk }       from '../actions';
+import { IGenericAction}                from '../actions';
+import { Node }                         from '../components';
+import { INode }                        from '../interfaces';
+import { IStore }                       from '../interfaces';
 
 interface IOwnProps {
-    nodes: TNode[];
+    nodes: INode[];
 }
 interface IDispatchProps {
     onClickExpand: (id: number) => void;
@@ -21,15 +23,16 @@ class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
         super();
     }
 
-    static mapStateToProps(state: TStore) {
+    static mapStateToProps(state: IStore) {
         return {
             nodes: state.nodes
         };
     }
 
-    static mapDispatchToProps(dispatch: any) {
+    static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
         return {
             onClickExpand: (id: number) => {
+                console.log(dispatch);
                 dispatch(expandButtonWasClicked(id));
             },
             fetchChildren: (id: number) => {
@@ -39,7 +42,7 @@ class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
     }
 
     render() {
-        const nodes = this.props.nodes.map((node: TNode) => {
+        const nodes = this.props.nodes.map((node: INode) => {
             return (
                 <Node
                     {...node}

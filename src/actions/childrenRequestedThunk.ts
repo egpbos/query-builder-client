@@ -1,12 +1,14 @@
-import { childrenReceived }  from './childrenReceived';
-import { childrenRequested } from './childrenRequested';
+import { Dispatch }                 from 'redux';
 
-import { TDatabaseRecord }   from '../types';
-import { TNode }             from '../types';
+import { IGenericAction }           from '../actions';
+import { IDatabaseRecord }          from '../interfaces';
+import { INode }                    from '../interfaces';
+import { childrenReceived }         from './childrenReceived';
+import { childrenRequested }        from './childrenRequested';
 
 export const childrenRequestedThunk = (id: number) => {
 
-    return (dispatch: any) => {
+    return (dispatch: Dispatch<IGenericAction>) => {
         const handleTheStatus = (response: Response) => {
             if (response.ok) {
                 return response.json();
@@ -16,7 +18,7 @@ export const childrenRequestedThunk = (id: number) => {
             }
         };
         const handleTheData = (dbrecords: any) => {
-            const convert = (dbrecord: TDatabaseRecord) => {
+            const convert = (dbrecord: IDatabaseRecord) => {
                 return {
                     childof: dbrecord.child_of,
                     id: dbrecord.id,
@@ -28,9 +30,9 @@ export const childrenRequestedThunk = (id: number) => {
                     name: dbrecord.name,
                     url: dbrecord.url,
                     isexpanded: false
-                } as TNode;
+                } as INode;
             };
-            const nodes: TNode[] = dbrecords.map(convert);
+            const nodes: INode[] = dbrecords.map(convert);
             dispatch(childrenReceived(nodes));
         };
         const handleAnyErrors = (err: Error) => {
@@ -41,7 +43,7 @@ export const childrenRequestedThunk = (id: number) => {
 
         const url: string = 'http://localhost:5000/node/' + id.toString() + '/children';
 
-        return fetch(url, {method: 'get'})
+        fetch(url, {method: 'get'})
                 .then(handleTheStatus)
                 .then(handleTheData)
                 .catch(handleAnyErrors);

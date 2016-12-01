@@ -1,8 +1,8 @@
 import { CHILDREN_RECEIVED }  from './authorized-actions';
 
-import { TNode }              from '../types';
+import { INode }              from '../interfaces';
 
-export const childrenReceived = (nodes: TNode[]) => {
+export const childrenReceived = (nodes: INode[]) => {
     return {
         type: CHILDREN_RECEIVED,
         payload: { nodes }
