@@ -17,3 +17,7 @@ declare module 'classnames' {
 
 	export default function classNames(classes:any): string;	
 }
+
+// declare module 'react-mdl/utils/mdlUpgrade' { 
+//   export default function mdlUpgrade(component:any):any;
+// }

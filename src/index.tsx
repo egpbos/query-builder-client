@@ -23,7 +23,7 @@ const dbrecord: DatabaseRecord = {
     url: 'http://dbpedia.org/ontology/www.w3.org/2002/07/owl#Thing'
 } as DatabaseRecord;
 
-const nodes: NodeLogic[] = [new NodeLogic(dbrecord)];
+const nodes: NodeLogic[] = [new NodeLogic(dbrecord, null)];
 
 const store = createStore(nodeListReducer, nodes);
 

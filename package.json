@@ -7,6 +7,7 @@
     "@nlesc/react-scripts": "0.1.1",
     "@types/react": "^0.14.50",
     "@types/react-dom": "^0.14.19",
+    "@types/react-mdl": "^1.7.18",
     "@types/whatwg-fetch": "0.0.32"
   },
   "dependencies": {

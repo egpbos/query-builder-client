@@ -2,15 +2,24 @@ import 'whatwg-fetch';
 
 import { DatabaseRecord } from '../DatabaseRecord';
 
-export class NodeLogic {
+export enum SelectionState {
+    Unselected,
+    Partial,
+    Selected,
+}
+
+export class NodeLogic {    
     public dbrecord: DatabaseRecord;
     public isexpanded: boolean;
-    public isselected: boolean;
+    public selectedState: SelectionState;
+    public parent: NodeLogic|null;
+    public children: NodeLogic[];
 
     constructor(
-        dbrecord: DatabaseRecord, 
-        isexpanded: boolean = false, 
-        isselected: boolean = false) {
+        dbrecord: DatabaseRecord,
+        parent: NodeLogic|null,
+        isexpanded: boolean = false,
+        selectedState: SelectionState = SelectionState.Unselected) {
 
         if ((dbrecord.is_entity && dbrecord.is_instance) || (!dbrecord.is_entity && !dbrecord.is_instance)) {
             throw new Error('is_entity and is_instance cannot both be false or true');
@@ -18,7 +27,9 @@ export class NodeLogic {
             this.dbrecord = dbrecord;
         }
         this.isexpanded = isexpanded;
-        this.isselected = isselected;
+        this.selectedState = selectedState;
+        this.parent = parent;
+        this.children = [];
     }
 
     public getClass(): string {
@@ -44,14 +55,13 @@ export class NodeLogic {
         };
 
         const handleTheData = (dbrecords: any) => {
-            const nodes: NodeLogic[] = [];
             for (const dbrecord of dbrecords) {
-                nodes.push(new NodeLogic(dbrecord));
+                this.children.push(new NodeLogic(dbrecord, this));
             }
 
             const addNodesAction = {
                 type: 'ADD_NODES',
-                payload: nodes
+                payload: {parent: this, children: this.children}
             };
             console.log('should dispatch ', addNodesAction);
             dispatch(addNodesAction);
