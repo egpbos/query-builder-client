@@ -32,7 +32,6 @@ class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
     static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
         return {
             onClickExpand: (id: number) => {
-                console.log(dispatch);
                 dispatch(expandButtonWasClicked(id));
             },
             fetchChildren: (id: number) => {
