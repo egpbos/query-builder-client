@@ -14,10 +14,10 @@ interface IOwnProps {
 }
 interface IDispatchProps {
     onClickExpand: (id: number) => void;
-    fetchChildren: (id: number) => void;
+    fetchChildren: (parent: INode) => void;
 }
 
-class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
+export class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
 
     constructor() {
         super();
@@ -34,14 +34,14 @@ class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
             onClickExpand: (id: number) => {
                 dispatch(expandButtonWasClicked(id));
             },
-            fetchChildren: (id: number) => {
-                dispatch(childrenRequestedThunk(id));
+            fetchChildren: (parent: INode) => {
+                dispatch(childrenRequestedThunk(parent));
             }
         };
     }
 
     render() {
-        const nodes = this.props.nodes.map((node: INode) => {
+        const nodes:JSX.Element[] = this.props.nodes.map((node: INode) => {
             return (
                 <Node
                     {...node}
@@ -50,7 +50,7 @@ class UnconnectedNodes extends React.Component<IOwnProps & IDispatchProps, {}> {
                     key={node.id}
                 />
             );
-            });
+        });
 
         return (
             <div>

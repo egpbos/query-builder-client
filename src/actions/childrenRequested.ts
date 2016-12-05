@@ -1,8 +1,9 @@
+import { INode }                    from '../interfaces';
 import { CHILDREN_REQUESTED } from './authorized-actions';
 
-export const childrenRequested = (id: number) => {
+export const childrenRequested = (parent: INode) => {
     return {
         type: CHILDREN_REQUESTED,
-        payload: { id }
+        payload: { parent }
     };
 };

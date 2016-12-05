@@ -8,7 +8,7 @@
     "rules": {
         "function-name": false,
         "indent": [true, 4],
-        "jsx-no-lambda": true,
+        "jsx-no-lambda": false,
         "no-angle-bracket-type-assertion": true,
         "no-console": [false],
         "no-for-in-array": false,

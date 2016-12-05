@@ -6,7 +6,7 @@ import { INode }                    from '../interfaces';
 import { childrenReceived }         from './childrenReceived';
 import { childrenRequested }        from './childrenRequested';
 
-export const childrenRequestedThunk = (id: number) => {
+export const childrenRequestedThunk = (parent: INode) => {
 
     return (dispatch: Dispatch<IGenericAction>) => {
         const handleTheStatus = (response: Response) => {
@@ -29,19 +29,21 @@ export const childrenRequestedThunk = (id: number) => {
                     mentioncount: dbrecord.mentioncount,
                     name: dbrecord.name,
                     url: dbrecord.url,
-                    isexpanded: false
+                    isexpanded: false,
+                    parent: parent,
+                    myChildren: []
                 } as INode;
             };
             const nodes: INode[] = dbrecords.map(convert);
-            dispatch(childrenReceived(nodes));
+            dispatch(childrenReceived(parent, nodes));
         };
         const handleAnyErrors = (err: Error) => {
             throw new Error('Errors occured. ' + err.message + err.stack);
         };
 
-        dispatch(childrenRequested(id));
+        dispatch(childrenRequested(parent));
 
-        const url: string = 'http://localhost:5000/node/' + id.toString() + '/children';
+        const url: string = 'http://localhost:5000/node/' + parent.id.toString() + '/children';
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)

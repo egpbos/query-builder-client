@@ -1,12 +1,15 @@
 import * as React          from 'react';
 
-import { INode }           from '../interfaces';
+import { INode }                from '../interfaces';
+import { Grid, Cell, Button }   from 'react-mdl';
+import Checkbox                 from '../Checkbox/Checkbox';
+import { UnconnectedNodes } from './Nodes';
 
 import './node.css';
 
 interface INodeDispatchProps {
     onClickExpand: (id: number) => void;
-    fetchChildren: (id: number) => void;
+    fetchChildren: (parent: INode|null) => void;
 }
 
 export class Node extends React.Component<INode & INodeDispatchProps, {}> {
@@ -24,7 +27,7 @@ export class Node extends React.Component<INode & INodeDispatchProps, {}> {
     }
 
     public fetchChildren() {
-        this.props.fetchChildren(this.props.id);
+        this.props.fetchChildren(this.props);
     }
 
     public onClick() {
@@ -40,7 +43,7 @@ export class Node extends React.Component<INode & INodeDispatchProps, {}> {
     }
 
     public render() {
-        const {level, isentity, isinstance, isleaf, isexpanded, name} = this.props;
+        const {level, isentity, isinstance, isleaf, isexpanded, name, myChildren} = this.props;
 
         const indent = {
             paddingLeft: (level * 30).toString() + 'px'
@@ -69,6 +72,11 @@ export class Node extends React.Component<INode & INodeDispatchProps, {}> {
                 </div>
                 <div className="content" >
                     {name}
+                    <UnconnectedNodes 
+                        nodes={myChildren}
+                        onClickExpand={this.props.onClickExpand}
+                        fetchChildren={this.props.fetchChildren}
+                    />
                 </div>
             </div>
         );

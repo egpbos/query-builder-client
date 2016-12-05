@@ -6,18 +6,5 @@ declare module '*.svg' {
 
 
 declare module 'classnames' {
-
-	// type ClassValue = string | number | ClassDictionary | ClassArray | undefined | null | false;
-
-	// interface ClassDictionary {
-	// 	[id: string]: boolean | undefined | null;
-	// }
-
-	// interface ClassArray extends Array<ClassValue> { }
-
 	export default function classNames(classes:any): string;	
 }
-
-// declare module 'react-mdl/utils/mdlUpgrade' { 
-//   export default function mdlUpgrade(component:any):any;
-// }

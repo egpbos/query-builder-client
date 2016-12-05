@@ -1,5 +1,7 @@
 import 'whatwg-fetch';
 
+import { ROOT_RECEIVED }              from '../actions';
+import { ROOT_REQUESTED }             from '../actions';
 import { CHILDREN_RECEIVED }          from '../actions';
 import { CHILDREN_REQUESTED }         from '../actions';
 import { EXPAND_BUTTON_WAS_CLICKED }  from '../actions';
@@ -9,40 +11,32 @@ import { INode }   from '../interfaces';
 
 const initstate: INode[] = [];
 
+function recursiveSearchAddChildren(state: INode[], parent: INode, children: INode[]): INode[] {
+    return  state.map((node: INode) => {
+        if (parent.id === node.id) {
+            return Object.assign({}, node, {
+                myChildren: children
+            });
+        } else {
+            return Object.assign({}, node, {
+                myChildren: recursiveSearchAddChildren(node.myChildren, parent, children)
+            });
+        }
+    });
+}
+
 export const nodesReducer = (nodes: INode[] = initstate, action: IGenericAction) => {
     switch (action.type) {
+        case ROOT_RECEIVED:
+            return action.payload.nodes;
+        case ROOT_REQUESTED:
+            console.error('Make a spinner or something');
+            return nodes;
         case CHILDREN_RECEIVED:
-
+            const payloadParent = action.payload.parent;
             const payloadNodes = action.payload.nodes;
 
-            // who is the parent common to all nodes from payload
-            const firstParentId: number = payloadNodes[0].childof;
-            const parentIsTheSame = (payloadNode: INode) => {
-                return firstParentId === payloadNode.childof;
-            };
-            const payloadNodesHaveCommonParent = payloadNodes.every(parentIsTheSame);
-            if (payloadNodesHaveCommonParent === false) {
-                throw new Error('Not all dbrecords have the same parent.');
-            }
-
-            // get position of parent in old state
-            const parentIndex = nodes.findIndex((node: INode) => {
-                return node.id === firstParentId;
-            });
-
-            if (parentIndex === -1) {
-                // overwrite nodes with the list of wrapped database records
-                return payloadNodes;
-            } else {
-                // the new state is old state from 0 up to and including
-                // the parent, followed by the nodes that we fetch from
-                // the database, followed by the remaining nodes from 
-                // old state.
-                const begin = nodes.slice(0, parentIndex + 1);
-                const middle = payloadNodes;
-                const end = nodes.slice(parentIndex + 1);
-                return begin.concat(middle).concat(end);
-            }
+            return recursiveSearchAddChildren(nodes, payloadParent, payloadNodes);
         case CHILDREN_REQUESTED:
             console.error('Make a spinner or something');
             return nodes;

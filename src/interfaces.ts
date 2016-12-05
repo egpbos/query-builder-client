@@ -21,6 +21,8 @@ export interface INode {
     name: string;
     url: string;
     isexpanded: boolean;
+    parent: INode|null;
+    myChildren: INode[];
 }
 
 export interface IStore {
