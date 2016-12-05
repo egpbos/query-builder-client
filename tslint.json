@@ -6,16 +6,18 @@
         "@nlesc/tslint-config-react-app"
     ],
     "rules": {
-        "member-ordering": [false],
-        "ordered-imports": [false],
-        "no-for-in-array": false,
-        "restrict-plus-operands": false,
-        "no-console": [false],
+        "function-name": false,
         "indent": [true, 4],
-        "react-a11y-event-has-role": false,
-        "no-http-string": [true, "http://localhost/?.", "http://dbpedia.org/?."],
-        "prefer-type-cast": false,
+        "jsx-no-lambda": true,
         "no-angle-bracket-type-assertion": true,
-        "max-func-body-length": false
+        "no-console": [false],
+        "no-for-in-array": false,
+        "no-http-string": [true, "http://localhost/?.", "http://dbpedia.org/?."],
+        "no-suspicious-comment": true,
+        "prefer-type-cast": false,
+        "max-func-body-length": false,
+        "react-a11y-event-has-role": false,
+        "react-this-binding-issue": true,
+        "restrict-plus-operands": false
     }
 }
