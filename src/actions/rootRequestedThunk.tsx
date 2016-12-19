@@ -25,7 +25,6 @@ export const rootRequestedThunk = () => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
                     parent:         -1,
-                    childof:        dbrecord.childof,
                     id:             dbrecord.id,
                     isentity:       dbrecord.isentity === 1 ? true : false,
                     isleaf:         dbrecord.isleaf === 1 ? true : false,
@@ -36,10 +35,12 @@ export const rootRequestedThunk = () => {
                     url:            dbrecord.url,
                     isexpanded:     false,
                     selectionState: SelectionState.Unselected,
-                    children:       []
+                    // children:       []
                 } as INewNode;
             };
-            const root: INewNode = dbrecords.map(convert);
+            //Since this is the root, we expect only 1 element, and therefore 
+            // only take the first element from the array
+            const root: INewNode = dbrecords.map(convert)[0];
             dispatch(rootReceived(root));
         };
 

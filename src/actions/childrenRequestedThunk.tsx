@@ -21,8 +21,8 @@ export const childrenRequestedThunk = (id: number) => {
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
-                    parent:         id,
-                    childof:        dbrecord.childof,
+                    parent:         dbrecord.childof,
+                    // childof:        dbrecord.childof,
                     id:             dbrecord.id,
                     isentity:       dbrecord.isentity === 1 ? true : false,
                     isleaf:         dbrecord.isleaf === 1 ? true : false,
@@ -38,14 +38,14 @@ export const childrenRequestedThunk = (id: number) => {
             };
 
             const nodes: INewNode[] = dbrecords.map(convert);
-            dispatch(childrenReceived(id, nodes));
+            dispatch(childrenReceived(nodes));
         };
 
         const handleAnyErrors = (err: Error) => {
             throw new Error('Errors occured. ' + err.message + err.stack);
         };
 
-        dispatch(childrenRequested(id));
+        dispatch(childrenRequested());
 
         const url: string = 'http://localhost:5000/node/' + id.toString() + '/children';
 

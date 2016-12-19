@@ -5,15 +5,15 @@ export enum SelectionState {
 }
 
 export interface IDatabaseRecord {
-    childof: number;
-    id: number;
-    isentity: number;
-    isinstance: number;
-    isleaf: number;
-    level: number;
-    mentioncount: number;
-    name: string;
-    url: string;
+    childof:        number;
+    id:             number;
+    isentity:       number;
+    isinstance:     number;
+    isleaf:         number;
+    level:          number;
+    mentioncount:   number;
+    name:           string;
+    url:            string;
 }
 
 // export interface INode {

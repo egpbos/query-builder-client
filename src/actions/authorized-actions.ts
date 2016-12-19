@@ -18,7 +18,6 @@ export const CHILDREN_RECEIVED = 'CHILDREN_RECEIVED';
 export interface IChildrenReceivedAction {
     type: 'CHILDREN_RECEIVED';
     payload: {
-        id: number,
         nodes: any
     };
 }
@@ -27,7 +26,6 @@ export const CHILDREN_REQUESTED = 'CHILDREN_REQUESTED';
 export interface IChildrenRequestedAction {
     type: 'CHILDREN_REQUESTED';
     payload: {
-        id: number
     };
 }
 

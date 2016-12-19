@@ -113,8 +113,8 @@ const initstate: any = {};
 export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => {
     switch (action.type) {
         case ROOT_RECEIVED:
-            const root = action.payload.nodes;
-            return Object.assign({}, nodes, nodes[root.id] = root);
+            const root = action.payload.root;
+            return { [root.id]: root };
         case ROOT_REQUESTED:
             //Thunk is executed here
             console.error('Make a spinner or something');
@@ -132,10 +132,13 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
             console.error('Make a spinner or something');
             return nodes;
         case EXPAND_BUTTON_WAS_CLICKED:
-            const node = action.payload;
+            const expandID = action.payload.id;
 
-            return Object.assign({}, nodes[node.id], {isexpanded: true});
-        case CHECKBOX_WAS_CLICKED:
+            return Object.assign({}, nodes[expandID], {isexpanded: true});
+        // case CHECKBOX_WAS_CLICKED:
+        //     const selectedID = action.payload.id;
+
+        //     return Object.assign({}, nodes[selectedID], {isexpanded: true});
             // const targetNode = action.payload.node;
 
             // if (targetNode.selectionState === SelectionState.Unselected) {
@@ -144,6 +147,9 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
             //     return recursiveSearchSetSelectionState(nodes, targetNode.id, SelectionState.Unselected);
             // }
         case SELECTION_WAS_CLICKED:
+            const selectedID = action.payload.id;
+
+            return Object.assign({}, nodes[selectedID], {isexpanded: true});
             // const targetNodeForSelection = action.payload.node;
             // const parent = action.payload.node.parent;
             // const siblings = action.payload.node.parent.myChildren;

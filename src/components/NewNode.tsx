@@ -32,13 +32,13 @@ export interface INewNode {
     url:            string;
     isexpanded:     boolean;
     selectionState: SelectionState;
-    children:       number[];
+    // children:       number[];
 }
 
 interface INewNodeDispatchProps {
     onClickExpand: (id: number) => void;
-    fetchChildren: (parent: number) => void;
-    toggleSelection: (node: number) => void;
+    fetchChildren: (id: number) => void;
+    toggleSelection: (id: number) => void;
 }
 
 export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode & INewNodeDispatchProps, {}> {
@@ -46,26 +46,42 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
         super();
     }
 
-    static mapStateToProps(state: IStore, ownProps : IExtraProps & INewNode) {
+    static mapStateToProps(state: IStore, ownProps : IExtraProps) {
         const dbid = ownProps.nodeID;
 
-        return {
-            nodeID:         dbid,
+        if (state.nodes[dbid] === undefined) {
+            return {
+                nodeID:         dbid,
 
-            parent:         state.nodes[dbid].childof,
-            id:             state.nodes[dbid].id,
-            isentity:       state.nodes[dbid].isentity,
-            isleaf:         state.nodes[dbid].isleaf,
-            isinstance:     state.nodes[dbid].isinstance,
-            level:          state.nodes[dbid].level,
-            mentioncount:   state.nodes[dbid].mentioncount,
-            name:           state.nodes[dbid].name,
-            url:            state.nodes[dbid].url,
-            isexpanded:     state.nodes[dbid].isexpanded,
-            selectionState: state.nodes[dbid].selectionState,
+                parent:         -1,
+                id:             dbid,
+                isentity:       false,
+                isleaf:         false,
+                isinstance:     false,
+                level:          0,
+                mentioncount:   0,
+                name:           'undefined',
+                url:            'un.defi.ned',
+                isexpanded:     false,
+                selectionState: SelectionState.Unselected
+            };
+        } else {
+            return {
+                nodeID:         dbid,
 
-            children:       []
-        };
+                parent:         state.nodes[dbid].childof,
+                id:             state.nodes[dbid].id,
+                isentity:       state.nodes[dbid].isentity,
+                isleaf:         state.nodes[dbid].isleaf,
+                isinstance:     state.nodes[dbid].isinstance,
+                level:          state.nodes[dbid].level,
+                mentioncount:   state.nodes[dbid].mentioncount,
+                name:           state.nodes[dbid].name,
+                url:            state.nodes[dbid].url,
+                isexpanded:     state.nodes[dbid].isexpanded,
+                selectionState: state.nodes[dbid].selectionState
+            };
+        }
     }
 
     static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
@@ -76,8 +92,8 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
             fetchChildren: (id: number) => {
                 dispatch(childrenRequestedThunk(id));
             },
-            toggleSelection: (node: number) => {
-                dispatch(selectionWasClicked(node));
+            toggleSelection: (id: number) => {
+                dispatch(selectionWasClicked(id));
             }
         };
     }
