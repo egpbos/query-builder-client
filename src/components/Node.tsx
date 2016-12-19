@@ -1,7 +1,8 @@
 import * as React          from 'react';
-
-import { INode }                from '../interfaces';
 import { Grid, Cell, Button }   from 'react-mdl';
+import { Nodes } from './Nodes'; 
+
+import { INode, SelectionState }                from '../interfaces';
 import Checkbox                 from '../Checkbox/Checkbox';
 import { UnconnectedNodes } from './Nodes';
 
@@ -10,6 +11,8 @@ import './node.css';
 interface INodeDispatchProps {
     onClickExpand: (id: number) => void;
     fetchChildren: (parent: INode|null) => void;
+    massSelection: (node: INode) => void;
+    toggleSelection: (node: INode) => void;
 }
 
 export class Node extends React.Component<INode & INodeDispatchProps, {}> {
@@ -20,6 +23,8 @@ export class Node extends React.Component<INode & INodeDispatchProps, {}> {
         this.expand = this.expand.bind(this);
         this.fetchChildren = this.fetchChildren.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.onClickSelect = this.onClickSelect.bind(this);
+        this.onCheckboxClick = this.onCheckboxClick.bind(this);
     }
 
     public expand() {
@@ -30,7 +35,20 @@ export class Node extends React.Component<INode & INodeDispatchProps, {}> {
         this.props.fetchChildren(this.props);
     }
 
-    public onClick() {
+    public massSelection() {
+        this.props.massSelection(this.props);
+    }
+
+    public toggleSelection() {
+        this.props.toggleSelection(this.props);
+    }
+
+    public onClick() {//event: any) {
+        // console.log('onClick: ');
+        // console.log(event);
+        // event.preventDefault();
+        // event.stopPropagation();
+
         const {isleaf, isexpanded} = this.props;
         if (isleaf !== true && isexpanded === false) {
             this.expand();
@@ -42,43 +60,62 @@ export class Node extends React.Component<INode & INodeDispatchProps, {}> {
         }
     }
 
+    public onClickSelect() {//event: any) {
+        // console.log('onClickselect: ');
+        // console.log(event);
+        // event.preventDefault();
+        // event.stopPropagation();
+
+        this.toggleSelection();
+    }
+
+    public onCheckboxClick() {//event: any) {
+        // console.log('onCheckboxClick: ');
+        // console.log(event);
+        // event.preventDefault();
+        // event.stopPropagation();        
+        this.massSelection();
+        // this.toggleSelection();
+    }
+
     public render() {
-        const {level, isentity, isinstance, isleaf, isexpanded, name, myChildren} = this.props;
+        const {id, isentity, isinstance, isleaf, isexpanded, selectionState, name} = this.props;
 
-        const indent = {
-            paddingLeft: (level * 30).toString() + 'px'
-        };
-
-        let nodeclass: string;
-        if (isentity === true) {
-            nodeclass = 'entity';
-        } else if (isinstance === true) {
-            nodeclass = 'instance';
+        if (isinstance) {
+            return (
+                <Cell col={2}>
+                    <Button raised accent={selectionState === SelectionState.Selected} onClick={this.onClickSelect}>
+                        {name}
+                    </Button>
+                </Cell>
+            );
         } else {
-            throw new Error('Apparently, node is not an instance and not ' +
-                ' an entity...this should not happen.');
-        }
+            return (
+                <Cell col={12} className="category">
+                    <span className="categoryText" onClick={this.onClick}>
+                        {name}
+                    </span>
+                    <span>
+                        <Checkbox
+                            id={'checkbox-all_' + id}
+                            ripple={true}
+                            indeterminate={selectionState === SelectionState.Partial}
+                            checked={selectionState === SelectionState.Selected}
+                            onClick={this.onCheckboxClick}
+                        />
+                    </span>
+                    <Nodes parentID={id} />
+                </Cell>
+            );
+            // <Nodes parentID={id} />
 
-        let bullet: string;
-        if (isleaf !== true && isexpanded === false) {
-            bullet = '+';
-        } else {
-            bullet = '\u2022';
+                    // <UnconnectedNodes
+                    //     nodes={myChildren}
+                    //     onClickExpand={this.props.onClickExpand}
+                    //     fetchChildren={this.props.fetchChildren}
+                    //     massSelection={this.props.massSelection}
+                    //     toggleSelection={this.props.toggleSelection}
+                    // />
         }
-        return (
-            <div className={nodeclass} style={indent}>
-                <div className="bullet" onClick={this.onClick} >
-                    {bullet}
-                </div>
-                <div className="content" >
-                    {name}
-                    <UnconnectedNodes 
-                        nodes={myChildren}
-                        onClickExpand={this.props.onClickExpand}
-                        fetchChildren={this.props.fetchChildren}
-                    />
-                </div>
-            </div>
-        );
     }
 }

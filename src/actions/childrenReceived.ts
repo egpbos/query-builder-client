@@ -1,9 +1,9 @@
-import { INode }              from '../interfaces';
+import { INewNode } from '../components/NewNode';
 import { CHILDREN_RECEIVED }  from './authorized-actions';
 
-export const childrenReceived = (parent: INode, nodes: INode[]) => {
+export const childrenReceived = (id: number, nodes: INewNode[]) => {
     return {
         type: CHILDREN_RECEIVED,
-        payload: { parent, nodes }
+        payload: { id, nodes }
     };
 };

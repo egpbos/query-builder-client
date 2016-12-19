@@ -1,9 +1,9 @@
-import { INode }          from '../interfaces';
+import { INewNode } from '../components/NewNode';
 import { ROOT_RECEIVED }  from './authorized-actions';
 
-export const rootReceived = (nodes: INode[]) => {
+export const rootReceived = (root: INewNode) => {
     return {
         type: ROOT_RECEIVED,
-        payload: { nodes }
+        payload: { root }
     };
 };

@@ -8,3 +8,4 @@ declare module '*.svg' {
 declare module 'classnames' {
 	export default function classNames(classes:any): string;	
 }
+

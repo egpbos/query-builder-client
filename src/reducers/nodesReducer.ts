@@ -1,54 +1,189 @@
 import 'whatwg-fetch';
 
-import { ROOT_RECEIVED }              from '../actions';
-import { ROOT_REQUESTED }             from '../actions';
-import { CHILDREN_RECEIVED }          from '../actions';
-import { CHILDREN_REQUESTED }         from '../actions';
-import { EXPAND_BUTTON_WAS_CLICKED }  from '../actions';
-import { IGenericAction }             from '../actions';
+// import { Model } from 'redux-orm';
 
-import { INode }   from '../interfaces';
+import { ROOT_RECEIVED }                from '../actions';
+import { ROOT_REQUESTED }               from '../actions';
+import { CHILDREN_RECEIVED }            from '../actions';
+import { CHILDREN_REQUESTED }           from '../actions';
+import { EXPAND_BUTTON_WAS_CLICKED }    from '../actions';
+import { SELECTION_WAS_CLICKED }        from '../actions';
+import { CHECKBOX_WAS_CLICKED }         from '../actions';
+import { IGenericAction }               from '../actions';
 
-const initstate: INode[] = [];
+import { SelectionState }   from '../interfaces';
+import { INewNode } from '../components/NewNode';
 
-function recursiveSearchAddChildren(state: INode[], parent: INode, children: INode[]): INode[] {
-    return  state.map((node: INode) => {
-        if (parent.id === node.id) {
-            return Object.assign({}, node, {
-                myChildren: children
-            });
-        } else {
-            return Object.assign({}, node, {
-                myChildren: recursiveSearchAddChildren(node.myChildren, parent, children)
-            });
-        }
-    });
-}
+const initstate: any = {};
 
-export const nodesReducer = (nodes: INode[] = initstate, action: IGenericAction) => {
+// function recursiveSearchSetSelectionState(state: any, nodeID: number, newSelectionState: SelectionState): INode[] {
+//     return state.map((node: INode) => {
+//         if (nodeID === node.id) {
+//             const children = state.filter((child) => {
+//                 return child.childof === node.id;
+//             });
+//             children.map((filteredChild: INode) => {
+//                 recursiveSearchSetSelectionState(children, filteredChild.id, newSelectionState);
+//             });
+
+//             console.log("assigning " + newSelectionState + " to " + node.name);
+
+//             return Object.assign({}, node, {
+//                 //Set the node itself to the new state
+//                 selectionState: newSelectionState
+//             });
+//         } else {
+//             return node;
+//         }
+//     });
+// }
+
+// function recursiveSearchSetSelectionStateAndParentState(state: INode[], targetNode: INode, newSelectionState: SelectionState, parentNode: INode, newParentState: SelectionState): INode[] {
+//     return state.map((node: INode) => {
+//         if (targetNode.id === node.id) {
+//             return Object.assign({}, node, {
+//                 //Set the node itself to the new state
+//                 selectionState: newSelectionState
+//             });
+//         } else if (parentNode.id === node.id) {
+//             return Object.assign({}, node, {
+//                 //Set the parent to the new state
+//                 selectionState: newParentState
+//             });
+//         }else {
+//             return Object.assign({}, node, {
+//                 //Search for the correct node recursively
+//                 myChildren: recursiveSearchSetSelectionStateAndParentState(node.myChildren, targetNode, newSelectionState, parentNode, newParentState)
+//             });
+//         }
+//     });
+// }
+
+// function recursiveSearchSetParentState(state: INode[], targetNode: INode): INode[] {
+//     return state.map((node: INode) => {
+//         if (targetNode.id === node.id) {
+//             const siblings = targetNode.myChildren;
+//             let allSelected = true;
+//             let someSelected = false;
+
+//             siblings.forEach((sibling: INode) => {
+//                 //If we do not have ourselves here, but an actual sibling
+//                 if (sibling.id !== targetNode.id) {
+//                     if (sibling.selectionState === SelectionState.Unselected) {
+//                         allSelected = false;
+//                     } else if (sibling.selectionState === SelectionState.Partial) {
+//                         allSelected = false;
+//                         someSelected = true;
+//                     } else if (sibling.selectionState === SelectionState.Selected) {
+//                         someSelected = true;
+//                     }
+//                 }
+//             });
+
+//             console.log(siblings);
+
+//             console.log("Siblings all selected: " + allSelected);
+//             console.log("Siblings some selected: " + someSelected);
+
+//             let newTargetState = SelectionState.Unselected;
+//             if (targetNode.selectionState === SelectionState.Unselected) {
+//                 newTargetState = SelectionState.Selected;
+//             }
+
+//             let newParentState = SelectionState.Unselected;
+//             if (allSelected && newTargetState === SelectionState.Selected) {
+//                 newParentState = SelectionState.Selected;
+//             } else if (someSelected || newTargetState === SelectionState.Selected) {
+//                 newParentState = SelectionState.Partial;
+//             }
+
+//             return Object.assign({}, node, {
+//                 //Set the parent to the new state
+//                 selectionState: newParentState
+//             });
+//         } else {
+//             return Object.assign({}, node, {
+//                 //Search for the correct node recursively
+//                 myChildren: recursiveSearchSetParentState(node.myChildren, targetNode)
+//             });
+//         }
+//     });
+// }
+
+export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => {
     switch (action.type) {
         case ROOT_RECEIVED:
-            return action.payload.nodes;
+            const root = action.payload.nodes;
+            return Object.assign({}, nodes, nodes[root.id] = root);
         case ROOT_REQUESTED:
+            //Thunk is executed here
             console.error('Make a spinner or something');
             return nodes;
         case CHILDREN_RECEIVED:
-            const payloadParent = action.payload.parent;
             const payloadNodes = action.payload.nodes;
 
-            return recursiveSearchAddChildren(nodes, payloadParent, payloadNodes);
+            payloadNodes.forEach((node : INewNode) => {
+                nodes = Object.assign({}, nodes, nodes[node.id] = node);
+            });
+
+            return nodes;
         case CHILDREN_REQUESTED:
+            //Thunk is executed here
             console.error('Make a spinner or something');
             return nodes;
         case EXPAND_BUTTON_WAS_CLICKED:
-            const { id } = action.payload;
-            return nodes.map((node: INode) => {
-                if (id === node.id) {
-                    return Object.assign({}, node, {isexpanded: true});
-                } else {
-                    return node;
-                }
-            });
+            const node = action.payload;
+
+            return Object.assign({}, nodes[node.id], {isexpanded: true});
+        case CHECKBOX_WAS_CLICKED:
+            // const targetNode = action.payload.node;
+
+            // if (targetNode.selectionState === SelectionState.Unselected) {
+            //     return recursiveSearchSetSelectionState(nodes, targetNode.id, SelectionState.Selected);
+            // } else {
+            //     return recursiveSearchSetSelectionState(nodes, targetNode.id, SelectionState.Unselected);
+            // }
+        case SELECTION_WAS_CLICKED:
+            // const targetNodeForSelection = action.payload.node;
+            // const parent = action.payload.node.parent;
+            // const siblings = action.payload.node.parent.myChildren;
+
+            // let allSelected = true;
+            // let someSelected = false;
+
+            // siblings.forEach((sibling: INode) => {
+            //     //If we do not have ourselves here, but an actual sibling
+            //     if (sibling !== targetNodeForSelection) {
+            //         if (sibling.selectionState === SelectionState.Unselected) {
+            //             allSelected = false;
+            //         } else if (sibling.selectionState === SelectionState.Partial) {
+            //             allSelected = false;
+            //             someSelected = true;
+            //         } else if (sibling.selectionState === SelectionState.Selected) {
+            //             someSelected = true;
+            //         }
+            //     }
+            // });
+
+            // console.log(siblings);
+
+            // console.log("Siblings all selected: " + allSelected);
+            // console.log("Siblings some selected: " + someSelected);
+
+            // let newTargetState = SelectionState.Unselected;
+            // if (targetNodeForSelection.selectionState === SelectionState.Unselected) {
+            //     newTargetState = SelectionState.Selected;
+            // }
+
+            // let newParentState = SelectionState.Unselected;
+            // if (allSelected && newTargetState === SelectionState.Selected) {
+            //     newParentState = SelectionState.Selected;
+            // } else if (someSelected || newTargetState === SelectionState.Selected) {
+            //     newParentState = SelectionState.Partial;
+            // }
+
+            // return recursiveSearchSetParentState(nodes, parent);
+
         default: {
             return nodes;
         }
