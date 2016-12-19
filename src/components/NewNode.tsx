@@ -1,18 +1,18 @@
-import * as React             from 'react';
-import { connect }                      from 'react-redux';
-import { Dispatch }                     from 'redux';
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { IGenericAction}                from '../actions';
-import { expandButtonWasClicked }       from '../actions';
+import { IGenericAction } from '../actions';
+import { expandButtonWasClicked } from '../actions';
 // import { checkboxWasClicked }           from '../actions';
-import { selectionWasClicked }          from '../actions';
-import { childrenRequestedThunk }       from '../actions';
+import { selectionWasClicked } from '../actions';
+import { childrenRequestedThunk } from '../actions';
 
 // import { Grid, Cell, Button } from 'react-mdl';
 import { Grid } from 'react-mdl';
-import { SelectionState }     from '../interfaces';
+import { SelectionState } from '../interfaces';
 // import Checkbox               from '../Checkbox/Checkbox';
-import { IStore }                       from '../interfaces';
+import { IStore } from '../interfaces';
 
 import './node.css';
 
@@ -21,18 +21,18 @@ interface IExtraProps {
 }
 
 export interface INewNode {
-    parent:         number;
-    id:             number;
-    isentity:       boolean;
-    isleaf:         boolean;
-    isinstance:     boolean;
-    level:          number;
-    mentioncount:   number;
-    name:           string;
-    url:            string;
-    isexpanded:     boolean;
+    parent: number;
+    id: number;
+    isentity: boolean;
+    isleaf: boolean;
+    isinstance: boolean;
+    level: number;
+    mentioncount: number;
+    name: string;
+    url: string;
+    isexpanded: boolean;
     selectionState: SelectionState;
-    // children:       number[];
+    children: number[];
 }
 
 interface INewNodeDispatchProps {
@@ -44,42 +44,46 @@ interface INewNodeDispatchProps {
 export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode & INewNodeDispatchProps, {}> {
     constructor() {
         super();
+
+        this.onClick = this.onClick.bind(this);
     }
 
-    static mapStateToProps(state: IStore, ownProps : IExtraProps) {
+    static mapStateToProps(state: IStore, ownProps: IExtraProps) {
         const dbid = ownProps.nodeID;
 
         if (state.nodes[dbid] === undefined) {
             return {
-                nodeID:         dbid,
+                nodeID: dbid,
 
-                parent:         -1,
-                id:             dbid,
-                isentity:       false,
-                isleaf:         false,
-                isinstance:     false,
-                level:          0,
-                mentioncount:   0,
-                name:           'undefined',
-                url:            'un.defi.ned',
-                isexpanded:     false,
-                selectionState: SelectionState.Unselected
+                parent: -1,
+                id: dbid,
+                isentity: false,
+                isleaf: false,
+                isinstance: false,
+                level: 0,
+                mentioncount: 0,
+                name: 'undefined',
+                url: 'un.defi.ned',
+                isexpanded: false,
+                selectionState: SelectionState.Unselected,
+                children: []
             };
         } else {
             return {
-                nodeID:         dbid,
+                nodeID: dbid,
 
-                parent:         state.nodes[dbid].childof,
-                id:             state.nodes[dbid].id,
-                isentity:       state.nodes[dbid].isentity,
-                isleaf:         state.nodes[dbid].isleaf,
-                isinstance:     state.nodes[dbid].isinstance,
-                level:          state.nodes[dbid].level,
-                mentioncount:   state.nodes[dbid].mentioncount,
-                name:           state.nodes[dbid].name,
-                url:            state.nodes[dbid].url,
-                isexpanded:     state.nodes[dbid].isexpanded,
-                selectionState: state.nodes[dbid].selectionState
+                parent: state.nodes[dbid].childof,
+                id: state.nodes[dbid].id,
+                isentity: state.nodes[dbid].isentity,
+                isleaf: state.nodes[dbid].isleaf,
+                isinstance: state.nodes[dbid].isinstance,
+                level: state.nodes[dbid].level,
+                mentioncount: state.nodes[dbid].mentioncount,
+                name: state.nodes[dbid].name,
+                url: state.nodes[dbid].url,
+                isexpanded: state.nodes[dbid].isexpanded,
+                selectionState: state.nodes[dbid].selectionState,
+                children: state.nodes[dbid].children
             };
         }
     }
@@ -98,36 +102,56 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
         };
     }
 
-    render() {
-      // const nodes: JSX.Element[] = this.props.children.map((node: INewNode) => {
-      //       if (this.props.parentID === node.childof) {
-      //           return (
-      //               <Node
-      //                   {...node}
-      //                   onClickExpand={this.props.onClickExpand}
-      //                   fetchChildren={this.props.fetchChildren}
-      //                   massSelection={this.props.massSelection}
-      //                   toggleSelection={this.props.toggleSelection}
-      //                   key={node.id}
-      //               />
-      //           );
-      //       } else {
-      //           return (
-      //               <div />
-      //           );
-      //       }
-      //   });
+    public onClick() {
+        this.props.fetchChildren(this.props.id);
+        this.props.onClickExpand(this.props.id);
+    }
 
-        return (
-          <Grid className={'mdl-cell--12-col'}>
-            {this.props.name}
-            {/* {this.props.children.map(child => <NewNode key={child} comment={child} />)} */}
-          </Grid>
-        );
+    render() {
+        // const nodes: JSX.Element[] = this.props.children.map((node: INewNode) => {
+        //       if (this.props.parentID === node.childof) {
+        //           return (
+        //               <Node
+        //                   {...node}
+        //                   onClickExpand={this.props.onClickExpand}
+        //                   fetchChildren={this.props.fetchChildren}
+        //                   massSelection={this.props.massSelection}
+        //                   toggleSelection={this.props.toggleSelection}
+        //                   key={node.id}
+        //               />
+        //           );
+        //       } else {
+        //           return (
+        //               <div />
+        //           );
+        //       }
+        //   });
+
+        if (this.props.isexpanded) {
+            let childNodes: JSX.Element[] = [];
+            if (this.props.children !== undefined) {
+                childNodes = this.props.children.map((child: number) =>
+                    <NewNode key={child} nodeID={child} />
+                );
+            }
+            return (
+                <Grid className={'mdl-cell--12-col'}>
+                    <span onClick={this.onClick}>{this.props.name} expanded</span>
+                    {childNodes}
+                </Grid>
+            );
+        } else {
+            return (
+                <Grid className={'mdl-cell--12-col'}>
+                    <span onClick={this.onClick}>{this.props.name}</span>
+                    {/* {this.props.children.map(child => <NewNode key={child} comment={child} />)} */}
+                </Grid>
+            );
+        }
     }
 }
 
 // Export just the connected component
 export const NewNode = connect(UnconnectedNewNode.mapStateToProps,
-                               UnconnectedNewNode.mapDispatchToProps)(UnconnectedNewNode);
+    UnconnectedNewNode.mapDispatchToProps)(UnconnectedNewNode);
 

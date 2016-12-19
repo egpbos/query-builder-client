@@ -11,7 +11,7 @@ import { store }       from './store';
 
 ReactDOM.render(
     <Provider store={store}>
-        <NewNode nodeID={1} />
+        <NewNode key={1} nodeID={1} />
     </Provider>,
     document.getElementById('root')
 );

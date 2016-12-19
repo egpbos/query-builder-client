@@ -113,28 +113,50 @@ const initstate: any = {};
 export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => {
     switch (action.type) {
         case ROOT_RECEIVED:
+            //RootRequestedThunk return point
             const root = action.payload.root;
             return { [root.id]: root };
         case ROOT_REQUESTED:
-            //Thunk is executed here
             console.error('Make a spinner or something');
             return nodes;
         case CHILDREN_RECEIVED:
+            //ChildrenRequestedThunk return point
             const payloadNodes = action.payload.nodes;
 
             payloadNodes.forEach((node : INewNode) => {
-                nodes = Object.assign({}, nodes, nodes[node.id] = node);
+                nodes[node.id] = node;
             });
+
+            //Deep copy of children array.
+            let oldParent = nodes[payloadNodes[0].parent];
+            let newParent = Object.assign({}, oldParent);
+            newParent.children = [];
+            if (oldParent.children !== undefined) {
+                oldParent.children.forEach((child: number) => {
+                    newParent.children.push(child);
+                });
+            }
+
+            //Add new children coming in.
+            payloadNodes.forEach((node : INewNode) => {
+                if (newParent.children === undefined) {
+                    newParent.children = [];
+                }
+                newParent.children.push(node.id);
+            });
+            nodes[payloadNodes[0].parent] = newParent;
 
             return nodes;
         case CHILDREN_REQUESTED:
-            //Thunk is executed here
             console.error('Make a spinner or something');
             return nodes;
         case EXPAND_BUTTON_WAS_CLICKED:
             const expandID = action.payload.id;
 
-            return Object.assign({}, nodes[expandID], {isexpanded: true});
+            nodes[expandID] = Object.assign({}, nodes[expandID], {isexpanded: true});
+
+            return nodes;
+
         // case CHECKBOX_WAS_CLICKED:
         //     const selectedID = action.payload.id;
 
