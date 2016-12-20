@@ -129,7 +129,7 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
         case EXPAND_BUTTON_WAS_CLICKED:
             const expandID = action.payload.id;
 
-            nodes[expandID] = Object.assign({}, nodes[expandID], {isexpanded: true});
+            nodes[expandID] = Object.assign({}, nodes[expandID], {isexpanded: !nodes[expandID].isexpanded});
 
             return nodes;
         case SELECTION_WAS_CLICKED:

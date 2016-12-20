@@ -131,8 +131,8 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
                 }
                 return (
                     <Grid className={'mdl-cell--12-col category'}>
-                        <Cell col={12} className="categoryTitleBar">
-                            <span className="categoryText" onClick={this.onClick}>
+                        <Cell col={12} className="categoryTitleBar" onClick={this.onClick}>
+                            <span className="categoryText">
                                 {this.props.name}
                             </span>
                             <span>
@@ -151,8 +151,8 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
             } else {
                 return (
                     <Grid className={'mdl-cell--12-col category'}>
-                        <Cell col={12} className="categoryTitleBar">
-                            <span className="categoryText" onClick={this.onClick}>
+                        <Cell col={12} className="categoryTitleBar" onClick={this.onClick}>
+                            <span className="categoryText">
                                 {this.props.name}
                             </span>
                             <span>
