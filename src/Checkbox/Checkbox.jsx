@@ -26,6 +26,10 @@ class Checkbox extends React.Component {
         }
     }
 
+    onChange = function() {
+        return true;
+    }
+
     render() {
         const { className, label, ripple, indeterminate, ...inputProps } = this.props;
 
@@ -40,6 +44,7 @@ class Checkbox extends React.Component {
                 <input                        
                     type="checkbox"
                     className="mdl-checkbox__input"
+                    onChange={this.onChange}
                     { ...inputProps }
                 />
                 {label && <span className="mdl-checkbox__label">{label}</span>}

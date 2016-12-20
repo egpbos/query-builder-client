@@ -1,13 +1,12 @@
-import { Dispatch }             from 'redux';
+import { Dispatch }                             from 'redux';
 
-import { IGenericAction }       from '../actions';
 import { IDatabaseRecord, SelectionState }      from '../interfaces';
-// import { INode }                from '../interfaces';
 
-import { INewNode } from '../components/NewNode';
+import { INewNode }                             from '../components/NewNode';
 
-import { rootReceived }         from './rootReceived';
-import { rootRequested }        from './rootRequested';
+import { IGenericAction }                       from '../actions';
+import { rootReceived }                         from './rootReceived';
+import { rootRequested }                        from './rootRequested';
 
 export const rootRequestedThunk = () => {
 
@@ -35,7 +34,7 @@ export const rootRequestedThunk = () => {
                     url:            dbrecord.url,
                     isexpanded:     false,
                     selectionState: SelectionState.Unselected,
-                    // children:       []
+                    children:       []
                 } as INewNode;
             };
             //Since this is the root, we expect only 1 element, and therefore 

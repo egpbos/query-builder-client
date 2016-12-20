@@ -37,14 +37,6 @@ export interface IExpandButtonWasClickedAction {
     };
 }
 
-export const CHECKBOX_WAS_CLICKED = 'CHECKBOX_WAS_CLICKED';
-export interface ICheckboxWasClickedAction {
-    type: 'CHECKBOX_WAS_CLICKED';
-    payload: {
-        id: number
-    };
-}
-
 export const SELECTION_WAS_CLICKED = 'SELECTION_WAS_CLICKED';
 export interface ISelectionWasClickedAction {
     type: 'SELECTION_WAS_CLICKED';

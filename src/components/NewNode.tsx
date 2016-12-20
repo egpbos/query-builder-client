@@ -7,11 +7,11 @@ import { expandButtonWasClicked }   from '../actions';
 import { selectionWasClicked }      from '../actions';
 import { childrenRequestedThunk }   from '../actions';
 
-import { Grid, Cell, Button }       from 'react-mdl';
 import Checkbox                     from '../Checkbox/Checkbox';
-import { SelectionState }           from '../interfaces';
+import { Button, Cell, Grid }       from 'react-mdl';
 
-import { IStore }        from '../interfaces';
+import { IStore }           from '../interfaces';
+import { SelectionState }   from '../interfaces';
 
 import './node.css';
 
@@ -125,41 +125,45 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
                 let childNodes: JSX.Element[] = [];
                 if (this.props.children !== undefined) {
                     childNodes = this.props.children.map((child: number) =>
-                        <NewNode key={child} nodeID={child} />
+                        <NewNode key={child} nodeID={child} />// tslint:disable-line
                     );
                 }
                 return (
                     <Grid className={'mdl-cell--12-col category'}>
-                        <span className="categoryText" onClick={this.onClick}>
-                            {this.props.name}
-                        </span>
-                        <span>
-                            <Checkbox
-                                id={'checkbox-all_' + this.props.id}
-                                ripple={true}
-                                indeterminate={this.props.selectionState === SelectionState.Partial}
-                                checked={this.props.selectionState === SelectionState.Selected}
-                                onClick={this.onClickSelect}
-                            />
-                        </span>
+                        <Cell col={12} className="categoryTitleBar">
+                            <span className="categoryText" onClick={this.onClick}>
+                                {this.props.name}
+                            </span>
+                            <span>
+                                <Checkbox
+                                    id={'checkbox-node_' + this.props.id}
+                                    ripple={true}
+                                    indeterminate={this.props.selectionState === SelectionState.Partial}
+                                    checked={this.props.selectionState === SelectionState.Selected}
+                                    onClick={this.onClickSelect}
+                                />
+                            </span>
+                        </Cell>
                         {childNodes}
                     </Grid>
                 );
             } else {
                 return (
                     <Grid className={'mdl-cell--12-col category'}>
-                        <span className="categoryText" onClick={this.onClick}>
-                            {this.props.name}
-                        </span>
-                        <span>
-                            <Checkbox
-                                id={'checkbox-all_' + this.props.id}
-                                ripple={true}
-                                indeterminate={this.props.selectionState === SelectionState.Partial}
-                                checked={this.props.selectionState === SelectionState.Selected}
-                                onClick={this.onClickSelect}
-                            />
-                        </span>
+                        <Cell col={12} className="categoryTitleBar">
+                            <span className="categoryText" onClick={this.onClick}>
+                                {this.props.name}
+                            </span>
+                            <span>
+                                <Checkbox
+                                    id={'checkbox-node_' + this.props.id}
+                                    ripple={true}
+                                    indeterminate={this.props.selectionState === SelectionState.Partial}
+                                    checked={this.props.selectionState === SelectionState.Selected}
+                                    onClick={this.onClickSelect}
+                                />
+                            </span>
+                        </Cell>
                     </Grid>
                 );
             }
@@ -169,5 +173,4 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
 
 // Export just the connected component
 export const NewNode = connect(UnconnectedNewNode.mapStateToProps,
-    UnconnectedNewNode.mapDispatchToProps)(UnconnectedNewNode);
-
+                               UnconnectedNewNode.mapDispatchToProps)(UnconnectedNewNode);
