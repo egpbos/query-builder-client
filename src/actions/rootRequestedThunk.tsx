@@ -23,15 +23,12 @@ export const rootRequestedThunk = () => {
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
-                    parent:         -1,
+                    parent:         dbrecord.childof,
                     id:             dbrecord.id,
-                    isentity:       dbrecord.isentity === 1 ? true : false,
-                    isleaf:         dbrecord.isleaf === 1 ? true : false,
                     isinstance:     dbrecord.isinstance === 1 ? true : false,
                     level:          dbrecord.level,
                     mentioncount:   dbrecord.mentioncount,
                     name:           dbrecord.name,
-                    url:            dbrecord.url,
                     isexpanded:     false,
                     selectionState: SelectionState.Unselected,
                     children:       []
@@ -49,7 +46,7 @@ export const rootRequestedThunk = () => {
 
         dispatch(rootRequested());
 
-        const url: string = 'http://localhost:5000/node/' + '0' + '/children';
+        const url: string = 'http://localhost:5000/entities/' + '1' + '/children';
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)

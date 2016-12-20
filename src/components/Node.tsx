@@ -22,13 +22,10 @@ interface IExtraProps {
 export interface INode {
     parent: number;
     id: number;
-    isentity: boolean;
-    isleaf: boolean;
     isinstance: boolean;
     level: number;
     mentioncount: number;
     name: string;
-    url: string;
     isexpanded: boolean;
     selectionState: SelectionState;
     children: number[];
@@ -55,15 +52,12 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
             return {
                 nodeID: dbid,
 
-                parent: -1,
+                parent: 1,
                 id: dbid,
-                isentity: false,
-                isleaf: false,
                 isinstance: false,
                 level: 0,
                 mentioncount: 0,
                 name: 'undefined',
-                url: 'un.defi.ned',
                 isexpanded: false,
                 selectionState: SelectionState.Unselected,
                 children: []
@@ -74,13 +68,10 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
 
                 parent: state.nodes[dbid].childof,
                 id: state.nodes[dbid].id,
-                isentity: state.nodes[dbid].isentity,
-                isleaf: state.nodes[dbid].isleaf,
                 isinstance: state.nodes[dbid].isinstance,
                 level: state.nodes[dbid].level,
                 mentioncount: state.nodes[dbid].mentioncount,
                 name: state.nodes[dbid].name,
-                url: state.nodes[dbid].url,
                 isexpanded: state.nodes[dbid].isexpanded,
                 selectionState: state.nodes[dbid].selectionState,
                 children: state.nodes[dbid].children

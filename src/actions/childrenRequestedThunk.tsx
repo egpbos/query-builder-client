@@ -47,7 +47,7 @@ export const childrenRequestedThunk = (id: number) => {
 
         dispatch(childrenRequested());
 
-        const url: string = 'http://localhost:5000/node/' + id.toString() + '/children';
+        const url: string = 'http://localhost:5000/entities/' + id.toString() + '/children';
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)

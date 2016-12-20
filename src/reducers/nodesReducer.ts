@@ -39,7 +39,7 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
         const selectedNode = nodes[selectionID];
 
         const parentID = selectedNode.parent;
-        if (parentID !== -1) {
+        if (parentID !== 1) {
             const parentNode = nodes[parentID];
 
             //The children of our parent are our siblings
