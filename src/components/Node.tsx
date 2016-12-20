@@ -124,7 +124,8 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
             if (this.props.isexpanded) {
                 let childNodes: JSX.Element[] = [];
                 if (this.props.children !== undefined) {
-                    childNodes = this.props.children.map((child: number) =>
+                    const temp: number[] = this.props.children;
+                    childNodes = temp.map((child: number) =>
                         <Node key={child} nodeID={child} />// tslint:disable-line
                     );
                 }
