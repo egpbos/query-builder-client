@@ -8,7 +8,6 @@ import { CHILDREN_RECEIVED }            from '../actions';
 import { CHILDREN_REQUESTED }           from '../actions';
 import { EXPAND_BUTTON_WAS_CLICKED }    from '../actions';
 import { SELECTION_WAS_CLICKED }        from '../actions';
-import { CHECKBOX_WAS_CLICKED }         from '../actions';
 import { IGenericAction }               from '../actions';
 
 import { SelectionState }   from '../interfaces';
@@ -16,101 +15,59 @@ import { INewNode } from '../components/NewNode';
 
 const initstate: any = {};
 
-// function recursiveSearchSetSelectionState(state: any, nodeID: number, newSelectionState: SelectionState): INode[] {
-//     return state.map((node: INode) => {
-//         if (nodeID === node.id) {
-//             const children = state.filter((child) => {
-//                 return child.childof === node.id;
-//             });
-//             children.map((filteredChild: INode) => {
-//                 recursiveSearchSetSelectionState(children, filteredChild.id, newSelectionState);
-//             });
-
-//             console.log("assigning " + newSelectionState + " to " + node.name);
-
-//             return Object.assign({}, node, {
-//                 //Set the node itself to the new state
-//                 selectionState: newSelectionState
-//             });
-//         } else {
-//             return node;
-//         }
-//     });
-// }
-
-// function recursiveSearchSetSelectionStateAndParentState(state: INode[], targetNode: INode, newSelectionState: SelectionState, parentNode: INode, newParentState: SelectionState): INode[] {
-//     return state.map((node: INode) => {
-//         if (targetNode.id === node.id) {
-//             return Object.assign({}, node, {
-//                 //Set the node itself to the new state
-//                 selectionState: newSelectionState
-//             });
-//         } else if (parentNode.id === node.id) {
-//             return Object.assign({}, node, {
-//                 //Set the parent to the new state
-//                 selectionState: newParentState
-//             });
-//         }else {
-//             return Object.assign({}, node, {
-//                 //Search for the correct node recursively
-//                 myChildren: recursiveSearchSetSelectionStateAndParentState(node.myChildren, targetNode, newSelectionState, parentNode, newParentState)
-//             });
-//         }
-//     });
-// }
-
-// function recursiveSearchSetParentState(state: INode[], targetNode: INode): INode[] {
-//     return state.map((node: INode) => {
-//         if (targetNode.id === node.id) {
-//             const siblings = targetNode.myChildren;
-//             let allSelected = true;
-//             let someSelected = false;
-
-//             siblings.forEach((sibling: INode) => {
-//                 //If we do not have ourselves here, but an actual sibling
-//                 if (sibling.id !== targetNode.id) {
-//                     if (sibling.selectionState === SelectionState.Unselected) {
-//                         allSelected = false;
-//                     } else if (sibling.selectionState === SelectionState.Partial) {
-//                         allSelected = false;
-//                         someSelected = true;
-//                     } else if (sibling.selectionState === SelectionState.Selected) {
-//                         someSelected = true;
-//                     }
-//                 }
-//             });
-
-//             console.log(siblings);
-
-//             console.log("Siblings all selected: " + allSelected);
-//             console.log("Siblings some selected: " + someSelected);
-
-//             let newTargetState = SelectionState.Unselected;
-//             if (targetNode.selectionState === SelectionState.Unselected) {
-//                 newTargetState = SelectionState.Selected;
-//             }
-
-//             let newParentState = SelectionState.Unselected;
-//             if (allSelected && newTargetState === SelectionState.Selected) {
-//                 newParentState = SelectionState.Selected;
-//             } else if (someSelected || newTargetState === SelectionState.Selected) {
-//                 newParentState = SelectionState.Partial;
-//             }
-
-//             return Object.assign({}, node, {
-//                 //Set the parent to the new state
-//                 selectionState: newParentState
-//             });
-//         } else {
-//             return Object.assign({}, node, {
-//                 //Search for the correct node recursively
-//                 myChildren: recursiveSearchSetParentState(node.myChildren, targetNode)
-//             });
-//         }
-//     });
-// }
-
 export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => {
+    function recursiveUpdateSelectionStateDown(selectionID: number, newState: SelectionState ) {
+        const selectedNode = nodes[selectionID];
+
+        const childrenIDs: number[] = selectedNode.children;
+        if (childrenIDs.length > 0) {
+            childrenIDs.forEach((childID: number) => {
+                nodes[childID] = Object.assign({}, nodes[childID], {selectionState: newState});
+                recursiveUpdateSelectionStateDown(childID, newState);
+            });
+        }
+    }
+
+    function recursiveUpdateSelectionStateUp(selectionID : number, newState: SelectionState) {
+        const selectedNode = nodes[selectionID];
+
+        const parentID = selectedNode.parent;
+        if (parentID !== -1) {
+            const parentNode = nodes[parentID];
+
+            const siblingIDs = parentNode.children;
+
+            let allSelected = true;
+            let someSelected = false;
+
+            siblingIDs.forEach((siblingID: number) => {
+                const sibling = nodes[siblingID];
+                //If we do not have ourselves here, but an actual sibling
+                if (siblingID !== selectionID) {
+                    if (sibling.selectionState === SelectionState.Unselected) {
+                        allSelected = false;
+                    } else if (sibling.selectionState === SelectionState.Partial) {
+                        allSelected = false;
+                        someSelected = true;
+                    } else if (sibling.selectionState === SelectionState.Selected) {
+                        someSelected = true;
+                    }
+                }
+            });
+
+            let newParentState = SelectionState.Unselected;
+            if (allSelected && newState === SelectionState.Selected) {
+                newParentState = SelectionState.Selected;
+            } else if (someSelected || newState === SelectionState.Selected) {
+                newParentState = SelectionState.Partial;
+            }
+
+            nodes[parentID] = Object.assign({}, nodes[parentID], {selectionState: newParentState});
+
+            recursiveUpdateSelectionStateUp(parentID, newParentState);
+        }
+    }
+
     switch (action.type) {
         case ROOT_RECEIVED:
             //RootRequestedThunk return point
@@ -156,62 +113,24 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
             nodes[expandID] = Object.assign({}, nodes[expandID], {isexpanded: true});
 
             return nodes;
-
-        // case CHECKBOX_WAS_CLICKED:
-        //     const selectedID = action.payload.id;
-
-        //     return Object.assign({}, nodes[selectedID], {isexpanded: true});
-            // const targetNode = action.payload.node;
-
-            // if (targetNode.selectionState === SelectionState.Unselected) {
-            //     return recursiveSearchSetSelectionState(nodes, targetNode.id, SelectionState.Selected);
-            // } else {
-            //     return recursiveSearchSetSelectionState(nodes, targetNode.id, SelectionState.Unselected);
-            // }
         case SELECTION_WAS_CLICKED:
-            const selectedID = action.payload.id;
+            const selectionID = action.payload.id;
+            const selectedNode = nodes[selectionID];
 
-            return Object.assign({}, nodes[selectedID], {isexpanded: true});
-            // const targetNodeForSelection = action.payload.node;
-            // const parent = action.payload.node.parent;
-            // const siblings = action.payload.node.parent.myChildren;
+            //First, determine our own new state and set it
+            let newTargetState = SelectionState.Unselected;
+            if (selectedNode.selectionState === SelectionState.Unselected) {
+                newTargetState = SelectionState.Selected;
+            }
+            nodes[selectionID] = Object.assign({}, nodes[selectionID], {selectionState: newTargetState});
 
-            // let allSelected = true;
-            // let someSelected = false;
+            //Update parent recursively
+            recursiveUpdateSelectionStateUp(selectionID, newTargetState);
 
-            // siblings.forEach((sibling: INode) => {
-            //     //If we do not have ourselves here, but an actual sibling
-            //     if (sibling !== targetNodeForSelection) {
-            //         if (sibling.selectionState === SelectionState.Unselected) {
-            //             allSelected = false;
-            //         } else if (sibling.selectionState === SelectionState.Partial) {
-            //             allSelected = false;
-            //             someSelected = true;
-            //         } else if (sibling.selectionState === SelectionState.Selected) {
-            //             someSelected = true;
-            //         }
-            //     }
-            // });
+            //Update children recursively
+            recursiveUpdateSelectionStateDown(selectionID, newTargetState);
 
-            // console.log(siblings);
-
-            // console.log("Siblings all selected: " + allSelected);
-            // console.log("Siblings some selected: " + someSelected);
-
-            // let newTargetState = SelectionState.Unselected;
-            // if (targetNodeForSelection.selectionState === SelectionState.Unselected) {
-            //     newTargetState = SelectionState.Selected;
-            // }
-
-            // let newParentState = SelectionState.Unselected;
-            // if (allSelected && newTargetState === SelectionState.Selected) {
-            //     newParentState = SelectionState.Selected;
-            // } else if (someSelected || newTargetState === SelectionState.Selected) {
-            //     newParentState = SelectionState.Partial;
-            // }
-
-            // return recursiveSearchSetParentState(nodes, parent);
-
+            return nodes;
         default: {
             return nodes;
         }

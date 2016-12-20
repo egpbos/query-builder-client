@@ -1,18 +1,17 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import * as React       from 'react';
+import { connect }      from 'react-redux';
+import { Dispatch }     from 'redux';
 
-import { IGenericAction } from '../actions';
-import { expandButtonWasClicked } from '../actions';
-// import { checkboxWasClicked }           from '../actions';
-import { selectionWasClicked } from '../actions';
-import { childrenRequestedThunk } from '../actions';
+import { IGenericAction }           from '../actions';
+import { expandButtonWasClicked }   from '../actions';
+import { selectionWasClicked }      from '../actions';
+import { childrenRequestedThunk }   from '../actions';
 
-// import { Grid, Cell, Button } from 'react-mdl';
-import { Grid } from 'react-mdl';
-import { SelectionState } from '../interfaces';
-// import Checkbox               from '../Checkbox/Checkbox';
-import { IStore } from '../interfaces';
+import { Grid, Cell, Button }       from 'react-mdl';
+import Checkbox                     from '../Checkbox/Checkbox';
+import { SelectionState }           from '../interfaces';
+
+import { IStore }        from '../interfaces';
 
 import './node.css';
 
@@ -46,6 +45,7 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
         super();
 
         this.onClick = this.onClick.bind(this);
+        this.onClickSelect = this.onClickSelect.bind(this);
     }
 
     static mapStateToProps(state: IStore, ownProps: IExtraProps) {
@@ -107,46 +107,62 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
         this.props.onClickExpand(this.props.id);
     }
 
-    render() {
-        // const nodes: JSX.Element[] = this.props.children.map((node: INewNode) => {
-        //       if (this.props.parentID === node.childof) {
-        //           return (
-        //               <Node
-        //                   {...node}
-        //                   onClickExpand={this.props.onClickExpand}
-        //                   fetchChildren={this.props.fetchChildren}
-        //                   massSelection={this.props.massSelection}
-        //                   toggleSelection={this.props.toggleSelection}
-        //                   key={node.id}
-        //               />
-        //           );
-        //       } else {
-        //           return (
-        //               <div />
-        //           );
-        //       }
-        //   });
+    public onClickSelect() {
+        this.props.toggleSelection(this.props.id);
+    }
 
-        if (this.props.isexpanded) {
-            let childNodes: JSX.Element[] = [];
-            if (this.props.children !== undefined) {
-                childNodes = this.props.children.map((child: number) =>
-                    <NewNode key={child} nodeID={child} />
-                );
-            }
+    render() {
+        if (this.props.isinstance) {
             return (
-                <Grid className={'mdl-cell--12-col'}>
-                    <span onClick={this.onClick}>{this.props.name} expanded</span>
-                    {childNodes}
-                </Grid>
+                <Cell col={2}>
+                    <Button raised accent={this.props.selectionState === SelectionState.Selected} onClick={this.onClickSelect}>
+                        {this.props.name}
+                    </Button>
+                </Cell>
             );
         } else {
-            return (
-                <Grid className={'mdl-cell--12-col'}>
-                    <span onClick={this.onClick}>{this.props.name}</span>
-                    {/* {this.props.children.map(child => <NewNode key={child} comment={child} />)} */}
-                </Grid>
-            );
+            if (this.props.isexpanded) {
+                let childNodes: JSX.Element[] = [];
+                if (this.props.children !== undefined) {
+                    childNodes = this.props.children.map((child: number) =>
+                        <NewNode key={child} nodeID={child} />
+                    );
+                }
+                return (
+                    <Grid className={'mdl-cell--12-col category'}>
+                        <span className="categoryText" onClick={this.onClick}>
+                            {this.props.name}
+                        </span>
+                        <span>
+                            <Checkbox
+                                id={'checkbox-all_' + this.props.id}
+                                ripple={true}
+                                indeterminate={this.props.selectionState === SelectionState.Partial}
+                                checked={this.props.selectionState === SelectionState.Selected}
+                                onClick={this.onClickSelect}
+                            />
+                        </span>
+                        {childNodes}
+                    </Grid>
+                );
+            } else {
+                return (
+                    <Grid className={'mdl-cell--12-col category'}>
+                        <span className="categoryText" onClick={this.onClick}>
+                            {this.props.name}
+                        </span>
+                        <span>
+                            <Checkbox
+                                id={'checkbox-all_' + this.props.id}
+                                ripple={true}
+                                indeterminate={this.props.selectionState === SelectionState.Partial}
+                                checked={this.props.selectionState === SelectionState.Selected}
+                                onClick={this.onClickSelect}
+                            />
+                        </span>
+                    </Grid>
+                );
+            }
         }
     }
 }
