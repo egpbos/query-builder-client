@@ -6,7 +6,7 @@ import { IGenericAction }                       from '../actions';
 import { childrenReceived }                     from './childrenReceived';
 import { childrenRequested }                    from './childrenRequested';
 
-import { INewNode }                             from '../components/NewNode';
+import { INode }                                from '../components/Node';
 
 export const childrenRequestedThunk = (id: number) => {
     return (dispatch: Dispatch<IGenericAction>) => {
@@ -34,10 +34,10 @@ export const childrenRequestedThunk = (id: number) => {
                     isexpanded:     false,
                     selectionState: SelectionState.Unselected,
                     children:       []
-                } as INewNode;
+                } as INode;
             };
 
-            const nodes: INewNode[] = dbrecords.map(convert);
+            const nodes: INode[] = dbrecords.map(convert);
             dispatch(childrenReceived(nodes));
         };
 

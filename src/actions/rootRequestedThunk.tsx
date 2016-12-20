@@ -2,7 +2,7 @@ import { Dispatch }                             from 'redux';
 
 import { IDatabaseRecord, SelectionState }      from '../interfaces';
 
-import { INewNode }                             from '../components/NewNode';
+import { INode }                                from '../components/Node';
 
 import { IGenericAction }                       from '../actions';
 import { rootReceived }                         from './rootReceived';
@@ -35,11 +35,11 @@ export const rootRequestedThunk = () => {
                     isexpanded:     false,
                     selectionState: SelectionState.Unselected,
                     children:       []
-                } as INewNode;
+                } as INode;
             };
             //Since this is the root, we expect only 1 element, and therefore 
             // only take the first element from the array
-            const root: INewNode = dbrecords.map(convert)[0];
+            const root: INode = dbrecords.map(convert)[0];
             dispatch(rootReceived(root));
         };
 

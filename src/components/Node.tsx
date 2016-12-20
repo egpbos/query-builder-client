@@ -1,6 +1,6 @@
-import * as React       from 'react';
-import { connect }      from 'react-redux';
-import { Dispatch }     from 'redux';
+import * as React                   from 'react';
+import { connect }                  from 'react-redux';
+import { Dispatch }                 from 'redux';
 
 import { IGenericAction }           from '../actions';
 import { expandButtonWasClicked }   from '../actions';
@@ -10,8 +10,8 @@ import { childrenRequestedThunk }   from '../actions';
 import Checkbox                     from '../Checkbox/Checkbox';
 import { Button, Cell, Grid }       from 'react-mdl';
 
-import { IStore }           from '../interfaces';
-import { SelectionState }   from '../interfaces';
+import { IStore }                   from '../interfaces';
+import { SelectionState }           from '../interfaces';
 
 import './node.css';
 
@@ -19,7 +19,7 @@ interface IExtraProps {
     nodeID: number;
 }
 
-export interface INewNode {
+export interface INode {
     parent: number;
     id: number;
     isentity: boolean;
@@ -34,13 +34,13 @@ export interface INewNode {
     children: number[];
 }
 
-interface INewNodeDispatchProps {
+interface INodeDispatchProps {
     onClickExpand: (id: number) => void;
     fetchChildren: (id: number) => void;
     toggleSelection: (id: number) => void;
 }
 
-export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode & INewNodeDispatchProps, {}> {
+export class UnconnectedNode extends React.Component<IExtraProps & INode & INodeDispatchProps, {}> {
     constructor() {
         super();
 
@@ -125,7 +125,7 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
                 let childNodes: JSX.Element[] = [];
                 if (this.props.children !== undefined) {
                     childNodes = this.props.children.map((child: number) =>
-                        <NewNode key={child} nodeID={child} />// tslint:disable-line
+                        <Node key={child} nodeID={child} />// tslint:disable-line
                     );
                 }
                 return (
@@ -172,5 +172,5 @@ export class UnconnectedNewNode extends React.Component<IExtraProps & INewNode &
 }
 
 // Export just the connected component
-export const NewNode = connect(UnconnectedNewNode.mapStateToProps,
-                               UnconnectedNewNode.mapDispatchToProps)(UnconnectedNewNode);
+export const Node = connect(UnconnectedNode.mapStateToProps,
+                            UnconnectedNode.mapDispatchToProps)(UnconnectedNode);

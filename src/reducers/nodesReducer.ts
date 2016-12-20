@@ -10,7 +10,7 @@ import { IGenericAction }               from '../actions';
 
 import { SelectionState }               from '../interfaces';
 
-import { INewNode }                     from '../components/NewNode';
+import { INode }                        from '../components/Node';
 
 const initstate: any = {};
 
@@ -102,7 +102,7 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
             }
 
             //Add new nodes coming in to the state space.
-            payloadNodes.forEach((node : INewNode) => {
+            payloadNodes.forEach((node : INode) => {
                 // Set the selection state for the new nodes based on the 
                 // selection state of the parent (default is Unselected)
                 if (newParent.selectionState === SelectionState.Selected) {
@@ -113,7 +113,7 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
             });
 
             //Add new children coming in to the parent node.
-            payloadNodes.forEach((node : INewNode) => {
+            payloadNodes.forEach((node : INode) => {
                 if (newParent.children === undefined) {
                     newParent.children = [];
                 }

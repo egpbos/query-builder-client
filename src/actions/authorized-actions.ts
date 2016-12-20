@@ -1,10 +1,10 @@
-import { INewNode } from '../components/NewNode';
+import { INode } from '../components/Node';
 
 export const ROOT_RECEIVED = 'ROOT_RECEIVED';
 export interface IRootReceivedAction {
     type: 'ROOT_RECEIVED';
     payload: {
-        root: INewNode
+        root: INode
     };
 }
 

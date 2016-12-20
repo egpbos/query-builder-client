@@ -6,12 +6,12 @@ import * as React      from 'react';
 import * as ReactDOM   from 'react-dom';
 import { Provider }    from 'react-redux';
 
-import { NewNode }     from './components';
+import { Node }        from './components';
 import { store }       from './store';
 
 ReactDOM.render(
     <Provider store={store}>
-        <NewNode key={1} nodeID={1} />
+        <Node key={1} nodeID={1} />
     </Provider>,
     document.getElementById('root')
 );
