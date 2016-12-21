@@ -78,20 +78,23 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
         }
     }
 
+    console.log(new Date().toISOString().slice(11, 19), action.type);
+
     switch (action.type) {
         case ROOT_RECEIVED:
             //RootRequestedThunk return point
             const root = action.payload.root;
-            return { [root.id]: root };
+            return Object.assign({}, { [root.id]: root });
         case ROOT_REQUESTED:
-            console.error('Make a spinner or something');
             return nodes;
         case CHILDREN_RECEIVED:
             //ChildrenRequestedThunk return point
             const payloadNodes = action.payload.nodes;
 
+            const parentId = payloadNodes[0].parent;
+
             //Copy the parent node
-            let oldParent = nodes[payloadNodes[0].parent];
+            let oldParent = nodes[parentId];
             let newParent = Object.assign({}, oldParent);
             //With a deep copy of its children array.
             newParent.children = [];
@@ -101,37 +104,42 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
                 });
             }
 
-            //Add new nodes coming in to the state space.
-            payloadNodes.forEach((node : INode) => {
-                // Set the selection state for the new nodes based on the 
-                // selection state of the parent (default is Unselected)
+            // Set the selection state for the new nodes based on the
+            // selection state of the parent (default is Unselected)
+            payloadNodes.forEach((payloadNode: INode) => {
                 if (newParent.selectionState === SelectionState.Selected) {
-                    node.selectionState = SelectionState.Selected;
+                    payloadNode.selectionState = SelectionState.Selected;
                 }
-
-                nodes[node.id] = node;
             });
 
-            //Add new children coming in to the parent node.
-            payloadNodes.forEach((node : INode) => {
+            // Add the IDs of the payloadNodes to the parent node's list of children
+            payloadNodes.forEach((payloadNode: INode) => {
                 if (newParent.children === undefined) {
                     newParent.children = [];
                 }
-                newParent.children.push(node.id);
+                newParent.children.push(payloadNode.id);
             });
-            //And overwrite the old parent node
-            nodes[payloadNodes[0].parent] = newParent;
 
-            return nodes;
+            // The new list of nodes the old list of nodes, except it's a new
+            // object and it has newParent as the value of key parentId. It does
+            // not include any payloadNodes yet at this stage.
+            let newNodes = Object.assign({}, nodes, { [parentId]: newParent});
+
+            // Finally, the payloadNodes need to be added to the new list of
+            // nodes, using the id of the payloadNode as the key.
+            payloadNodes.forEach((payloadNode: INode) => {
+                newNodes[payloadNode.id] = payloadNode;
+            });
+
+            return newNodes;
+
         case CHILDREN_REQUESTED:
-            console.error('Make a spinner or something');
             return nodes;
         case EXPAND_BUTTON_WAS_CLICKED:
-            const expandID = action.payload.id;
-
-            nodes[expandID] = Object.assign({}, nodes[expandID], {isexpanded: !nodes[expandID].isexpanded});
-
-            return nodes;
+            const {id} = action.payload;
+            const oldNode = nodes[id];
+            const newNode = Object.assign({}, oldNode, {isexpanded: !oldNode.isexpanded});
+            return Object.assign({}, nodes, {[id]: newNode});
         case SELECTION_WAS_CLICKED:
             const selectionID = action.payload.id;
             const selectedNode = nodes[selectionID];
