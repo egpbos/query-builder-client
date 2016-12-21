@@ -22,18 +22,14 @@ export const childrenRequestedThunk = (id: number) => {
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
-                    parent:         dbrecord.childof,
+                    children:       [],
                     id:             dbrecord.id,
-                    isentity:       dbrecord.isentity === 1 ? true : false,
-                    isleaf:         dbrecord.isleaf === 1 ? true : false,
+                    isexpanded:     false,
                     isinstance:     dbrecord.isinstance === 1 ? true : false,
-                    level:          dbrecord.level,
                     mentioncount:   dbrecord.mentioncount,
                     name:           dbrecord.name,
-                    url:            dbrecord.url,
-                    isexpanded:     false,
-                    selectionState: SelectionState.Unselected,
-                    children:       []
+                    parent:         dbrecord.childof,
+                    selectionState: SelectionState.Unselected
                 } as INode;
             };
 
