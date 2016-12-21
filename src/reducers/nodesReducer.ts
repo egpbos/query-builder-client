@@ -39,7 +39,7 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
         const selectedNode = nodes[selectionID];
 
         const parentID = selectedNode.parent;
-        if (parentID !== 1) {
+        if (parentID !== -1) {
             const parentNode = nodes[parentID];
 
             //The children of our parent are our siblings
@@ -81,21 +81,23 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
     console.log(new Date().toISOString().slice(11, 19), action.type);
 
     switch (action.type) {
-        case ROOT_RECEIVED:
+        case ROOT_RECEIVED: {
             //RootRequestedThunk return point
-            const root = action.payload.root;
+            const {root} = action.payload;
             return Object.assign({}, { [root.id]: root });
-        case ROOT_REQUESTED:
+        }
+        case ROOT_REQUESTED: {
             return nodes;
-        case CHILDREN_RECEIVED:
+        }
+        case CHILDREN_RECEIVED: {
             //ChildrenRequestedThunk return point
             const payloadNodes = action.payload.nodes;
 
             const parentId = payloadNodes[0].parent;
 
             //Copy the parent node
-            let oldParent = nodes[parentId];
-            let newParent = Object.assign({}, oldParent);
+            const oldParent = nodes[parentId];
+            const newParent = Object.assign({}, oldParent);
             //With a deep copy of its children array.
             newParent.children = [];
             if (oldParent.children !== undefined) {
@@ -123,7 +125,7 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
             // The new list of nodes the old list of nodes, except it's a new
             // object and it has newParent as the value of key parentId. It does
             // not include any payloadNodes yet at this stage.
-            let newNodes = Object.assign({}, nodes, { [parentId]: newParent});
+            const newNodes = Object.assign({}, nodes, { [parentId]: newParent});
 
             // Finally, the payloadNodes need to be added to the new list of
             // nodes, using the id of the payloadNode as the key.
@@ -132,32 +134,37 @@ export const nodesReducer = (nodes: any = initstate, action: IGenericAction) => 
             });
 
             return newNodes;
-
-        case CHILDREN_REQUESTED:
+        }
+        case CHILDREN_REQUESTED: {
             return nodes;
-        case EXPAND_BUTTON_WAS_CLICKED:
+        }
+        case EXPAND_BUTTON_WAS_CLICKED: {
             const {id} = action.payload;
             const oldNode = nodes[id];
             const newNode = Object.assign({}, oldNode, {isexpanded: !oldNode.isexpanded});
             return Object.assign({}, nodes, {[id]: newNode});
-        case SELECTION_WAS_CLICKED:
-            const selectionID = action.payload.id;
-            const selectedNode = nodes[selectionID];
+        }
+        case SELECTION_WAS_CLICKED: {
+            const {id} = action.payload;
+            const selectedNode = nodes[id];
 
             //First, determine our own new state and set it
-            let newTargetState = SelectionState.Unselected;
+            let targetState = SelectionState.Unselected;
             if (selectedNode.selectionState === SelectionState.Unselected) {
-                newTargetState = SelectionState.Selected;
+                targetState = SelectionState.Selected;
             }
-            nodes[selectionID] = Object.assign({}, nodes[selectionID], {selectionState: newTargetState});
+
+            const newNode = Object.assign({}, selectedNode, {selectionState: targetState});
+            const newNodes = Object.assign({}, nodes, { [id]: newNode});
 
             //Update parent recursively
-            recursiveUpdateSelectionStateUp(selectionID);
+            recursiveUpdateSelectionStateUp(id);
 
             //Update children recursively
-            recursiveUpdateSelectionStateDown(selectionID, newTargetState);
+            recursiveUpdateSelectionStateDown(id, targetState);
 
-            return nodes;
+            return newNodes;
+        }
         default: {
             return nodes;
         }
