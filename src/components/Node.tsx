@@ -20,18 +20,14 @@ interface IExtraProps {
 }
 
 export interface INode {
-    parent: number;
+    children: number[];
     id: number;
-    isentity: boolean;
-    isleaf: boolean;
+    isexpanded: boolean;
     isinstance: boolean;
-    level: number;
     mentioncount: number;
     name: string;
-    url: string;
-    isexpanded: boolean;
+    parent: number;
     selectionState: SelectionState;
-    children: number[];
 }
 
 interface INodeDispatchProps {
@@ -53,37 +49,27 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
 
         if (state.nodes[dbid] === undefined) {
             return {
-                nodeID: dbid,
-
-                parent: -1,
+                children: [],
                 id: dbid,
-                isentity: false,
-                isleaf: false,
+                isexpanded: false,
                 isinstance: false,
-                level: 0,
                 mentioncount: 0,
                 name: 'undefined',
-                url: 'un.defi.ned',
-                isexpanded: false,
-                selectionState: SelectionState.Unselected,
-                children: []
+                nodeID: dbid,
+                parent: 1,
+                selectionState: SelectionState.Unselected
             };
         } else {
             return {
-                nodeID: dbid,
-
-                parent: state.nodes[dbid].childof,
+                children: state.nodes[dbid].children,
                 id: state.nodes[dbid].id,
-                isentity: state.nodes[dbid].isentity,
-                isleaf: state.nodes[dbid].isleaf,
+                isexpanded: state.nodes[dbid].isexpanded,
                 isinstance: state.nodes[dbid].isinstance,
-                level: state.nodes[dbid].level,
                 mentioncount: state.nodes[dbid].mentioncount,
                 name: state.nodes[dbid].name,
-                url: state.nodes[dbid].url,
-                isexpanded: state.nodes[dbid].isexpanded,
-                selectionState: state.nodes[dbid].selectionState,
-                children: state.nodes[dbid].children
+                nodeID: dbid,
+                parent: state.nodes[dbid].childof,
+                selectionState: state.nodes[dbid].selectionState
             };
         }
     }
