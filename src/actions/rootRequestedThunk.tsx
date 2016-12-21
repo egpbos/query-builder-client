@@ -23,15 +23,14 @@ export const rootRequestedThunk = () => {
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
-                    parent:         dbrecord.childof,
+                    children:       [],
                     id:             dbrecord.id,
+                    isexpanded:     false,
                     isinstance:     dbrecord.isinstance === 1 ? true : false,
-                    level:          dbrecord.level,
                     mentioncount:   dbrecord.mentioncount,
                     name:           dbrecord.name,
-                    isexpanded:     false,
-                    selectionState: SelectionState.Unselected,
-                    children:       []
+                    parent:         dbrecord.childof,
+                    selectionState: SelectionState.Unselected
                 } as INode;
             };
             //Since this is the root, we expect only 1 element, and therefore 
@@ -46,7 +45,7 @@ export const rootRequestedThunk = () => {
 
         dispatch(rootRequested());
 
-        const url: string = 'http://localhost:5000/entities/' + '1' + '/children';
+        const url: string = 'http://localhost:5000/entities/' + '1';
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)
