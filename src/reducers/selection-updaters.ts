@@ -1,4 +1,4 @@
-import { INode }           from '../components/Node';
+import { INode }           from '../interfaces';
 import { SelectionState }  from '../interfaces';
 
 /*

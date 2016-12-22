@@ -1,12 +1,10 @@
 import * as React                   from 'react';
+import { Button }                   from 'react-mdl';
 import { connect }                  from 'react-redux';
 import { Dispatch }                 from 'redux';
 
 import { IGenericAction }           from '../actions';
 import { selectionWasClicked }      from '../actions';
-
-import { Button }                   from 'react-mdl';
-
 import { IStore }                   from '../interfaces';
 import { SelectionState }           from '../interfaces';
 

@@ -29,7 +29,7 @@ export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INode
     constructor() {
         super();
 
-        this.onClickSelect = this.onClickSelect.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     static mapStateToProps(state: IStore, ownProps: IExtraProps) {
@@ -37,16 +37,14 @@ export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INode
 
         if (state.nodes[dbid] === undefined) {
             return {
-                nodeID: dbid,
-
                 id: dbid,
+                nodeID: dbid,
                 selectionState: SelectionState.Unselected
             };
         } else {
             return {
-                nodeID: dbid,
-
                 id: state.nodes[dbid].id,
+                nodeID: dbid,
                 selectionState: state.nodes[dbid].selectionState
             };
         }
@@ -60,7 +58,7 @@ export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INode
         };
     }
 
-    public onClickSelect() {
+    public onClick() {
         this.props.toggleSelection(this.props.id);
     }
 
@@ -72,7 +70,7 @@ export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INode
                     ripple={true}
                     indeterminate={this.props.selectionState === SelectionState.Partial}
                     checked={this.props.selectionState === SelectionState.Selected}
-                    onClick={this.onClickSelect}
+                    onClick={this.onClick}
                 />
             </span>
         );

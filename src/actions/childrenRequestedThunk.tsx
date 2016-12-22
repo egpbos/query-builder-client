@@ -1,12 +1,10 @@
 import { Dispatch }                             from 'redux';
 
+import { IGenericAction }                       from '../interfaces';
 import { IDatabaseRecord, SelectionState }      from '../interfaces';
-
-import { IGenericAction }                       from '../actions';
+import { INode }                                from '../interfaces';
 import { childrenReceived }                     from './childrenReceived';
 import { childrenRequested }                    from './childrenRequested';
-
-import { INode }                                from '../components/Node';
 
 export const childrenRequestedThunk = (id: number) => {
     return (dispatch: Dispatch<IGenericAction>) => {
@@ -23,10 +21,9 @@ export const childrenRequestedThunk = (id: number) => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
                     children:       [],
-                    id:             dbrecord.id,
+                    dbid:           dbrecord.id,
                     isexpanded:     false,
                     isinstance:     dbrecord.isinstance === 1 ? true : false,
-                    mentioncount:   dbrecord.mentioncount,
                     name:           dbrecord.name,
                     parent:         dbrecord.childof,
                     selectionState: SelectionState.Unselected

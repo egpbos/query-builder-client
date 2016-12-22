@@ -1,10 +1,8 @@
 import { Dispatch }                             from 'redux';
 
+import { IGenericAction }                       from '../interfaces';
 import { IDatabaseRecord, SelectionState }      from '../interfaces';
-
-import { INode }                                from '../components/Node';
-
-import { IGenericAction }                       from '../actions';
+import { INode }                                from '../interfaces';
 import { rootReceived }                         from './rootReceived';
 import { rootRequested }                        from './rootRequested';
 
@@ -24,10 +22,9 @@ export const rootRequestedThunk = () => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
                     children:       [],
-                    id:             dbrecord.id,
+                    dbid:           dbrecord.id,
                     isexpanded:     false,
                     isinstance:     dbrecord.isinstance === 1 ? true : false,
-                    mentioncount:   dbrecord.mentioncount,
                     name:           dbrecord.name,
                     parent:         dbrecord.childof,
                     selectionState: SelectionState.Unselected

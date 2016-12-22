@@ -1,4 +1,4 @@
-import { INode }                from '../components/Node';
+import { INode }                from '../interfaces';
 import { CHILDREN_RECEIVED }    from './authorized-actions';
 
 export const childrenReceived = (nodes: INode[]) => {

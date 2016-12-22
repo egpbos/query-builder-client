@@ -19,3 +19,14 @@ export interface IDatabaseRecord {
 export interface IStore {
     nodes: any;
 }
+
+export interface INode {
+    children: number[];
+    dbid: number;
+    name: string;
+}
+
+export interface IGenericAction {
+    type: string;
+    payload: any;
+}

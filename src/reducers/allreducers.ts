@@ -1,4 +1,4 @@
-import { IGenericAction } from '../actions';
+import { IGenericAction } from '../interfaces';
 import { IStore }         from '../interfaces';
 import { nodesReducer }   from '../reducers';
 

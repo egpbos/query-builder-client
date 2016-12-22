@@ -1,5 +1,5 @@
-import { INode } from '../components/Node';
-import { ROOT_RECEIVED }  from './authorized-actions';
+import { INode }         from '../interfaces';
+import { ROOT_RECEIVED } from './authorized-actions';
 
 export const rootReceived = (root: INode) => {
     return {

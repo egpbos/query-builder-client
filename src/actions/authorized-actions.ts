@@ -1,4 +1,4 @@
-import { INode } from '../components/Node';
+import { INode } from '../interfaces';
 
 export const ROOT_RECEIVED = 'ROOT_RECEIVED';
 export interface IRootReceivedAction {

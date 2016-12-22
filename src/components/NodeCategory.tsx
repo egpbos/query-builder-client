@@ -1,22 +1,9 @@
-import * as React                   from 'react';
-import { connect }                  from 'react-redux';
-import { Dispatch }                 from 'redux';
-
-import { IGenericAction }           from '../actions';
-import { expandButtonWasClicked }   from '../actions';
-import { childrenRequestedThunk }   from '../actions';
-
-import { IStore }                   from '../interfaces';
+import * as React from 'react';
 
 import './nodeCategory.css';
 
-interface IExtraProps {
-    nodeID: number;
-}
-
-export interface INodeCategory {
+interface INodeCategory {
     id: number;
-    mentioncount: number;
     name: string;
 }
 
@@ -25,44 +12,10 @@ interface INodeDispatchProps {
     fetchChildren: (id: number) => void;
 }
 
-export class UnconnectedNodeCategory extends React.Component<IExtraProps & INodeCategory & INodeDispatchProps, {}> {
+export class NodeCategory extends React.Component<INodeCategory & INodeDispatchProps, {}> {
     constructor() {
         super();
-
         this.onClick = this.onClick.bind(this);
-    }
-
-    static mapStateToProps(state: IStore, ownProps: IExtraProps) {
-        const dbid = ownProps.nodeID;
-
-        if (state.nodes[dbid] === undefined) {
-            return {
-                nodeID: dbid,
-
-                id: dbid,
-                mentioncount: 0,
-                name: 'undefined'
-            };
-        } else {
-            return {
-                nodeID: dbid,
-
-                id: state.nodes[dbid].id,
-                mentioncount: state.nodes[dbid].mentioncount,
-                name: state.nodes[dbid].name
-            };
-        }
-    }
-
-    static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
-        return {
-            onClickExpand: (id: number) => {
-                dispatch(expandButtonWasClicked(id));
-            },
-            fetchChildren: (id: number) => {
-                dispatch(childrenRequestedThunk(id));
-            }
-        };
     }
 
     public onClick() {
@@ -78,7 +31,3 @@ export class UnconnectedNodeCategory extends React.Component<IExtraProps & INode
         );
     }
 }
-
-// Export just the connected component
-export const NodeCategory = connect(UnconnectedNodeCategory.mapStateToProps,
-                                    UnconnectedNodeCategory.mapDispatchToProps)(UnconnectedNodeCategory);
