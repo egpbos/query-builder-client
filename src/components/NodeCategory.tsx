@@ -11,6 +11,7 @@ import { IStore }                   from '../interfaces';
 import './nodeCategory.css';
 
 interface IExtraProps {
+    table: string;
     nodeID: number;
 }
 
@@ -21,8 +22,8 @@ export interface INodeCategory {
 }
 
 interface INodeDispatchProps {
-    onClickExpand: (id: number) => void;
-    fetchChildren: (id: number) => void;
+    onClickExpand: (table: string, id: number) => void;
+    fetchChildren: (table: string, id: number) => void;
 }
 
 export class UnconnectedNodeCategory extends React.Component<IExtraProps & INodeCategory & INodeDispatchProps, {}> {
@@ -35,7 +36,18 @@ export class UnconnectedNodeCategory extends React.Component<IExtraProps & INode
     static mapStateToProps(state: IStore, ownProps: IExtraProps) {
         const dbid = ownProps.nodeID;
 
-        if (state.nodes[dbid] === undefined) {
+        let nodes : any;
+        if (ownProps.table === 'entities') {
+            nodes = state.entities;
+        } else if (ownProps.table === 'events') {
+            nodes = state.events;
+        } else if (ownProps.table === 'sources') {
+            nodes = state.sources;
+        } else if (ownProps.table === 'topics') {
+            nodes = state.topics;
+        }
+
+        if (nodes[dbid] === undefined) {
             return {
                 nodeID: dbid,
 
@@ -47,27 +59,27 @@ export class UnconnectedNodeCategory extends React.Component<IExtraProps & INode
             return {
                 nodeID: dbid,
 
-                id: state.nodes[dbid].id,
-                mentioncount: state.nodes[dbid].mentioncount,
-                name: state.nodes[dbid].name
+                id: nodes[dbid].id,
+                mentioncount: nodes[dbid].mentioncount,
+                name: nodes[dbid].name
             };
         }
     }
 
     static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
         return {
-            onClickExpand: (id: number) => {
-                dispatch(expandButtonWasClicked(id));
+            onClickExpand: (table: string, id: number) => {
+                dispatch(expandButtonWasClicked(table, id));
             },
-            fetchChildren: (id: number) => {
-                dispatch(childrenRequestedThunk(id));
+            fetchChildren: (table: string, id: number) => {
+                dispatch(childrenRequestedThunk(table, id));
             }
         };
     }
 
     public onClick() {
-        this.props.fetchChildren(this.props.id);
-        this.props.onClickExpand(this.props.id);
+        this.props.fetchChildren(this.props.table, this.props.id);
+        this.props.onClickExpand(this.props.table, this.props.id);
     }
 
     render() {

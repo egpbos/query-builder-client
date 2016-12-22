@@ -8,7 +8,7 @@ import { childrenRequested }                    from './childrenRequested';
 
 import { INode }                                from '../components/Node';
 
-export const childrenRequestedThunk = (id: number) => {
+export const childrenRequestedThunk = (table: string, id: number) => {
     return (dispatch: Dispatch<IGenericAction>) => {
         const handleTheStatus = (response: Response) => {
             if (response.ok) {
@@ -34,16 +34,16 @@ export const childrenRequestedThunk = (id: number) => {
             };
 
             const nodes: INode[] = dbrecords.map(convert);
-            dispatch(childrenReceived(nodes));
+            dispatch(childrenReceived(table, nodes));
         };
 
         const handleAnyErrors = (err: Error) => {
             throw new Error('Errors occured. ' + err.message + err.stack);
         };
 
-        dispatch(childrenRequested());
+        dispatch(childrenRequested(table));
 
-        const url: string = 'http://localhost:5000/entities/' + id.toString() + '/children';
+        const url: string = 'http://localhost:5000/' + table + '/' + id.toString() + '/children';
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)

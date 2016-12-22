@@ -1,2 +1,2 @@
-export { nodesReducer } from './nodesReducer';
+export { nodesReducerFactory } from './nodesReducerFactory';
 export { allreducers }  from './allreducers';

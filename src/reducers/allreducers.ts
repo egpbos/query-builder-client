@@ -1,13 +1,10 @@
-import { IGenericAction } from '../actions';
-import { IStore }         from '../interfaces';
-import { nodesReducer }   from '../reducers';
+import { combineReducers }          from 'redux';
 
-const initstate: IStore = {
-    nodes: {}
-};
+import { nodesReducerFactory }      from '../reducers';
 
-export const allreducers = (state: IStore = initstate, action: IGenericAction) => {
-    return {
-        nodes: nodesReducer(state.nodes, action)
-    };
-};
+export const allreducers = combineReducers ({
+    entities:   nodesReducerFactory('entities'),
+    events:     nodesReducerFactory('events'),
+    sources:    nodesReducerFactory('sources'),
+    topics:     nodesReducerFactory('topics')
+});

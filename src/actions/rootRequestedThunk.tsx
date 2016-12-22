@@ -8,7 +8,7 @@ import { IGenericAction }                       from '../actions';
 import { rootReceived }                         from './rootReceived';
 import { rootRequested }                        from './rootRequested';
 
-export const rootRequestedThunk = () => {
+export const rootRequestedThunk = (table: string) => {
 
     return (dispatch: Dispatch<IGenericAction>) => {
         const handleTheStatus = (response: Response) => {
@@ -36,16 +36,16 @@ export const rootRequestedThunk = () => {
             //Since this is the root, we expect only 1 element, and therefore 
             // only take the first element from the array
             const root: INode = dbrecords.map(convert)[0];
-            dispatch(rootReceived(root));
+            dispatch(rootReceived(table, root));
         };
 
         const handleAnyErrors = (err: Error) => {
             throw new Error('Errors occured. ' + err.message + err.stack);
         };
 
-        dispatch(rootRequested());
+        dispatch(rootRequested(table));
 
-        const url: string = 'http://localhost:5000/entities/' + '1';
+        const url: string = 'http://localhost:5000/' + table + '/' + '1';
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)

@@ -13,11 +13,12 @@ import { SelectionState }           from '../interfaces';
 import './nodeInstance.css';
 
 interface IExtraProps {
+    table: string;
     nodeID: number;
 }
 
 interface INodeDispatchProps {
-    toggleSelection: (id: number) => void;
+    toggleSelection: (table: string, id: number) => void;
 }
 
 export interface INodeInstance {
@@ -36,7 +37,18 @@ export class UnconnectedNodeInstance extends React.Component<IExtraProps & INode
     static mapStateToProps(state: IStore, ownProps: IExtraProps) {
         const dbid = ownProps.nodeID;
 
-        if (state.nodes[dbid] === undefined) {
+        let nodes : any;
+        if (ownProps.table === 'entities') {
+            nodes = state.entities;
+        } else if (ownProps.table === 'events') {
+            nodes = state.events;
+        } else if (ownProps.table === 'sources') {
+            nodes = state.sources;
+        } else if (ownProps.table === 'topics') {
+            nodes = state.topics;
+        }
+
+        if (nodes[dbid] === undefined) {
             return {
                 nodeID: dbid,
 
@@ -48,23 +60,23 @@ export class UnconnectedNodeInstance extends React.Component<IExtraProps & INode
             return {
                 nodeID: dbid,
 
-                id: state.nodes[dbid].id,
-                name: state.nodes[dbid].name,
-                selectionState: state.nodes[dbid].selectionState
+                id: nodes[dbid].id,
+                name: nodes[dbid].name,
+                selectionState: nodes[dbid].selectionState
             };
         }
     }
 
     static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
         return {
-            toggleSelection: (id: number) => {
-                dispatch(selectionWasClicked(id));
+            toggleSelection: (table: string, id: number) => {
+                dispatch(selectionWasClicked(table, id));
             }
         };
     }
 
     public onClickSelect() {
-        this.props.toggleSelection(this.props.id);
+        this.props.toggleSelection(this.props.table, this.props.id);
     }
 
     render() {

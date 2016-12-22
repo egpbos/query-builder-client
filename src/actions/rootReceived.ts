@@ -1,9 +1,9 @@
 import { INode } from '../components/Node';
 import { ROOT_RECEIVED }  from './authorized-actions';
 
-export const rootReceived = (root: INode) => {
+export const rootReceived = (table: string, root: INode) => {
     return {
         type: ROOT_RECEIVED,
-        payload: { root }
+        payload: { table, root }
     };
 };

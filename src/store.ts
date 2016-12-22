@@ -34,14 +34,16 @@ store.subscribe(() => {
     console.log(store.getState());
 
     //tryout function to gather selected items    
-    const nodes = store.getState().nodes;
-    const root = nodes[1];
+    const entityNodes = store.getState().entities;
+    const root = entityNodes[1];
     if (root) {
-        const selectedNodes : INode[] = aggregateSelected(nodes, root);
+        const selectedNodes : INode[] = aggregateSelected(entityNodes, root);
 
-        console.log('selected: ');
         console.log(selectedNodes);
     }
 });
 
-store.dispatch(rootRequestedThunk());
+store.dispatch(rootRequestedThunk('entities'));
+store.dispatch(rootRequestedThunk('events'));
+store.dispatch(rootRequestedThunk('sources'));
+store.dispatch(rootRequestedThunk('topics'));

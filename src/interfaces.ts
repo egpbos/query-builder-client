@@ -32,5 +32,8 @@ export interface IDatabaseRecord {
 // }
 
 export interface IStore {
-    nodes: any;
+    entities: any;
+    events: any;
+    sources: any;
+    topics: any;
 }

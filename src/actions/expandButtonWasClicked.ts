@@ -1,8 +1,8 @@
 import { EXPAND_BUTTON_WAS_CLICKED } from './authorized-actions';
 
-export const expandButtonWasClicked = (id: number) => {
+export const expandButtonWasClicked = (table: string, id: number) => {
     return {
         type: EXPAND_BUTTON_WAS_CLICKED,
-        payload: { id }
+        payload: { table, id }
     };
 };

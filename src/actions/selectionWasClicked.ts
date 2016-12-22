@@ -1,8 +1,8 @@
 import { SELECTION_WAS_CLICKED } from './authorized-actions';
 
-export const selectionWasClicked = (id: number) => {
+export const selectionWasClicked = (table: string, id: number) => {
     return {
         type: SELECTION_WAS_CLICKED,
-        payload: { id }
+        payload: { table, id }
     };
 };
