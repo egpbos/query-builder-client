@@ -6,6 +6,8 @@ export { ROOT_RECEIVED }              from './authorized-actions';
 export { ROOT_REQUESTED }             from './authorized-actions';
 export { SELECTION_WAS_CLICKED }      from './authorized-actions';
 
+export { BUILD_QUERY }                from './authorized-actions';
+
 // export generic action type
 export { IGenericAction }             from './IGenericAction';
 
@@ -16,3 +18,5 @@ export { expandButtonWasClicked }     from './expandButtonWasClicked';
 export { childrenRequested }          from './childrenRequested';
 export { rootRequested }              from './rootRequested';
 export { selectionWasClicked }        from './selectionWasClicked';
+
+export { buildQuery }                 from './buildQuery';

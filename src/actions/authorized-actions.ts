@@ -51,3 +51,10 @@ export interface ISelectionWasClickedAction {
         id: number
     };
 }
+
+export const BUILD_QUERY = 'BUILD_QUERY';
+export interface IBuildQueryAction {
+    type: 'BUILD_QUERY';
+    payload: {
+    };
+}

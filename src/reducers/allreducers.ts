@@ -1,10 +1,25 @@
-import { combineReducers }          from 'redux';
+import { queryReducer }         from '../reducers';
+import { nodesReducerFactory }  from '../reducers';
 
-import { nodesReducerFactory }      from '../reducers';
+import { IGenericAction } from '../actions';
 
-export const allreducers = combineReducers ({
-    entities:   nodesReducerFactory('entities'),
-    events:     nodesReducerFactory('events'),
-    sources:    nodesReducerFactory('sources'),
-    topics:     nodesReducerFactory('topics')
-});
+const initstate: any = {
+    entities: {},
+    events: {},
+    sources: {},
+    topics: {},
+    queryState: {}
+};
+
+function combinedReducer(state: any = initstate, action: IGenericAction) {
+    return {
+        entities:   nodesReducerFactory('entities')(state.entities, action),
+        events:     nodesReducerFactory('events')(state.events, action),
+        sources:    nodesReducerFactory('sources')(state.sources, action),
+        topics:     nodesReducerFactory('topics')(state.topics, action),
+
+        queryState:  queryReducer(state, action)
+    };
+}
+
+export const allreducers = combinedReducer;
