@@ -38,24 +38,14 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
                 children: [],
                 id: dbid,
                 isexpanded: false,
-                isinstance: false,
-                mentioncount: 0,
-                name: 'undefined',
-                nodeID: dbid,
-                parent: 1,
-                selectionState: SelectionState.Unselected
+                isinstance: false
             };
         } else {
             return {
                 children: state.nodes[dbid].children,
                 id: state.nodes[dbid].id,
                 isexpanded: state.nodes[dbid].isexpanded,
-                isinstance: state.nodes[dbid].isinstance,
-                mentioncount: state.nodes[dbid].mentioncount,
-                name: state.nodes[dbid].name,
-                nodeID: dbid,
-                parent: state.nodes[dbid].childof,
-                selectionState: state.nodes[dbid].selectionState
+                isinstance: state.nodes[dbid].isinstance
             };
         }
     }
