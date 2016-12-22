@@ -1,16 +1,9 @@
 import * as React                   from 'react';
-import { connect }                  from 'react-redux';
-import { Dispatch }                 from 'redux';
-
-import { IGenericAction }           from '../actions';
-import { expandButtonWasClicked }   from '../actions';
-import { childrenRequestedThunk }   from '../actions';
-
 import { Cell, Grid }               from 'react-mdl';
+import { connect }                  from 'react-redux';
 
 import { IStore }                   from '../interfaces';
 import { SelectionState }           from '../interfaces';
-
 import { NodeCategory }             from './NodeCategory';
 import { NodeCheckbox }             from './NodeCheckbox';
 import { NodeInstance }             from './NodeInstance';
@@ -32,16 +25,9 @@ export interface INode {
     selectionState: SelectionState;
 }
 
-interface INodeDispatchProps {
-    onClickExpand: (id: number) => void;
-    fetchChildren: (id: number) => void;
-}
-
-export class UnconnectedNode extends React.Component<IExtraProps & INode & INodeDispatchProps, {}> {
+export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
     constructor() {
         super();
-
-        this.onClick = this.onClick.bind(this);
     }
 
     static mapStateToProps(state: IStore, ownProps: IExtraProps) {
@@ -74,25 +60,6 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
         }
     }
 
-    static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
-        return {
-            onClickExpand: (id: number) => {
-                dispatch(expandButtonWasClicked(id));
-            },
-            fetchChildren: (id: number) => {
-                dispatch(childrenRequestedThunk(id));
-            }
-        };
-    }
-
-    public onClick(e : any) {
-        e.stopPropagation();
-        console.log(this.props.id);
-
-        this.props.fetchChildren(this.props.id);
-        this.props.onClickExpand(this.props.id);
-    }
-
     render() {
         if (this.props.isinstance) {
             return (
@@ -121,6 +88,5 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode & INode
     }
 }
 
-// Export just the connected component
-export const Node = connect(UnconnectedNode.mapStateToProps,
-                            UnconnectedNode.mapDispatchToProps)(UnconnectedNode);
+// // Export just the connected component
+export const Node = connect(UnconnectedNode.mapStateToProps)(UnconnectedNode);
