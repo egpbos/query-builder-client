@@ -7,7 +7,7 @@ import * as ReactDOM    from 'react-dom';
 import { Provider }     from 'react-redux';
 
 import { Node }         from './components';
-import { QueryBuildButton } from './components';
+import { MentionCounter, QueryBuildButton, QueryClearButton } from './components';
 import { store }        from './store';
 
 import { Cell, Grid }   from 'react-mdl';
@@ -16,7 +16,13 @@ ReactDOM.render(
     <Provider store={store}>
         <div>
             <Grid>
-                <Cell col={9} />
+                <Cell col={3}>
+                    <QueryClearButton />
+                </Cell>
+                <Cell col={3} />
+                <Cell col={3}>
+                    <MentionCounter />
+                </Cell>
                 <Cell col={3}>
                     <QueryBuildButton />
                 </Cell>

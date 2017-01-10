@@ -4,6 +4,7 @@ import { Dispatch }                 from 'redux';
 
 import { IGenericAction }           from '../actions';
 import { selectionWasClicked }      from '../actions';
+import { buildQuery }               from '../actions';
 
 import Checkbox                     from '../Checkbox/Checkbox';
 
@@ -18,6 +19,7 @@ interface IExtraProps {
 }
 
 interface INodeDispatchProps {
+    buildQuery: () => void;
     toggleSelection: (table: string, id: number) => void;
 }
 
@@ -66,6 +68,9 @@ export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INode
 
     static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
         return {
+            buildQuery: () => {
+                dispatch(buildQuery());
+            },
             toggleSelection: (table: string, id: number) => {
                 dispatch(selectionWasClicked(table, id));
             }
@@ -74,6 +79,7 @@ export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INode
 
     public onClickSelect() {
         this.props.toggleSelection(this.props.table, this.props.id);
+        this.props.buildQuery();
     }
 
     render() {

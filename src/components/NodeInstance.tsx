@@ -81,7 +81,7 @@ export class UnconnectedNodeInstance extends React.Component<IExtraProps & INode
 
     render() {
         return (
-            <Button raised accent={this.props.selectionState === SelectionState.Selected} onClick={this.onClickSelect}>
+            <Button raised colored={this.props.selectionState === SelectionState.Selected} onClick={this.onClickSelect}>
                 {this.props.name}
             </Button>
         );

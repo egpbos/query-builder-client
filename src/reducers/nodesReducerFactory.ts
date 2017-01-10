@@ -6,6 +6,7 @@ import { CHILDREN_RECEIVED }            from '../actions';
 import { CHILDREN_REQUESTED }           from '../actions';
 import { EXPAND_BUTTON_WAS_CLICKED }    from '../actions';
 import { SELECTION_WAS_CLICKED }        from '../actions';
+import { CLEAR_QUERY }                  from '../actions';
 import { IGenericAction }               from '../actions';
 
 import { SelectionState }               from '../interfaces';
@@ -16,7 +17,8 @@ const initstate: any = {};
 
 export const nodesReducerFactory = (table : string = '') => {
     return (nodes: any = initstate, action: IGenericAction) => {
-        if (action.payload && action.payload.table !== table) {
+        //Check if the action is meant for this reducer
+        if (action.type !== CLEAR_QUERY && action.payload && action.payload.table !== table) {
             return nodes;
         }
 
@@ -85,8 +87,6 @@ export const nodesReducerFactory = (table : string = '') => {
             return newNodes;
         }
 
-        console.log(new Date().toISOString().slice(11, 19), action.type);
-
         if (action.type === ROOT_RECEIVED) {
             //RootRequestedThunk return point
             const root = action.payload.root;
@@ -123,7 +123,9 @@ export const nodesReducerFactory = (table : string = '') => {
                 if (newParent.children === undefined) {
                     newParent.children = [];
                 }
-                newParent.children.push(payloadNode.id);
+                if (newParent.children.indexOf(payloadNode.id) < 0) {
+                    newParent.children.push(payloadNode.id);
+                }
             });
 
             // The new list of nodes the old list of nodes, except it's a new
@@ -134,7 +136,9 @@ export const nodesReducerFactory = (table : string = '') => {
             // Finally, the payloadNodes need to be added to the new list of
             // nodes, using the id of the payloadNode as the key.
             payloadNodes.forEach((payloadNode: INode) => {
-                newNodes[payloadNode.id] = payloadNode;
+                if (!newNodes[payloadNode.id]) {
+                    newNodes[payloadNode.id] = payloadNode;
+                }
             });
 
             return newNodes;
@@ -167,6 +171,17 @@ export const nodesReducerFactory = (table : string = '') => {
 
             //Update children recursively
             newNodes = recursiveUpdateSelectionStateDown(newNodes, id, newTargetState);
+
+            return newNodes;
+        } else if (action.type === CLEAR_QUERY) {
+            let newNodes = Object.assign({}, nodes);
+
+            const selectedNode = nodes[1];
+
+            newNodes[1] = Object.assign({}, selectedNode, {selectionState: SelectionState.Unselected});
+
+            //Update children recursively
+            newNodes = recursiveUpdateSelectionStateDown(newNodes, 1, SelectionState.Unselected);
 
             return newNodes;
         } else {

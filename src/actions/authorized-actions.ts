@@ -1,5 +1,13 @@
 import { INode } from '../components/Node';
 
+export const ROOT_REQUESTED = 'ROOT_REQUESTED';
+export interface IRootRequestedAction {
+    type: 'ROOT_REQUESTED';
+    payload: {
+        table: string
+    };
+}
+
 export const ROOT_RECEIVED = 'ROOT_RECEIVED';
 export interface IRootReceivedAction {
     type: 'ROOT_RECEIVED';
@@ -9,9 +17,9 @@ export interface IRootReceivedAction {
     };
 }
 
-export const ROOT_REQUESTED = 'ROOT_REQUESTED';
-export interface IRootRequestedAction {
-    type: 'ROOT_REQUESTED';
+export const CHILDREN_REQUESTED = 'CHILDREN_REQUESTED';
+export interface IChildrenRequestedAction {
+    type: 'CHILDREN_REQUESTED';
     payload: {
         table: string
     };
@@ -23,14 +31,6 @@ export interface IChildrenReceivedAction {
     payload: {
         table: string,
         nodes: any
-    };
-}
-
-export const CHILDREN_REQUESTED = 'CHILDREN_REQUESTED';
-export interface IChildrenRequestedAction {
-    type: 'CHILDREN_REQUESTED';
-    payload: {
-        table: string
     };
 }
 
@@ -52,9 +52,51 @@ export interface ISelectionWasClickedAction {
     };
 }
 
+export const CLEAR_QUERY = 'CLEAR_QUERY';
+export interface IClearQueryAction {
+    type: 'CLEAR_QUERY';
+    payload: {
+    };
+}
+
 export const BUILD_QUERY = 'BUILD_QUERY';
 export interface IBuildQueryAction {
     type: 'BUILD_QUERY';
+    payload: {
+    };
+}
+
+export const STORE_QUERY = 'STORE_QUERY';
+export interface IStoreQueryAction {
+    type: 'STORE_QUERY';
+    payload: {
+    };
+}
+
+export const OPEN_BUILD_QUERY_DIALOG = 'OPEN_BUILD_QUERY_DIALOG';
+export interface IStoreOpenBuildQueryDialogAction {
+    type: 'OPEN_BUILD_QUERY_DIALOG';
+    payload: {
+    };
+}
+
+export const CLOSE_BUILD_QUERY_DIALOG = 'CLOSE_BUILD_QUERY_DIALOG';
+export interface IStoreCloseBuildQueryDialogAction {
+    type: 'CLOSE_BUILD_QUERY_DIALOG';
+    payload: {
+    };
+}
+
+export const OPEN_CLEAR_QUERY_DIALOG = 'OPEN_CLEAR_QUERY_DIALOG';
+export interface IStoreOpenClearQueryDialogAction {
+    type: 'OPEN_CLEAR_QUERY_DIALOG';
+    payload: {
+    };
+}
+
+export const CLOSE_CLEAR_QUERY_DIALOG = 'CLOSE_CLEAR_QUERY_DIALOG';
+export interface IStoreCloseClearQueryDialogAction {
+    type: 'CLOSE_CLEAR_QUERY_DIALOG';
     payload: {
     };
 }
