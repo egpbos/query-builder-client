@@ -131,7 +131,7 @@ export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButt
                 <Dialog key="buildDialog" open={this.props.dialogOpen} onCancel={this.handleCloseDialog}>
                     <DialogTitle component="h4">Do you want to send the following query to the KnowledgeStore?</DialogTitle>
                     <DialogContent>
-                        <p>
+                        <div>
                             {(queryEntities.length > 0) ? <b>Entities</b> : <div />}
                             {(queryEntities.length > 0) ? queryEntities : <div />}
 
@@ -143,13 +143,13 @@ export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButt
 
                             {(queryTopics.length > 0) ? <b>Topics</b> : <div />}
                             {(queryTopics.length > 0) ? queryTopics : <div />}
-                        </p>
-                        <p>
+                        </div>
+                        <div>
                             <b>Resulting Query String:</b>
-                        </p>
-                        <p>
+                        </div>
+                        <div>
                             {this.props.query.queryString}
-                        </p>
+                        </div>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.clickStoreQuery}>Perform Query</Button>

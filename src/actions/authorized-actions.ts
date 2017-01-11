@@ -100,3 +100,21 @@ export interface IStoreCloseClearQueryDialogAction {
     payload: {
     };
 }
+
+export const TEXT_SEARCH = 'TEXT_SEARCH';
+export interface ITextSearchAction {
+    type: 'TEXT_SEARCH';
+    payload: {
+        table: string,
+        input: string
+    };
+}
+
+export const TEXT_SEARCH_RESULT_RECEIVED = 'TEXT_SEARCH_RESULT_RECEIVED';
+export interface ITextSearchResultReceivedAction {
+    type: 'TEXT_SEARCH_RESULT_RECEIVED';
+    payload: {
+        table: string,
+        nodes: number[]
+    };
+}

@@ -30,7 +30,7 @@ export class UnconnectedMentionCounter extends React.Component<IMentionCounter, 
 
     render() {
         return (
-            <div className="mdl-textfield mdl-js-textfield">
+            <div className="mdl-textfield mdl-js-textfield mentioncounter">
                 Selected Mentions: {this.props.selectedMentionCount ? this.props.selectedMentionCount : 0}
             </div>
         );

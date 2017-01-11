@@ -26,6 +26,7 @@ export interface INode {
     name: string;
     parent: number;
     selectionState: SelectionState;
+    highlighted: boolean;
 }
 
 export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
@@ -57,7 +58,8 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
                 name: 'undefined',
                 nodeID: dbid,
                 parent: -1,
-                selectionState: SelectionState.Unselected
+                selectionState: SelectionState.Unselected,
+                highlighted: false
             };
         } else {
             return {
@@ -69,7 +71,8 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
                 name: nodes[dbid].name,
                 nodeID: dbid,
                 parent: nodes[dbid].childof,
-                selectionState: nodes[dbid].selectionState
+                selectionState: nodes[dbid].selectionState,
+                highlighted: nodes[dbid].highlighted
             };
         }
     }
@@ -90,7 +93,7 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
                 );
             }
             return (
-                <Grid className={'mdl-cell--12-col category'}>
+                <Grid className={this.props.highlighted ? 'mdl-cell--12-col category highlighted' : 'mdl-cell--12-col category'}>
                     <Cell col={12} className="categoryTitleBar">
                         <NodeCheckbox table={this.props.table} nodeID={this.props.id} />
                         <NodeCategory table={this.props.table} nodeID={this.props.id} />

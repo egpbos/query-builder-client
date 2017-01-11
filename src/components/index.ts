@@ -7,3 +7,4 @@ export { NodeCheckbox }  from './NodeCheckbox';
 export { MentionCounter }  from './MentionCounter';
 export { QueryBuildButton }  from './QueryBuildButton';
 export { QueryClearButton }  from './QueryClearButton';
+export { Searchbox }  from './Searchbox';

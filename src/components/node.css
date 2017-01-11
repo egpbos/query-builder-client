@@ -8,3 +8,11 @@
   flex-flow: row wrap;
   justify-content: space-between;
 }
+
+.highlighted {
+  background-color:darkred;
+}
+
+.notHighlighted {
+  background-color:white;
+}

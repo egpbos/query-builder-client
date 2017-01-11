@@ -10,7 +10,7 @@ export { childrenRequestedThunk }     from './childrenRequestedThunk';
 export { childrenRequested }          from './childrenRequested';
 
 export { CHILDREN_RECEIVED }          from './authorized-actions';
-export { childrenReceived }          from './childrenReceived';
+export { childrenReceived }           from './childrenReceived';
 
 export { ROOT_REQUESTED }             from './authorized-actions';
 export { rootRequestedThunk }         from './rootRequestedThunk';
@@ -42,3 +42,10 @@ export { openClearQueryDialog }       from './openClearQueryDialog';
 
 export { CLOSE_CLEAR_QUERY_DIALOG }   from './authorized-actions';
 export { closeClearQueryDialog }      from './closeClearQueryDialog';
+
+export { TEXT_SEARCH }                from './authorized-actions';
+export { textSearch }                 from './textSearch';
+export { textSearchThunk }            from './textSearchThunk';
+
+export { TEXT_SEARCH_RESULT_RECEIVED }from './authorized-actions';
+export { textSearchResultReceived }   from './textSearchResultReceived';

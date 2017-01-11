@@ -1,10 +1,10 @@
-import { CLEAR_QUERY }          from '../actions';
-import { BUILD_QUERY }          from '../actions';
-import { STORE_QUERY }          from '../actions';
-import { OPEN_BUILD_QUERY_DIALOG }    from '../actions';
-import { OPEN_CLEAR_QUERY_DIALOG }    from '../actions';
-import { CLOSE_BUILD_QUERY_DIALOG }   from '../actions';
-import { CLOSE_CLEAR_QUERY_DIALOG }   from '../actions';
+import { CLEAR_QUERY }                  from '../actions';
+import { BUILD_QUERY }                  from '../actions';
+import { STORE_QUERY }                  from '../actions';
+import { OPEN_BUILD_QUERY_DIALOG }      from '../actions';
+import { OPEN_CLEAR_QUERY_DIALOG }      from '../actions';
+import { CLOSE_BUILD_QUERY_DIALOG }     from '../actions';
+import { CLOSE_CLEAR_QUERY_DIALOG }     from '../actions';
 
 import { IGenericAction } from '../actions';
 
@@ -119,6 +119,7 @@ export const queryReducer =  (state: any = initstate, action: IGenericAction) =>
     } else if (action.type === CLOSE_CLEAR_QUERY_DIALOG) {
         return Object.assign({}, state.queryState, {isQueryClearDialogOpen: false});
     } else if (action.type === STORE_QUERY) {
+        //Needs something done
         return state.queryState;
     } else {
         return state.queryState;

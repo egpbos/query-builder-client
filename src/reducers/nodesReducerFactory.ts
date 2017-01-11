@@ -8,12 +8,13 @@ import { EXPAND_BUTTON_WAS_CLICKED }    from '../actions';
 import { SELECTION_WAS_CLICKED }        from '../actions';
 import { CLEAR_QUERY }                  from '../actions';
 import { IGenericAction }               from '../actions';
+import { TEXT_SEARCH_RESULT_RECEIVED }  from '../actions';
 
 import { SelectionState }               from '../interfaces';
 
 import { INode }                        from '../components/Node';
 
-const initstate: any = {};
+const initstate: any = { textSearchResults: []};
 
 export const nodesReducerFactory = (table : string = '') => {
     return (nodes: any = initstate, action: IGenericAction) => {
@@ -87,6 +88,22 @@ export const nodesReducerFactory = (table : string = '') => {
             return newNodes;
         }
 
+        /*
+            Updates the highlight state of nodes based on the new highlight state, 
+            and does so for all parents, grandparents etc. recursively up the tree.
+        */
+        // function recursiveUpdateHightlightStateUp(newNodes: any, highlightID : number, shouldHighlight : boolean) {
+        //     const selectedNode = newNodes[highlightID];
+        //     const parentID = selectedNode.parent;
+        //     if (parentID !== -1) {
+        //         newNodes[parentID] = Object.assign({}, nodes[parentID], {highlighted: shouldHighlight});
+
+        //         newNodes = recursiveUpdateHightlightStateUp(newNodes, parentID, shouldHighlight);
+        //     }
+
+        //     return newNodes;
+        // }
+
         if (action.type === ROOT_RECEIVED) {
             //RootRequestedThunk return point
             const root = action.payload.root;
@@ -138,6 +155,14 @@ export const nodesReducerFactory = (table : string = '') => {
             payloadNodes.forEach((payloadNode: INode) => {
                 if (!newNodes[payloadNode.id]) {
                     newNodes[payloadNode.id] = payloadNode;
+                    const searchResultsArray = Object.keys(nodes.textSearchResults).map((key) => {
+                        return nodes.textSearchResults[key];
+                    });
+                    if (searchResultsArray.indexOf(payloadNode.id) >= 0) {
+                        newNodes[payloadNode.id] = Object.assign({}, newNodes[payloadNode.id], {highlighted: true});
+                    } else {
+                        newNodes[payloadNode.id] = Object.assign({}, newNodes[payloadNode.id], {highlighted: false});
+                    }
                 }
             });
 
@@ -184,7 +209,29 @@ export const nodesReducerFactory = (table : string = '') => {
             newNodes = recursiveUpdateSelectionStateDown(newNodes, 1, SelectionState.Unselected);
 
             return newNodes;
-        } else {
+        } else if (action.type === TEXT_SEARCH_RESULT_RECEIVED) {
+            //TextSearchThunk return point
+            const newNodes = Object.assign({}, nodes, {textSearchResults: action.payload.nodes});
+
+            const payloadNodeIDs = action.payload.nodes;
+
+            Object.keys(nodes).forEach((key) => {
+                if (key !== 'textSearchResults') {
+                    const node = nodes[key];
+                    newNodes[key] = Object.assign({}, node, {highlighted: false});
+                }
+            });
+
+            payloadNodeIDs.forEach((payloadNodeID: number) => {
+                const id = payloadNodeID;
+                const node = nodes[id];
+                if (node !== undefined) {
+                    newNodes[id] = Object.assign({}, node, {highlighted: true});
+                }
+            });
+
+            return newNodes;
+         } else {
             return nodes;
         }
     };
