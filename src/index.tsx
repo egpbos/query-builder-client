@@ -1,28 +1,9 @@
-import * as React       from 'react';
-import * as ReactDOM    from 'react-dom';
+import * as React                 from 'react';
+import * as ReactDOM              from 'react-dom';
 
-import { Folder }       from './components';
-
-const state = {
-    1: {
-        children: [2, 3],
-        dbid: 1,
-        isinstance: false,
-        name: 'node1'
-    },
-    2: {
-        children: [],
-        dbid: 2,
-        isinstance: false,
-        name: 'node2'
-    },
-    3: {
-        children: [],
-        dbid: 3,
-        isinstance: true,
-        name: 'node3'
-    }
-};
+import { childrenRequestedThunk } from './actions';
+import { Folder }                 from './components';
+import { store }                  from './store';
 
 const onClickCheckBox = (dbid: number) => {
     console.log('clicked on checkbox with id ' + dbid.toString());
@@ -34,6 +15,7 @@ const onClickFile = (dbid: number) => {
 
 const onClickFolder = (dbid: number) => {
     console.log('clicked on folder with id ' + dbid.toString());
+    store.dispatch(childrenRequestedThunk(dbid));
 };
 
 const methods = {
@@ -42,7 +24,9 @@ const methods = {
     onClickFolder
 };
 
+const entities = store.getState();
+
 ReactDOM.render(
-    <Folder key={1} dbid={1} state={state} methods={methods} />,
+    <Folder key={1} dbid={1} methods={methods} entities={entities} />,
     document.getElementById('root')
 );

@@ -1,0 +1,1 @@
+export { entitiesReducer } from './entitiesReducer';
