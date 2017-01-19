@@ -3,7 +3,7 @@ import { connect }  from 'react-redux';
 import { Dispatch } from 'react-redux';
 
 import { childrenRequestedThunk } from '../actions';
-import { Folder }                 from '../components';
+import { Folder }         from '../components';
 import { IGenericAction }         from '../interfaces';
 
 export class UnconnectedTree extends React.Component<any, any> {
@@ -12,22 +12,10 @@ export class UnconnectedTree extends React.Component<any, any> {
     }
 
     render(): JSX.Element {
-        // Folder needs to call itself recursively. Currently Tree can render 1 layer deep onCLick
         const dbidRoot = 1;
-        const me = this.props.entities[dbidRoot];
-        let childFolders: JSX.Element[] = [];
-        if (me.hasOwnProperty('children') && me.children !== undefined) {
-            childFolders = me.children.map((childId: number) => {
-                return (
-                    <Folder dbid={childId} key={childId} entities={this.props.entities} onClickFolder={this.props.onClickFolder}/>
-                );
-            });
-        }
+        const { entities, onClickFolder, onClickFile } = this.props;
         return (
-            <div>
-                <Folder dbid={dbidRoot} key={dbidRoot} entities={this.props.entities} onClickFolder={this.props.onClickFolder}/>
-                <div>{childFolders}</div>
-            </div>
+            <Folder key={dbidRoot} dbid={dbidRoot} entities={entities} onClickFolder={onClickFolder} onClickFile={onClickFile}/>
         );
     }
 }
@@ -42,6 +30,9 @@ const mapDispatchToProps = (dispatch: Dispatch<IGenericAction>) => {
     return {
         onClickFolder: (dbid: number) => {
             dispatch(childrenRequestedThunk(dbid));
+        },
+        onClickFile: (dbid: number) => {
+            console.log('clicked file with dbid=' + dbid.toString());
         }
     };
 };

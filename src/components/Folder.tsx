@@ -1,5 +1,7 @@
 import * as React   from 'react';
 
+import { FolderContents }         from '../components';
+
 export class Folder extends React.Component<any, any> {
     constructor() {
         super();
@@ -12,13 +14,13 @@ export class Folder extends React.Component<any, any> {
 
     render(): JSX.Element {
 
-        const myProps = this.props.entities[this.props.dbid];
-
-        const {name} = myProps;
+        const { name } = this.props.entities[this.props.dbid];
+        const { dbid, entities, onClickFolder } = this.props;
 
         return (
             <div onClick={this.onClickFolder}>
                 {name}
+                <FolderContents dbid={dbid} entities={entities} onClickFolder={onClickFolder}/>
             </div>
         );
     }

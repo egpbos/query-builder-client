@@ -15,8 +15,8 @@ export class File extends React.Component<any, any> {
     }
 
     render(): JSX.Element {
-        const myProps = this.props.state[this.props.dbid];
-        const {name} = myProps;
+
+        const {name} = this.props.state[this.props.dbid];
 
         return (
             <Button onClick={this.onClickFile}>
