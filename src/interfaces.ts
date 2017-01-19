@@ -16,24 +16,10 @@ export interface IDatabaseRecord {
     url:            string;
 }
 
-// export interface INode {
-//     childof: number;
-//     id: number;
-//     isentity: boolean;
-//     isleaf: boolean;
-//     isinstance: boolean;
-//     level: number;
-//     mentioncount: number;
-//     name: string;
-//     url: string;
-//     isexpanded: boolean;
-//     selectionState: SelectionState;
-//     children: INode[];
-// }
-
 export interface IStore {
     entities: any;
     events: any;
     sources: any;
     topics: any;
+    queryState: any;
 }

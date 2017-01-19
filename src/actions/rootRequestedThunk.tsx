@@ -30,7 +30,8 @@ export const rootRequestedThunk = (table: string) => {
                     mentioncount:   dbrecord.mentioncount,
                     name:           dbrecord.name,
                     parent:         dbrecord.childof,
-                    selectionState: SelectionState.Unselected
+                    selectionState: SelectionState.Unselected,
+                    highlighted:    false
                 } as INode;
             };
             //Since this is the root, we expect only 1 element, and therefore 

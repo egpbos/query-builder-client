@@ -29,7 +29,8 @@ export const childrenRequestedThunk = (table: string, id: number) => {
                     mentioncount:   dbrecord.mentioncount,
                     name:           dbrecord.name,
                     parent:         dbrecord.childof,
-                    selectionState: SelectionState.Unselected
+                    selectionState: SelectionState.Unselected,
+                    highlighted:    false
                 } as INode;
             };
 
