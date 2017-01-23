@@ -5,7 +5,7 @@ import { IGenericAction }      from '../interfaces';
 const initstate = {
     [1]: {
         dbid: 1,
-        isinstance: false,
+        isfile: false,
         name: 'root'
     }
 };

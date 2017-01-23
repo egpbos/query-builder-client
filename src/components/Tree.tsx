@@ -3,7 +3,7 @@ import { connect }  from 'react-redux';
 import { Dispatch } from 'react-redux';
 
 import { childrenRequestedThunk } from '../actions';
-import { Folder }         from '../components';
+import { Folder }                 from '../components';
 import { IGenericAction }         from '../interfaces';
 
 export class UnconnectedTree extends React.Component<any, any> {
@@ -15,7 +15,13 @@ export class UnconnectedTree extends React.Component<any, any> {
         const dbidRoot = 1;
         const { entities, onClickFolder, onClickFile } = this.props;
         return (
-            <Folder key={dbidRoot} dbid={dbidRoot} entities={entities} onClickFolder={onClickFolder} onClickFile={onClickFile}/>
+            <Folder
+                key={dbidRoot}
+                dbid={dbidRoot}
+                entities={entities}
+                onClickFolder={onClickFolder}
+                onClickFile={onClickFile}
+            />
         );
     }
 }

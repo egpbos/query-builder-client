@@ -12,32 +12,38 @@ export class FolderContents extends React.Component<any, any> {
 
         const { entities, dbid, onClickFolder, onClickFile } = this.props;
 
-        let childFolders: JSX.Element[];
-        let childFiles: JSX.Element[];
+        const hasChildren = entities[dbid].hasOwnProperty('children') && entities[dbid].children !== undefined;
 
-        if (entities[dbid].hasOwnProperty('children') && entities[dbid].children !== undefined) {
-            childFolders = entities[dbid].children.map((childId: number) => {
-                if (entities.hasOwnProperty(childId) && entities[childId].isinstance !== true) {
-                    return (<Folder key={childId} dbid={childId} entities={entities} onClickFolder={onClickFolder}/>);
+        let children: JSX.Element[] = [];
+
+        if (hasChildren) {
+            children = entities[dbid].children.map((childId: number) => {
+                if (entities.hasOwnProperty(childId)) {
+                    if (entities[childId].isfile !== true) {
+                        return (<Folder
+                            key={childId}
+                            dbid={childId}
+                            entities={entities}
+                            onClickFolder={onClickFolder}
+                            onClickFile={onClickFile}
+                        />);
+                    } else {
+                        return (<File
+                            key={childId}
+                            dbid={childId}
+                            entities={entities}
+                            onClickFile={onClickFile}
+                        />);
+                    }
                 } else {
                     return;
                 }
             });
-            childFiles = entities[dbid].children.map((childId: number) => {
-                if (entities.hasOwnProperty(childId) && entities[childId].isinstance === true) {
-                    return (<File key={childId} dbid={childId} entities={entities} onClickFile={onClickFile}/>);
-                } else {
-                    return;
-                }
-            });
-        } else {
-            return (<div />);
         }
 
         return (
             <div>
-                {childFolders}
-                {childFiles}
+                {children}
             </div>
         );
     }

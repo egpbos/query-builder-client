@@ -15,12 +15,17 @@ export class Folder extends React.Component<any, any> {
     render(): JSX.Element {
 
         const { name } = this.props.entities[this.props.dbid];
-        const { dbid, entities, onClickFolder } = this.props;
+        const { dbid, entities, onClickFolder, onClickFile } = this.props;
 
         return (
-            <div onClick={this.onClickFolder}>
-                {name}
-                <FolderContents dbid={dbid} entities={entities} onClickFolder={onClickFolder}/>
+            <div>
+                <span onClick={this.onClickFolder}>{name}</span>
+                <FolderContents
+                    dbid={dbid}
+                    entities={entities}
+                    onClickFolder={onClickFolder}
+                    onClickFile={onClickFile}
+                />
             </div>
         );
     }

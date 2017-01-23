@@ -11,12 +11,12 @@ export class File extends React.Component<any, any> {
     }
 
     onClickFile() {
-        this.props.methods.onClickFile(this.props.dbid);
+        this.props.onClickFile(this.props.dbid);
     }
 
     render(): JSX.Element {
 
-        const {name} = this.props.state[this.props.dbid];
+        const { name } = this.props.entities[this.props.dbid];
 
         return (
             <Button onClick={this.onClickFile}>
