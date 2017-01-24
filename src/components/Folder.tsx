@@ -1,5 +1,6 @@
 import * as React         from 'react';
 import { Cell, Grid }     from 'react-mdl';
+import { Checkbox }       from 'react-mdl';
 
 import { FolderContents } from '../components';
 
@@ -8,6 +9,7 @@ import './Folder.css';
 export class Folder extends React.Component<any, any> {
     constructor() {
         super();
+        this.onClickCheckbox = this.onClickCheckbox.bind(this);
         this.onClickFolder = this.onClickFolder.bind(this);
     }
 
@@ -15,10 +17,14 @@ export class Folder extends React.Component<any, any> {
         this.props.onClickFolder(this.props.dbid);
     }
 
+    onClickCheckbox() {
+        this.props.onClickCheckbox(this.props.dbid);
+    }
+
     render(): JSX.Element {
 
         const { name } = this.props.entities[this.props.dbid];
-        const { dbid, entities, onClickFolder, onClickFile } = this.props;
+        const { dbid, entities, onClickFolder, onClickFile, onClickCheckbox } = this.props;
         const highlighted = true;
         let classNameStr: string = 'mdl-cell--12-col category';
         if (highlighted === true) {
@@ -29,12 +35,16 @@ export class Folder extends React.Component<any, any> {
             <div>
                 <Grid className={classNameStr}>
                     <Cell col={12} className="categoryTitleBar">
-                        <span className="categoryText" onClick={this.onClickFolder}>{name}</span>
+                        <Checkbox onClick={this.onClickCheckbox}/>
+                        <span className="categoryText" onClick={this.onClickFolder}>
+                            {name}
+                        </span>
                         <FolderContents
                             dbid={dbid}
                             entities={entities}
                             onClickFolder={onClickFolder}
                             onClickFile={onClickFile}
+                            onClickCheckbox={onClickCheckbox}
                         />
                     </Cell>
                 </Grid>

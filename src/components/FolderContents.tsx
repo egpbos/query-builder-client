@@ -10,7 +10,7 @@ export class FolderContents extends React.Component<any, any> {
 
     render(): JSX.Element {
 
-        const { entities, dbid, onClickFolder, onClickFile } = this.props;
+        const { entities, dbid, onClickFolder, onClickFile, onClickCheckbox } = this.props;
 
         const hasChildren = entities[dbid].hasOwnProperty('children') && entities[dbid].children !== undefined;
 
@@ -26,6 +26,7 @@ export class FolderContents extends React.Component<any, any> {
                             entities={entities}
                             onClickFolder={onClickFolder}
                             onClickFile={onClickFile}
+                            onClickCheckbox={onClickCheckbox}
                         />);
                     } else {
                         return (<File

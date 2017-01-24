@@ -7,13 +7,14 @@ import { Folder }                 from '../components';
 import { IGenericAction }         from '../interfaces';
 
 export class UnconnectedTree extends React.Component<any, any> {
+
     constructor() {
         super();
     }
 
     render(): JSX.Element {
         const dbidRoot = 1;
-        const { entities, onClickFolder, onClickFile } = this.props;
+        const { entities, onClickFolder, onClickFile, onClickCheckbox } = this.props;
         return (
             <Folder
                 key={dbidRoot}
@@ -21,6 +22,7 @@ export class UnconnectedTree extends React.Component<any, any> {
                 entities={entities}
                 onClickFolder={onClickFolder}
                 onClickFile={onClickFile}
+                onClickCheckbox={onClickCheckbox}
             />
         );
     }
@@ -39,6 +41,9 @@ const mapDispatchToProps = (dispatch: Dispatch<IGenericAction>) => {
         },
         onClickFile: (dbid: number) => {
             console.log('clicked file with dbid=' + dbid.toString());
+        },
+        onClickCheckbox: (dbid: number) => {
+            console.log('clicked checkbox with dbid=' + dbid.toString());
         }
     };
 };
