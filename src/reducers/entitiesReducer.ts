@@ -7,6 +7,16 @@ import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
 import { IGenericAction }                   from '../interfaces';
 
+const deepCopyWithChange = (entities: any, dbid: number, change: any): any => {
+        const oldEntity = entities[dbid];
+        const newEntity = Object.assign({}, oldEntity, change);
+        // deep copy of nonprimitive property 'children'
+        if (oldEntity.hasOwnProperty('children') && oldEntity.children !== undefined) {
+            newEntity.children = [...oldEntity.children];
+        }
+        return Object.assign({}, entities, {[dbid]: newEntity});
+};
+
 const initstate = {
     [-1]: {
         children: undefined,
@@ -34,9 +44,7 @@ export const entitiesReducer = (entities: any = initstate, action: IGenericActio
         //With a deep copy of its children array.
         newParent.children = [];
         if (oldParent.hasOwnProperty('children') && oldParent.children !== undefined) {
-            oldParent.children.forEach((child: number) => {
-                newParent.children.push(child);
-            });
+            newParent.children = [...oldParent.children];
         }
 
         // Add the dbid of each payloadChild to the parent's list of children
@@ -60,39 +68,23 @@ export const entitiesReducer = (entities: any = initstate, action: IGenericActio
         return entities;
 
     } else if (action.type === EXPAND_FOLDER_WAS_CLICKED) {
-        const oldEntity = entities[action.payload.dbid];
-        const newEntity = Object.assign({}, oldEntity, {expanded: true});
-        // deep copy of nonprimitive property 'children'
-        if (oldEntity.hasOwnProperty('children') && oldEntity.children !== undefined) {
-            newEntity.children = [...oldEntity.children];
-        }
-        return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
+
+        return deepCopyWithChange(entities, action.payload.dbid, {expanded: true});
 
     } else if (action.type === COLLAPSE_FOLDER_WAS_CLICKED) {
-        const oldEntity = entities[action.payload.dbid];
-        const newEntity = Object.assign({}, oldEntity, {expanded: false});
-        // deep copy of nonprimitive property 'children'
-        if (oldEntity.hasOwnProperty('children') && oldEntity.children !== undefined) {
-            newEntity.children = [...oldEntity.children];
-        }
-        return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
+
+        return deepCopyWithChange(entities, action.payload.dbid, {expanded: false});
 
     } else if (action.type === TOGGLE_FILE_SELECTED_WAS_CLICKED) {
-        const oldEntity = entities[action.payload.dbid];
-        const newEntity = Object.assign({}, oldEntity, {selected: !oldEntity.selected});
-        // deep copy of nonprimitive property 'children'
-        if (oldEntity.hasOwnProperty('children') && oldEntity.children !== undefined) {
-            newEntity.children = [...oldEntity.children];
-        }
-        return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
+
+        const selected = entities[action.payload.dbid].selected;
+        return deepCopyWithChange(entities, action.payload.dbid, {selected: !selected});
+
     } else if (action.type === TOGGLE_FOLDER_SELECTED_WAS_CLICKED) {
-        const oldEntity = entities[action.payload.dbid];
-        const newEntity = Object.assign({}, oldEntity, {selected: !oldEntity.selected});
-        // deep copy of nonprimitive property 'children'
-        if (oldEntity.hasOwnProperty('children') && oldEntity.children !== undefined) {
-            newEntity.children = [...oldEntity.children];
-        }
-        return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
+
+        const selected = entities[action.payload.dbid].selected;
+        return deepCopyWithChange(entities, action.payload.dbid, {selected: !selected});
+
     } else {
         return entities;
 
