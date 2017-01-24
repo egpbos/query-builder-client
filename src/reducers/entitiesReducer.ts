@@ -3,6 +3,7 @@ import { CHILDREN_REQUESTED }               from '../actions';
 import { COLLAPSE_FOLDER_WAS_CLICKED }      from '../actions';
 import { EXPAND_FOLDER_WAS_CLICKED }        from '../actions';
 import { TOGGLE_FILE_SELECTED_WAS_CLICKED } from '../actions';
+import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
 import { IGenericAction }                   from '../interfaces';
 
@@ -84,7 +85,14 @@ export const entitiesReducer = (entities: any = initstate, action: IGenericActio
             newEntity.children = [...oldEntity.children];
         }
         return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
-
+    } else if (action.type === TOGGLE_FOLDER_SELECTED_WAS_CLICKED) {
+        const oldEntity = entities[action.payload.dbid];
+        const newEntity = Object.assign({}, oldEntity, {selected: !oldEntity.selected});
+        // deep copy of nonprimitive property 'children'
+        if (oldEntity.hasOwnProperty('children') && oldEntity.children !== undefined) {
+            newEntity.children = [...oldEntity.children];
+        }
+        return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
     } else {
         return entities;
 

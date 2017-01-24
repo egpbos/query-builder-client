@@ -55,7 +55,7 @@ export class Folder extends React.Component<any, any> {
                 <Grid className={'mdl-cell--12-col category'}>
                     <Cell col={12} className="categoryTitleBar">
                         <Checkbox onClick={this.onClickCheckbox}/>
-                        <span className="categoryText" onClick={this.onClickFolder}>
+                        <span className="categoryText" onClick={this.onClickFolder} >
                             {name}
                         </span>
                         {this.renderFolderContents(expanded)}
