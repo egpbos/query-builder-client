@@ -25,7 +25,8 @@ export const childrenRequestedThunk = (dbid: number) => {
                     expanded: false,
                     isfile:   dbrecord.isinstance === 1 ? true : false,
                     name:     dbrecord.name,
-                    parent:   dbrecord.childof
+                    parent:   dbrecord.childof,
+                    selected: false
                 };
             };
 

@@ -27,12 +27,12 @@ export class Folder extends React.Component<any, any> {
         this.props.onClickCheckbox(this.props.dbid);
     }
 
-    public renderFolderContents(expanded: boolean) {
+    public renderFolderContents(expanded: boolean): JSX.Element {
+
+        const { dbid, entities} = this.props;
+        const { onClickFolder, onClickFile, onClickCheckbox } = this.props;
+
         if (expanded) {
-
-            const { dbid, entities} = this.props;
-            const { onClickFolder, onClickFile, onClickCheckbox } = this.props;
-
             return (
                 <FolderContents
                     dbid={dbid}
@@ -42,7 +42,7 @@ export class Folder extends React.Component<any, any> {
                     onClickCheckbox={onClickCheckbox}
                 />);
         } else {
-            return;
+            return (<div />);
         }
     }
 

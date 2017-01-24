@@ -2,11 +2,12 @@ import * as React   from 'react';
 import { connect }  from 'react-redux';
 import { Dispatch } from 'react-redux';
 
-import { childrenRequestedThunk }   from '../actions';
-import { collapseFolderWasClicked } from '../actions';
-import { expandFolderWasClicked }   from '../actions';
-import { Folder }                   from '../components';
-import { IGenericAction }           from '../interfaces';
+import { childrenRequestedThunk }       from '../actions';
+import { collapseFolderWasClicked }     from '../actions';
+import { expandFolderWasClicked }       from '../actions';
+import { toggleFileSelectedWasClicked } from '../actions';
+import { FolderContents }               from '../components';
+import { IGenericAction }               from '../interfaces';
 
 export class UnconnectedTree extends React.Component<any, any> {
 
@@ -15,10 +16,10 @@ export class UnconnectedTree extends React.Component<any, any> {
     }
 
     render(): JSX.Element {
-        const dbidRoot = 1;
+        const dbidRoot = -1;
         const { entities, onClickFolder, onClickFile, onClickCheckbox } = this.props;
         return (
-            <Folder
+            <FolderContents
                 key={dbidRoot}
                 dbid={dbidRoot}
                 entities={entities}
@@ -52,6 +53,7 @@ const mapDispatchToProps = (dispatch: Dispatch<IGenericAction>) => {
 
     const onClickFile = (dbid: number) => {
         console.log('clicked file with dbid=' + dbid.toString());
+        dispatch(toggleFileSelectedWasClicked(dbid));
     };
 
     const onClickCheckbox = (dbid: number) => {
