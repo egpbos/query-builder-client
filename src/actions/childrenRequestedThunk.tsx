@@ -2,6 +2,7 @@ import { Dispatch }           from 'redux';
 
 import { childrenReceived }   from '../actions';
 import { childrenRequested }  from '../actions';
+import { expandFolderWasClicked }  from '../actions';
 import { IGenericAction }     from '../interfaces';
 import { IDatabaseRecord }    from '../interfaces';
 
@@ -19,16 +20,18 @@ export const childrenRequestedThunk = (dbid: number) => {
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseRecord) => {
                 return {
-                    children:  [],
-                    dbid:      dbrecord.id,
-                    isfile:    dbrecord.isinstance === 1 ? true : false,
-                    name:      dbrecord.name,
-                    parent:    dbrecord.childof
+                    children: undefined,
+                    dbid:     dbrecord.id,
+                    expanded: false,
+                    isfile:   dbrecord.isinstance === 1 ? true : false,
+                    name:     dbrecord.name,
+                    parent:   dbrecord.childof
                 };
             };
 
             const entities = dbrecords.map(convert);
             dispatch(childrenReceived(entities));
+            dispatch(expandFolderWasClicked(dbid));
         };
 
         const handleAnyErrors = (err: Error) => {

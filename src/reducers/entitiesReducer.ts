@@ -1,10 +1,13 @@
-import { CHILDREN_RECEIVED }   from '../actions';
-import { CHILDREN_REQUESTED }  from '../actions';
-import { IGenericAction }      from '../interfaces';
+import { CHILDREN_RECEIVED }           from '../actions';
+import { CHILDREN_REQUESTED }          from '../actions';
+import { EXPAND_FOLDER_WAS_CLICKED }   from '../actions';
+import { COLLAPSE_FOLDER_WAS_CLICKED } from '../actions';
+import { IGenericAction }              from '../interfaces';
 
 const initstate = {
     [1]: {
         dbid: 1,
+        expanded: true,
         isfile: false,
         name: 'root'
     }
@@ -53,6 +56,16 @@ export const entitiesReducer = (entities: any = initstate, action: IGenericActio
         }
     } else if (action.type === CHILDREN_REQUESTED) {
         return entities;
+    } else if (action.type === EXPAND_FOLDER_WAS_CLICKED) {
+        const oldEntity = entities[action.payload.dbid];
+        const newEntity = Object.assign({}, oldEntity, {expanded: true});
+        console.warn('TODO deep copy of nonprimitve properties.');
+        return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
+    } else if (action.type === COLLAPSE_FOLDER_WAS_CLICKED) {
+        const oldEntity = entities[action.payload.dbid];
+        const newEntity = Object.assign({}, oldEntity, {expanded: false});
+        console.warn('TODO deep copy of nonprimitve properties.');
+        return Object.assign({}, entities, {[action.payload.dbid]: newEntity});
     } else {
         return entities;
     }

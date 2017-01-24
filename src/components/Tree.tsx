@@ -2,9 +2,11 @@ import * as React   from 'react';
 import { connect }  from 'react-redux';
 import { Dispatch } from 'react-redux';
 
-import { childrenRequestedThunk } from '../actions';
-import { Folder }                 from '../components';
-import { IGenericAction }         from '../interfaces';
+import { childrenRequestedThunk }   from '../actions';
+import { collapseFolderWasClicked } from '../actions';
+import { expandFolderWasClicked }   from '../actions';
+import { Folder }                   from '../components';
+import { IGenericAction }           from '../interfaces';
 
 export class UnconnectedTree extends React.Component<any, any> {
 
@@ -35,16 +37,31 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<IGenericAction>) => {
-    return {
-        onClickFolder: (dbid: number) => {
-            dispatch(childrenRequestedThunk(dbid));
-        },
-        onClickFile: (dbid: number) => {
-            console.log('clicked file with dbid=' + dbid.toString());
-        },
-        onClickCheckbox: (dbid: number) => {
-            console.log('clicked checkbox with dbid=' + dbid.toString());
+
+    const onClickFolder = (dbid: number, expanded: boolean, hasChildren: boolean) => {
+        if (expanded) {
+            dispatch(collapseFolderWasClicked(dbid));
+        } else {
+            if (hasChildren) {
+                dispatch(expandFolderWasClicked(dbid));
+            } else {
+                dispatch(childrenRequestedThunk(dbid));
+            }
         }
+    };
+
+    const onClickFile = (dbid: number) => {
+        console.log('clicked file with dbid=' + dbid.toString());
+    };
+
+    const onClickCheckbox = (dbid: number) => {
+        console.log('clicked checkbox with dbid=' + dbid.toString());
+    };
+
+    return {
+        onClickFolder,
+        onClickFile,
+        onClickCheckbox
     };
 };
 

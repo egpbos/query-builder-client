@@ -7,6 +7,9 @@ import { FolderContents } from '../components';
 import './Folder.css';
 
 export class Folder extends React.Component<any, any> {
+
+    public expanded: boolean;
+
     constructor() {
         super();
         this.onClickCheckbox = this.onClickCheckbox.bind(this);
@@ -14,38 +17,48 @@ export class Folder extends React.Component<any, any> {
     }
 
     onClickFolder() {
-        this.props.onClickFolder(this.props.dbid);
+        const { dbid, entities } = this.props;
+        const { expanded } = entities[dbid];
+        const hasChildren = entities[dbid].hasOwnProperty('children') && entities[dbid].children !== undefined;
+        this.props.onClickFolder(dbid, expanded, hasChildren);
     }
 
     onClickCheckbox() {
         this.props.onClickCheckbox(this.props.dbid);
     }
 
+    public renderFolderContents(expanded: boolean) {
+        if (expanded) {
+
+            const { dbid, entities} = this.props;
+            const { onClickFolder, onClickFile, onClickCheckbox } = this.props;
+
+            return (
+                <FolderContents
+                    dbid={dbid}
+                    entities={entities}
+                    onClickFolder={onClickFolder}
+                    onClickFile={onClickFile}
+                    onClickCheckbox={onClickCheckbox}
+                />);
+        } else {
+            return;
+        }
+    }
+
     render(): JSX.Element {
 
-        const { name } = this.props.entities[this.props.dbid];
-        const { dbid, entities, onClickFolder, onClickFile, onClickCheckbox } = this.props;
-        const highlighted = true;
-        let classNameStr: string = 'mdl-cell--12-col category';
-        if (highlighted === true) {
-            classNameStr += ' highlighted';
-        }
+        const { name, expanded } = this.props.entities[this.props.dbid];
 
         return (
             <div>
-                <Grid className={classNameStr}>
+                <Grid className={'mdl-cell--12-col category'}>
                     <Cell col={12} className="categoryTitleBar">
                         <Checkbox onClick={this.onClickCheckbox}/>
                         <span className="categoryText" onClick={this.onClickFolder}>
                             {name}
                         </span>
-                        <FolderContents
-                            dbid={dbid}
-                            entities={entities}
-                            onClickFolder={onClickFolder}
-                            onClickFile={onClickFile}
-                            onClickCheckbox={onClickCheckbox}
-                        />
+                        {this.renderFolderContents(expanded)}
                     </Cell>
                 </Grid>
             </div>
