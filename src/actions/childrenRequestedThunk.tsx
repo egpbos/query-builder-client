@@ -5,6 +5,7 @@ import { childrenRequested }  from '../actions';
 import { expandFolderWasClicked }  from '../actions';
 import { IGenericAction }     from '../interfaces';
 import { IDatabaseRecord }    from '../interfaces';
+import { Selected }           from '../Selected';
 
 export const childrenRequestedThunk = (dbid: number) => {
     return (dispatch: Dispatch<IGenericAction>) => {
@@ -26,7 +27,7 @@ export const childrenRequestedThunk = (dbid: number) => {
                     isfile:   dbrecord.isinstance === 1 ? true : false,
                     name:     dbrecord.name,
                     parent:   dbrecord.childof,
-                    selected: false
+                    selected: Selected.None
                 };
             };
 

@@ -6,6 +6,7 @@ import { TOGGLE_FILE_SELECTED_WAS_CLICKED } from '../actions';
 import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
 import { IGenericAction }                   from '../interfaces';
+import { Selected }                         from '../Selected';
 
 const deepCopyWithChange = (entities: any, dbid: number, change: any): any => {
         const oldEntity = entities[dbid];
@@ -17,6 +18,19 @@ const deepCopyWithChange = (entities: any, dbid: number, change: any): any => {
         return Object.assign({}, entities, {[dbid]: newEntity});
 };
 
+const threewayToggleSelection = (entities: any, dbid: number) => {
+    const selected = entities[dbid].selected;
+    if (selected === Selected.None) {
+        return {selected: Selected.All};
+    } else if (selected === Selected.Partial) {
+        return {selected: Selected.All};
+    } else if (selected === Selected.All) {
+        return {selected: Selected.None};
+    } else {
+        throw new Error('selection has unknown state.');
+    }
+};
+
 const initstate = {
     [-1]: {
         children: undefined,
@@ -25,7 +39,7 @@ const initstate = {
         isfile:   false,
         name:     'root',
         parent:   undefined,
-        selected: false
+        selected: Selected.None
     }
 };
 
@@ -77,16 +91,41 @@ export const entitiesReducer = (entities: any = initstate, action: IGenericActio
 
     } else if (action.type === TOGGLE_FILE_SELECTED_WAS_CLICKED) {
 
-        const selected = entities[action.payload.dbid].selected;
-        return deepCopyWithChange(entities, action.payload.dbid, {selected: !selected});
+        const change = threewayToggleSelection(entities, action.payload.dbid);
+        return deepCopyWithChange(entities, action.payload.dbid, change);
 
     } else if (action.type === TOGGLE_FOLDER_SELECTED_WAS_CLICKED) {
 
-        const selected = entities[action.payload.dbid].selected;
-        return deepCopyWithChange(entities, action.payload.dbid, {selected: !selected});
+        const change = threewayToggleSelection(entities, action.payload.dbid);
+        return deepCopyWithChange(entities, action.payload.dbid, change);
 
     } else {
         return entities;
 
     }
 };
+
+// the code snippet below is a function which will be used to traverse the tree
+// and determine the state of the parent based on the selection state of me and 
+// my siblings
+
+const determineParentSelectedState = (entities: any, dbid: number) => {
+
+    const children = entities[dbid].parent.children;
+    const selected = children.map((childId: number) => {
+        return entities[childId].selected;
+    });
+
+    const allSelected = selected.indexOf(false) === -1;
+    const allUnselected = selected.indexOf(true) === -1;
+
+    if (allSelected) {
+        return 'selected';
+    } else if (allUnselected) {
+        return 'unselected';
+    } else {
+        return 'partial';
+    }
+};
+
+console.log(determineParentSelectedState);
