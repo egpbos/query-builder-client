@@ -8,7 +8,8 @@ import { expandFolderWasClicked }         from '../actions';
 import { toggleFileSelectedWasClicked }   from '../actions';
 import { toggleFolderSelectedWasClicked } from '../actions';
 import { FolderContents }                 from '../components';
-import { IGenericAction }                 from '../interfaces';
+import { GenericAction }                  from '../types';
+import { Entities }                       from '../types';
 
 export class UnconnectedTree extends React.Component<any, any> {
 
@@ -32,13 +33,13 @@ export class UnconnectedTree extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: Entities) => {
     return {
         entities: state
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<IGenericAction>) => {
+const mapDispatchToProps = (dispatch: Dispatch<GenericAction>) => {
 
     const onClickFolder = (dbid: number, expanded: boolean, hasChildren: boolean) => {
         if (expanded) {

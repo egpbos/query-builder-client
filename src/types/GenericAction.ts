@@ -1,4 +1,4 @@
-export interface IGenericAction {
+export type GenericAction = {
     type: string;
     payload: any;
 }

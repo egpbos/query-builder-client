@@ -4,6 +4,7 @@ import { Checkbox }          from 'react-mdl';
 
 import { FolderContents }    from '../components';
 import { entityHasChildren } from '../utils';
+import { Selected }          from '../utils';
 
 import './Folder.css';
 
@@ -49,13 +50,13 @@ export class Folder extends React.Component<any, any> {
 
     render(): JSX.Element {
 
-        const { name, expanded } = this.props.entities[this.props.dbid];
-
+        const { name, expanded, selected } = this.props.entities[this.props.dbid];
+        const checked = selected === Selected.All;
         return (
             <div>
                 <Grid className={'mdl-cell--12-col category'}>
                     <Cell col={12} className="categoryTitleBar">
-                        <Checkbox onClick={this.onClickCheckbox}/>
+                        <Checkbox onChange={this.onClickCheckbox} checked={checked}/>
                         <span className="categoryText" onClick={this.onClickFolder} >
                             {name}
                         </span>

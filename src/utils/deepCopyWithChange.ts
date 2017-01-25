@@ -1,4 +1,6 @@
-export const deepCopyWithChange = (entities: any, dbid: number, change: any): any => {
+import { Entities } from '../types';
+
+export const deepCopyWithChange = (entities: Entities, dbid: number, change: any): any => {
         const oldEntity = entities[dbid];
         const newEntity = Object.assign({}, oldEntity, change);
         // deep copy of nonprimitive property 'children'

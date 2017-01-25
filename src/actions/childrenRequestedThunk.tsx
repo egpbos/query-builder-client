@@ -1,14 +1,14 @@
-import { Dispatch }           from 'redux';
+import { Dispatch }                from 'redux';
 
-import { childrenReceived }   from '../actions';
-import { childrenRequested }  from '../actions';
+import { childrenReceived }        from '../actions';
+import { childrenRequested }       from '../actions';
 import { expandFolderWasClicked }  from '../actions';
-import { IGenericAction }     from '../interfaces';
-import { IDatabaseRecord }    from '../interfaces';
-import { Selected }           from '../utils';
+import { GenericAction }           from '../types';
+import { DatabaseRecord }          from '../types';
+import { Selected }                from '../utils';
 
 export const childrenRequestedThunk = (dbid: number) => {
-    return (dispatch: Dispatch<IGenericAction>) => {
+    return (dispatch: Dispatch<GenericAction>) => {
         const handleTheStatus = (response: Response) => {
             if (response.ok) {
                 return response.json();
@@ -19,7 +19,7 @@ export const childrenRequestedThunk = (dbid: number) => {
         };
 
         const handleTheData = (dbrecords: any) => {
-            const convert = (dbrecord: IDatabaseRecord) => {
+            const convert = (dbrecord: DatabaseRecord) => {
                 return {
                     children: undefined,
                     dbid:     dbrecord.id,

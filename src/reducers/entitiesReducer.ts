@@ -1,16 +1,18 @@
-import { CHILDREN_RECEIVED }                from '../actions';
-import { CHILDREN_REQUESTED }               from '../actions';
-import { COLLAPSE_FOLDER_WAS_CLICKED }      from '../actions';
-import { EXPAND_FOLDER_WAS_CLICKED }        from '../actions';
-import { TOGGLE_FILE_SELECTED_WAS_CLICKED } from '../actions';
+import { CHILDREN_RECEIVED }                  from '../actions';
+import { CHILDREN_REQUESTED }                 from '../actions';
+import { COLLAPSE_FOLDER_WAS_CLICKED }        from '../actions';
+import { EXPAND_FOLDER_WAS_CLICKED }          from '../actions';
+import { TOGGLE_FILE_SELECTED_WAS_CLICKED }   from '../actions';
 import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
-import { IGenericAction }                   from '../interfaces';
-import { Selected }                         from '../utils';
-import { deepCopyWithChange }               from '../utils';
-import { threewayToggleSelection }          from '../utils';
+import { Entities }                           from '../types';
+import { GenericAction }                      from '../types';
+import { Selected }                           from '../utils';
+import { deepCopyWithChange }                 from '../utils';
+import { threewayToggleSelection }            from '../utils';
+import { applySelectionStateDownward }        from '../utils';
 
-const initstate = {
+const initstate: Entities = {
     [-1]: {
         children: undefined,
         dbid:     -1,
@@ -22,7 +24,7 @@ const initstate = {
     }
 };
 
-export const entitiesReducer = (entities: any = initstate, action: IGenericAction) => {
+export const entitiesReducer = (entities: Entities = initstate, action: GenericAction) => {
 
     console.log(new Date().toISOString().slice(11, 19), action.type);
 
@@ -76,6 +78,7 @@ export const entitiesReducer = (entities: any = initstate, action: IGenericActio
     } else if (action.type === TOGGLE_FOLDER_SELECTED_WAS_CLICKED) {
 
         const change = threewayToggleSelection(entities, action.payload.dbid);
+        entities = applySelectionStateDownward(entities, action.payload.dbid, change.selected);
         return deepCopyWithChange(entities, action.payload.dbid, change);
 
     } else {

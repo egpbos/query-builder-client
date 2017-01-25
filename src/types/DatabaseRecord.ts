@@ -1,4 +1,4 @@
-export interface IDatabaseRecord {
+export type DatabaseRecord = {
     id:             number;
     name:           string;
     isinstance:     number;
