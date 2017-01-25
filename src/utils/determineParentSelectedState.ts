@@ -1,5 +1,5 @@
 import { Entities } from '../types';
-import { Selected } from '../utils';
+import { Selected } from '../types';
 
 // the code snippet below is a function which will be used to traverse the tree
 // and determine the state of the parent based on the selection state of me and 

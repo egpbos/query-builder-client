@@ -1,5 +1,5 @@
 import { Entities } from '../types';
-import { Selected } from '../utils';
+import { Selected } from '../types';
 
 export const threewayToggleSelection = (entities: Entities, dbid: number) => {
     const selected = entities[dbid].selected;

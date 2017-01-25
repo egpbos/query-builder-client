@@ -5,7 +5,7 @@ import { childrenRequested }       from '../actions';
 import { expandFolderWasClicked }  from '../actions';
 import { GenericAction }           from '../types';
 import { DatabaseRecord }          from '../types';
-import { Selected }                from '../utils';
+import { Selected }                from '../types';
 
 export const childrenRequestedThunk = (dbid: number) => {
     return (dispatch: Dispatch<GenericAction>) => {

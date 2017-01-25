@@ -1,4 +1,4 @@
-import { Selected } from '../utils';
+import { Selected } from '../types';
 
 export type Entity = {
     children: number[] | undefined;

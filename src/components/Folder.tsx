@@ -3,8 +3,8 @@ import { Cell, Grid }        from 'react-mdl';
 import { Checkbox }          from 'react-mdl';
 
 import { FolderContents }    from '../components';
+import { Selected }          from '../types';
 import { entityHasChildren } from '../utils';
-import { Selected }          from '../utils';
 
 import './Folder.css';
 

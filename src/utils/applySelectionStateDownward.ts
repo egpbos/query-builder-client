@@ -1,6 +1,6 @@
 import { Entities }          from '../types';
+import { Selected }          from '../types';
 import { deepCopyWithChange} from '../utils';
-import { Selected }          from '../utils';
 
 export const applySelectionStateDownward = (entities: Entities, dbid: number, selected: Selected): Entities => {
 

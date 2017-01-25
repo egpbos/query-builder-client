@@ -7,7 +7,7 @@ import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
 import { Entities }                           from '../types';
 import { GenericAction }                      from '../types';
-import { Selected }                           from '../utils';
+import { Selected }                           from '../types';
 import { deepCopyWithChange }                 from '../utils';
 import { threewayToggleSelection }            from '../utils';
 import { applySelectionStateDownward }        from '../utils';
