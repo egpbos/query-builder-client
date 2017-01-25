@@ -1,7 +1,8 @@
-import * as React   from 'react';
+import * as React            from 'react';
 
-import { Folder }   from '../components';
-import { File }     from '../components';
+import { Folder }            from '../components';
+import { File }              from '../components';
+import { entityHasChildren } from '../utils';
 
 export class FolderContents extends React.Component<any, any> {
     constructor() {
@@ -11,12 +12,11 @@ export class FolderContents extends React.Component<any, any> {
     render(): JSX.Element {
 
         const { entities, dbid, onClickFolder, onClickFile, onClickCheckbox } = this.props;
-        const exists = entities.hasOwnProperty(dbid);
-        const hasChildren = exists && entities[dbid].hasOwnProperty('children') && entities[dbid].children !== undefined;
+        const hasChildren = entityHasChildren(entities, dbid);
 
         let children: JSX.Element[] = [];
 
-        if (exists && hasChildren) {
+        if (hasChildren) {
             children = entities[dbid].children.map((childId: number) => {
                 if (entities.hasOwnProperty(childId)) {
                     if (entities[childId].isfile !== true) {

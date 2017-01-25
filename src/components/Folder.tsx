@@ -1,8 +1,9 @@
-import * as React         from 'react';
-import { Cell, Grid }     from 'react-mdl';
-import { Checkbox }       from 'react-mdl';
+import * as React            from 'react';
+import { Cell, Grid }        from 'react-mdl';
+import { Checkbox }          from 'react-mdl';
 
-import { FolderContents } from '../components';
+import { FolderContents }    from '../components';
+import { entityHasChildren } from '../utils';
 
 import './Folder.css';
 
@@ -19,7 +20,7 @@ export class Folder extends React.Component<any, any> {
     onClickFolder() {
         const { dbid, entities } = this.props;
         const { expanded } = entities[dbid];
-        const hasChildren = entities[dbid].hasOwnProperty('children') && entities[dbid].children !== undefined;
+        const hasChildren = entityHasChildren(entities, dbid);
         this.props.onClickFolder(dbid, expanded, hasChildren);
     }
 

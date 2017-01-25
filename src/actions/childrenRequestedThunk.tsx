@@ -5,7 +5,7 @@ import { childrenRequested }  from '../actions';
 import { expandFolderWasClicked }  from '../actions';
 import { IGenericAction }     from '../interfaces';
 import { IDatabaseRecord }    from '../interfaces';
-import { Selected }           from '../Selected';
+import { Selected }           from '../utils';
 
 export const childrenRequestedThunk = (dbid: number) => {
     return (dispatch: Dispatch<IGenericAction>) => {

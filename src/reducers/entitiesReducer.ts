@@ -6,30 +6,9 @@ import { TOGGLE_FILE_SELECTED_WAS_CLICKED } from '../actions';
 import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
 import { IGenericAction }                   from '../interfaces';
-import { Selected }                         from '../Selected';
-
-const deepCopyWithChange = (entities: any, dbid: number, change: any): any => {
-        const oldEntity = entities[dbid];
-        const newEntity = Object.assign({}, oldEntity, change);
-        // deep copy of nonprimitive property 'children'
-        if (oldEntity.hasOwnProperty('children') && oldEntity.children !== undefined) {
-            newEntity.children = [...oldEntity.children];
-        }
-        return Object.assign({}, entities, {[dbid]: newEntity});
-};
-
-const threewayToggleSelection = (entities: any, dbid: number) => {
-    const selected = entities[dbid].selected;
-    if (selected === Selected.None) {
-        return {selected: Selected.All};
-    } else if (selected === Selected.Partial) {
-        return {selected: Selected.All};
-    } else if (selected === Selected.All) {
-        return {selected: Selected.None};
-    } else {
-        throw new Error('selection has unknown state.');
-    }
-};
+import { Selected }                         from '../utils';
+import { deepCopyWithChange }               from '../utils';
+import { threewayToggleSelection }          from '../utils';
 
 const initstate = {
     [-1]: {
@@ -104,28 +83,3 @@ export const entitiesReducer = (entities: any = initstate, action: IGenericActio
 
     }
 };
-
-// the code snippet below is a function which will be used to traverse the tree
-// and determine the state of the parent based on the selection state of me and 
-// my siblings
-
-const determineParentSelectedState = (entities: any, dbid: number) => {
-
-    const children = entities[dbid].parent.children;
-    const selected = children.map((childId: number) => {
-        return entities[childId].selected;
-    });
-
-    const allSelected = selected.indexOf(false) === -1;
-    const allUnselected = selected.indexOf(true) === -1;
-
-    if (allSelected) {
-        return 'selected';
-    } else if (allUnselected) {
-        return 'unselected';
-    } else {
-        return 'partial';
-    }
-};
-
-console.log(determineParentSelectedState);
