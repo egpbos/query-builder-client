@@ -11,6 +11,7 @@ import { Selected }                           from '../utils';
 import { deepCopyWithChange }                 from '../utils';
 import { threewayToggleSelection }            from '../utils';
 import { applySelectionStateDownward }        from '../utils';
+import { propagateSelectionStateUpward }      from '../utils';
 
 const initstate: Entities = {
     [-1]: {
@@ -77,8 +78,10 @@ export const entitiesReducer = (entities: Entities = initstate, action: GenericA
 
     } else if (action.type === TOGGLE_FOLDER_SELECTED_WAS_CLICKED) {
 
-        const change = threewayToggleSelection(entities, action.payload.dbid);
-        entities = applySelectionStateDownward(entities, action.payload.dbid, change.selected);
+        const { dbid } = action.payload;
+        const change = threewayToggleSelection(entities, dbid);
+        entities = applySelectionStateDownward(entities, dbid, change.selected);
+        entities = propagateSelectionStateUpward(entities, dbid);
         return deepCopyWithChange(entities, action.payload.dbid, change);
 
     } else {
