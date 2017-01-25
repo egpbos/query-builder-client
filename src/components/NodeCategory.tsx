@@ -26,7 +26,7 @@ interface INodeDispatchProps {
     fetchChildren: (table: string, id: number) => void;
 }
 
-export class UnconnectedNodeCategory extends React.Component<IExtraProps & INodeCategory & INodeDispatchProps, {}> {
+export class UnconnectedNodeCategory extends React.Component<IExtraProps & INodeCategory & INodeDispatchProps, { }> {
     constructor() {
         super();
 
@@ -84,8 +84,8 @@ export class UnconnectedNodeCategory extends React.Component<IExtraProps & INode
 
     render() {
         return (
-            <span className="categoryText" onClick={this.onClick}>
-                {this.props.name}
+            <span className="categoryText" onClick={ this.onClick }>
+                { this.props.name }
             </span>
         );
     }

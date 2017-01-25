@@ -13,38 +13,38 @@ import { store }        from './store';
 import { Cell, Grid }   from 'react-mdl';
 
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={ store }>
         <div>
             <Grid>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     <QueryClearButton />
                 </Cell>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     <Searchbox />
                 </Cell>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     <MentionCounter />
                 </Cell>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     <QueryBuildButton />
                 </Cell>
             </Grid>
             <Grid>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     Entities
-                    <Node key={1} table={'entities'} nodeID={1} />
+                    <Node key={ 1 } table={ 'entities' } nodeID={ 1 } />
                 </Cell>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     Events
-                    <Node key={1} table={'events'} nodeID={1} />
+                    <Node key={ 1 } table={ 'events' } nodeID={ 1 } />
                 </Cell>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     Sources
-                    <Node key={1} table={'sources'} nodeID={1} />
+                    <Node key={ 1 } table={ 'sources' } nodeID={ 1 } />
                 </Cell>
-                <Cell col={3}>
+                <Cell col={ 3 }>
                     Topics
-                    <Node key={1} table={'topics'} nodeID={1} />
+                    <Node key={ 1 } table={ 'topics' } nodeID={ 1 } />
                 </Cell>
             </Grid>
         </div>

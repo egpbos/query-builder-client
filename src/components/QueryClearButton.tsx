@@ -28,7 +28,7 @@ export interface IQueryClearButton {
     buttonActive: boolean;
 }
 
-export class UnconnectedQueryClearButton extends React.Component<IQueryClearButton & IQueryClearButtonDispatchProps, {}> {
+export class UnconnectedQueryClearButton extends React.Component<IQueryClearButton & IQueryClearButtonDispatchProps, { }> {
     constructor() {
         super();
 
@@ -91,17 +91,17 @@ export class UnconnectedQueryClearButton extends React.Component<IQueryClearButt
     render() {
         return (
             <div>
-                <Button raised disabled={!this.props.buttonActive} accent onClick={this.onClick}>
+                <Button raised disabled={ !this.props.buttonActive } accent onClick={ this.onClick }>
                     Clear Query
                 </Button>
-                <Dialog key="clearDialog" open={this.props.dialogOpen} onCancel={this.handleCloseDialog}>
+                <Dialog key="clearDialog" open={ this.props.dialogOpen } onCancel={ this.handleCloseDialog }>
                     <DialogTitle component="h4">You are about to clear your query. Are you sure?</DialogTitle>
                     <DialogContent>
                         You will not be able to undo this action.
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.clickClearQuery}>Clear Query</Button>
-                        <Button onClick={this.handleCloseDialog}>Cancel</Button>
+                        <Button onClick={ this.clickClearQuery }>Clear Query</Button>
+                        <Button onClick={ this.handleCloseDialog }>Cancel</Button>
                     </DialogActions>
                 </Dialog>
             </div>

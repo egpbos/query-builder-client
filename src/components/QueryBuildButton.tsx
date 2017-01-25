@@ -30,7 +30,7 @@ export interface IQueryBuildButton {
     buttonActive: boolean;
 }
 
-export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButton & IQueryBuildButtonDispatchProps, {}> {
+export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButton & IQueryBuildButtonDispatchProps, { }> {
     constructor() {
         super();
 
@@ -99,61 +99,61 @@ export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButt
         if (this.props.query !== undefined && this.props.query.entities !== undefined) {
             const temp: any[] = this.props.query.entities;
             queryEntities = temp.map((queryEntity: any) =>
-                <div key={queryEntity.name}>{queryEntity.name}</div>
+                <div key={ queryEntity.name }>{ queryEntity.name }</div>
             );
         }
         let queryEvents: JSX.Element[] = [];
         if (this.props.query !== undefined && this.props.query.events !== undefined) {
             const temp: any[] = this.props.query.events;
             queryEvents = temp.map((queryEvent: any) =>
-                <div key={queryEvent.name}>{queryEvent.name}</div>
+                <div key={ queryEvent.name }>{ queryEvent.name }</div>
             );
         }
         let querySources: JSX.Element[] = [];
         if (this.props.query !== undefined && this.props.query.sources !== undefined) {
             const temp: any[] = this.props.query.sources;
             querySources = temp.map((querySource: any) =>
-                <div key={querySource.name}>{querySource.name}</div>
+                <div key={ querySource.name }>{ querySource.name }</div>
             );
         }
         let queryTopics: JSX.Element[] = [];
         if (this.props.query !== undefined && this.props.query.topics !== undefined) {
             const temp: any[] = this.props.query.topics;
             queryTopics = temp.map((queryTopic: any) =>
-                <div key={queryTopic.name}>{queryTopic.name}</div>
+                <div key={ queryTopic.name }>{ queryTopic.name }</div>
             );
         }
         return (
             <div>
-                <Button raised disabled={!this.props.buttonActive} colored onClick={this.onClick}>
+                <Button raised disabled={ !this.props.buttonActive } colored onClick={ this.onClick }>
                     Build Query
                 </Button>
-                <Dialog key="buildDialog" open={this.props.dialogOpen} onCancel={this.handleCloseDialog}>
+                <Dialog key="buildDialog" open={ this.props.dialogOpen } onCancel={ this.handleCloseDialog }>
                     <DialogTitle component="h4">Do you want to send the following query to the KnowledgeStore?</DialogTitle>
                     <DialogContent>
                         <div>
-                            {(queryEntities.length > 0) ? <b>Entities</b> : <div />}
-                            {(queryEntities.length > 0) ? queryEntities : <div />}
+                            { (queryEntities.length > 0) ? <b>Entities</b> : <div /> }
+                            { (queryEntities.length > 0) ? queryEntities : <div /> }
 
-                            {(queryEvents.length > 0) ? <b>Events</b> : <div />}
-                            {(queryEvents.length > 0) ? queryEvents : <div />}
+                            { (queryEvents.length > 0) ? <b>Events</b> : <div /> }
+                            { (queryEvents.length > 0) ? queryEvents : <div /> }
 
-                            {(querySources.length > 0) ? <b>Sources</b> : <div />}
-                            {(querySources.length > 0) ? querySources : <div />}
+                            { (querySources.length > 0) ? <b>Sources</b> : <div /> }
+                            { (querySources.length > 0) ? querySources : <div /> }
 
-                            {(queryTopics.length > 0) ? <b>Topics</b> : <div />}
-                            {(queryTopics.length > 0) ? queryTopics : <div />}
+                            { (queryTopics.length > 0) ? <b>Topics</b> : <div /> }
+                            { (queryTopics.length > 0) ? queryTopics : <div /> }
                         </div>
                         <div>
                             <b>Resulting Query String:</b>
                         </div>
                         <div>
-                            {this.props.query.queryString}
+                            { this.props.query.queryString }
                         </div>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.clickStoreQuery}>Perform Query</Button>
-                        <Button onClick={this.handleCloseDialog}>Cancel</Button>
+                        <Button onClick={ this.clickStoreQuery }>Perform Query</Button>
+                        <Button onClick={ this.handleCloseDialog }>Cancel</Button>
                     </DialogActions>
                 </Dialog>
             </div>

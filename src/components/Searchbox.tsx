@@ -18,7 +18,7 @@ export interface ISearchbox {
     id: number;
 }
 
-export class UnconnectedSearchbox extends React.Component<ISearchbox & ISearchboxDispatchProps, {}> {
+export class UnconnectedSearchbox extends React.Component<ISearchbox & ISearchboxDispatchProps, { }> {
     constructor() {
         super();
         this.handleTextChange = this.handleTextChange.bind(this);
@@ -50,9 +50,9 @@ export class UnconnectedSearchbox extends React.Component<ISearchbox & ISearchbo
             <Textfield
                 className="searchbox"
                 key="SearchboxTextfield"
-                onChange={this.handleTextChange}
+                onChange={ this.handleTextChange }
                 label="Search for..."
-                style={{width: '200px'}}
+                style={ {width: '200px'} }
             />
         );
     }

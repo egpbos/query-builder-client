@@ -11,7 +11,7 @@ export interface IMentionCounter {
     selectedMentionCount: number;
 }
 
-export class UnconnectedMentionCounter extends React.Component<IMentionCounter, {}> {
+export class UnconnectedMentionCounter extends React.Component<IMentionCounter, { }> {
     constructor() {
         super();
     }
@@ -31,7 +31,7 @@ export class UnconnectedMentionCounter extends React.Component<IMentionCounter, 
     render() {
         return (
             <div className="mdl-textfield mdl-js-textfield mentioncounter">
-                Selected Mentions: {this.props.selectedMentionCount ? this.props.selectedMentionCount : 0}
+                Selected Mentions: { this.props.selectedMentionCount ? this.props.selectedMentionCount : 0 }
             </div>
         );
     }

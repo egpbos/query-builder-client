@@ -28,7 +28,7 @@ export interface INodeCheckbox {
     selectionState: SelectionState;
 }
 
-export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INodeCheckbox & INodeDispatchProps, {}> {
+export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INodeCheckbox & INodeDispatchProps, { }> {
     constructor() {
         super();
 
@@ -86,11 +86,11 @@ export class UnconnectedNodeCheckbox extends React.Component<IExtraProps & INode
         return (
             <span>
                 <Checkbox
-                    id={'checkbox-node_' + this.props.id}
-                    ripple={true}
-                    indeterminate={this.props.selectionState === SelectionState.Partial}
-                    checked={this.props.selectionState === SelectionState.Selected}
-                    onClick={this.onClickSelect}
+                    id={ 'checkbox-node_' + this.props.id }
+                    ripple={ true }
+                    indeterminate={ this.props.selectionState === SelectionState.Partial }
+                    checked={ this.props.selectionState === SelectionState.Selected }
+                    onClick={ this.onClickSelect }
                 />
             </span>
         );

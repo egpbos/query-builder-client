@@ -27,7 +27,7 @@ export interface INodeInstance {
     selectionState: SelectionState;
 }
 
-export class UnconnectedNodeInstance extends React.Component<IExtraProps & INodeInstance & INodeDispatchProps, {}> {
+export class UnconnectedNodeInstance extends React.Component<IExtraProps & INodeInstance & INodeDispatchProps, { }> {
     constructor() {
         super();
 
@@ -81,8 +81,8 @@ export class UnconnectedNodeInstance extends React.Component<IExtraProps & INode
 
     render() {
         return (
-            <Button raised colored={this.props.selectionState === SelectionState.Selected} onClick={this.onClickSelect}>
-                {this.props.name}
+            <Button raised colored={ this.props.selectionState === SelectionState.Selected } onClick={ this.onClickSelect }>
+                { this.props.name }
             </Button>
         );
     }
