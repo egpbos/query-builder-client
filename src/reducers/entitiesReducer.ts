@@ -80,9 +80,10 @@ export const entitiesReducer = (entities: Entities = initstate, action: GenericA
 
         const { dbid } = action.payload;
         const change = threewayToggleSelection(entities, dbid);
+        entities = deepCopyWithChange(entities, action.payload.dbid, change);
         entities = applySelectionStateDownward(entities, dbid, change.selected);
         entities = propagateSelectionStateUpward(entities, dbid);
-        return deepCopyWithChange(entities, action.payload.dbid, change);
+        return entities;
 
     } else {
         return entities;
