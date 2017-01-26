@@ -8,8 +8,7 @@ import { expandFolderWasClicked }         from '../actions';
 import { toggleFileSelectedWasClicked }   from '../actions';
 import { toggleFolderSelectedWasClicked } from '../actions';
 import { FolderContents }                 from '../components';
-import { GenericAction }                  from '../types';
-import { Entities }                       from '../types';
+import { GenericCollectionAction }        from '../types';
 
 export class UnconnectedTree extends React.Component<any, any> {
 
@@ -33,32 +32,36 @@ export class UnconnectedTree extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: Entities) => {
+const mapStateToProps = (state: any, ownProps: any) => {
+
+    const { collection } = ownProps;
     return {
-        entities: state
+        entities: state[collection]
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<GenericAction>) => {
+const mapDispatchToProps = (dispatch: Dispatch<GenericCollectionAction>, ownProps: any) => {
+
+    const { collection } = ownProps;
 
     const onClickFolder = (dbid: number, expanded: boolean, hasChildren: boolean) => {
         if (expanded) {
-            dispatch(collapseFolderWasClicked(dbid));
+            dispatch(collapseFolderWasClicked(collection, dbid));
         } else {
             if (hasChildren) {
-                dispatch(expandFolderWasClicked(dbid));
+                dispatch(expandFolderWasClicked(collection, dbid));
             } else {
-                dispatch(childrenRequestedThunk(dbid));
+                dispatch(childrenRequestedThunk(collection, dbid));
             }
         }
     };
 
     const onClickFile = (dbid: number) => {
-        dispatch(toggleFileSelectedWasClicked(dbid));
+        dispatch(toggleFileSelectedWasClicked(collection, dbid));
     };
 
     const onClickCheckbox = (dbid: number) => {
-        dispatch(toggleFolderSelectedWasClicked(dbid));
+        dispatch(toggleFolderSelectedWasClicked(collection, dbid));
     };
 
     return {

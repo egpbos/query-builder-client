@@ -3,12 +3,13 @@ import { Dispatch }                from 'redux';
 import { childrenReceived }        from '../actions';
 import { childrenRequested }       from '../actions';
 import { expandFolderWasClicked }  from '../actions';
-import { GenericAction }           from '../types';
+import { baseurl }                 from '../config';
+import { GenericCollectionAction } from '../types';
 import { DatabaseRecord }          from '../types';
 import { Selected }                from '../types';
 
-export const childrenRequestedThunk = (dbid: number) => {
-    return (dispatch: Dispatch<GenericAction>) => {
+export const childrenRequestedThunk = (collection: string, dbid: number) => {
+    return (dispatch: Dispatch<GenericCollectionAction>) => {
         const handleTheStatus = (response: Response) => {
             if (response.ok) {
                 return response.json();
@@ -33,17 +34,17 @@ export const childrenRequestedThunk = (dbid: number) => {
             };
 
             const entities = dbrecords.map(convert);
-            dispatch(childrenReceived(entities));
-            dispatch(expandFolderWasClicked(dbid));
+            dispatch(childrenReceived(collection, entities));
+            dispatch(expandFolderWasClicked(collection, dbid));
         };
 
         const handleAnyErrors = (err: Error) => {
             throw new Error('Errors occured. ' + err.message + err.stack);
         };
 
-        dispatch(childrenRequested(dbid));
+        dispatch(childrenRequested(collection, dbid));
 
-        const url: string = 'http://localhost:5000/' + 'entities' + '/' + dbid.toString() + '/children';
+        const url: string = baseurl + collection + '/' + dbid.toString() + '/children';
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)

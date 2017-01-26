@@ -1,16 +1,53 @@
-import { applyMiddleware }        from 'redux';
-import { createStore }            from 'redux';
-import thunk                      from 'redux-thunk';
+import { applyMiddleware }         from 'redux';
+import { createStore }             from 'redux';
+import { combineReducers }         from 'redux';
+import thunk                       from 'redux-thunk';
 
-import { childrenRequestedThunk } from './actions';
-import { entitiesReducer }        from './reducers';
+import { childrenRequestedThunk }  from './actions';
+import { collections }             from './config';
+import { entitiesReducer }         from './reducers';
+import { Entities }                from './types';
+import { GenericCollectionAction } from './types';
+import { Selected }                from './types';
 
-export const store = createStore(entitiesReducer, applyMiddleware(thunk));
+const commonReducerGenerator = (collection = '', commonReducer: any) => {
 
-// // whenever the store has changed, print the new state
-// store.subscribe(() => {
-//     console.log(store.getState());
-// });
+    const initstate: Entities = {
+        [-1]: {
+            children:    undefined,
+            dbid:        -1,
+            expanded:    false,
+            highlighted: false,
+            isfile:      false,
+            name:        'root',
+            parent:      undefined,
+            selected:    Selected.None
+        }
+    };
+    return (state: any = initstate, action: GenericCollectionAction) => {
+        if (action.collection !== collection) {
+            return state;
+        }
+        return commonReducer(state, action);
+    };
+};
+
+const collectionReducers: any = {};
+collections.forEach((collection: string) => {
+    collectionReducers[collection] = commonReducerGenerator(collection, entitiesReducer);
+});
+
+const combinedReducers = combineReducers(collectionReducers);
+
+export const store = createStore(combinedReducers, applyMiddleware(thunk));
+
+// whenever the store has changed, print the new state
+store.subscribe(() => {
+    console.log(store.getState());
+});
 
 const dbidRoot = -1;
-store.dispatch(childrenRequestedThunk(dbidRoot));
+
+collections.map((collection: string) => {
+    store.dispatch(childrenRequestedThunk(collection, dbidRoot));
+});

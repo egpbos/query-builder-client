@@ -6,7 +6,7 @@ import { TOGGLE_FILE_SELECTED_WAS_CLICKED }   from '../actions';
 import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
 import { Entities }                           from '../types';
-import { GenericAction }                      from '../types';
+import { GenericCollectionAction }            from '../types';
 import { Selected }                           from '../types';
 import { deepCopyWithChange }                 from '../utils';
 import { threewayToggleSelection }            from '../utils';
@@ -26,7 +26,7 @@ const initstate: Entities = {
     }
 };
 
-export const entitiesReducer = (entities: Entities = initstate, action: GenericAction) => {
+export const entitiesReducer = (entities: Entities = initstate, action: GenericCollectionAction) => {
 
     console.log(new Date().toISOString().slice(11, 19), action.type);
 
