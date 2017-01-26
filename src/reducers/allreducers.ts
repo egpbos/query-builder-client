@@ -8,7 +8,11 @@ const initstate: any = {
     events: {},
     sources: {},
     topics: {},
-    queryState: {}
+    queryState: {
+        isQueryDialogOpen: false,
+        selectedMentionCount: 0,
+        queryString: ''
+    }
 };
 
 function combinedReducer(state: any = initstate, action: IGenericAction) {

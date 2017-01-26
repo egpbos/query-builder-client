@@ -30,6 +30,7 @@ export { buildQuery }                 from './buildQuery';
 
 export { STORE_QUERY }                from './authorized-actions';
 export { storeQuery }                 from './storeQuery';
+export { storeQueryThunk }            from './storeQueryThunk';
 
 export { OPEN_BUILD_QUERY_DIALOG }    from './authorized-actions';
 export { openBuildQueryDialog }       from './openBuildQueryDialog';
@@ -49,3 +50,13 @@ export { textSearchThunk }            from './textSearchThunk';
 
 export { TEXT_SEARCH_RESULT_RECEIVED }from './authorized-actions';
 export { textSearchResultReceived }   from './textSearchResultReceived';
+
+export { CHANGE_QUERY_TEXT }          from './authorized-actions';
+export { changeQueryText }            from './changeQueryText';
+
+export { GET_DAEMON_STATUS }          from './authorized-actions';
+export { getDaemonStatus }            from './getDaemonStatus';
+export { getDaemonStatusThunk }       from './getDaemonStatusThunk';
+
+export { GET_DAEMON_STATUS_RESULT_RECEIVED }  from './authorized-actions';
+export { getDaemonStatusResultReceived }      from './getDaemonStatusResultReceived';

@@ -7,7 +7,6 @@ import { IStore }                   from '../interfaces';
 import './mentionCounter.css';
 
 export interface IMentionCounter {
-    id: number;
     selectedMentionCount: number;
 }
 
@@ -18,20 +17,29 @@ export class UnconnectedMentionCounter extends React.Component<IMentionCounter, 
 
     static mapStateToProps(state: IStore) { //state: IStore) {
         return {
-            id:  -1,
             selectedMentionCount: state.queryState.selectedMentionCount
         };
     }
 
     static mapDispatchToProps() {
-        return {
-        };
+        return {};
     }
 
     render() {
+        let mentionClass = '';
+        if (this.props.selectedMentionCount < -10000 || this.props.selectedMentionCount > 10000) {
+            mentionClass = 'impossible_query';
+        } else if (this.props.selectedMentionCount < -5000 || this.props.selectedMentionCount > 5000) {
+            mentionClass = 'heavy_query';
+        } else {
+            mentionClass = 'safe_query';
+        }
         return (
             <div className="mdl-textfield mdl-js-textfield mentioncounter">
-                Selected Mentions: {this.props.selectedMentionCount ? this.props.selectedMentionCount : 0}
+                Selected Mentions:
+                <span className={mentionClass}>
+                {this.props.selectedMentionCount < 0 ? ' < ' + -this.props.selectedMentionCount : ' ' + this.props.selectedMentionCount}
+                </span>
             </div>
         );
     }

@@ -5,6 +5,7 @@ import { OPEN_BUILD_QUERY_DIALOG }      from '../actions';
 import { OPEN_CLEAR_QUERY_DIALOG }      from '../actions';
 import { CLOSE_BUILD_QUERY_DIALOG }     from '../actions';
 import { CLOSE_CLEAR_QUERY_DIALOG }     from '../actions';
+import { CHANGE_QUERY_TEXT }            from '../actions';
 
 import { IGenericAction } from '../actions';
 
@@ -12,9 +13,6 @@ import { INode }          from '../components/Node';
 import { SelectionState } from '../interfaces';
 
 const initstate: any = {
-    isQueryDialogOpen: false,
-    selectedMentionCount: 0,
-    queryString: ''
 };
 
 function aggregateSelected(nodes : any, node: INode) : INode[] {
@@ -36,20 +34,33 @@ function aggregateSelected(nodes : any, node: INode) : INode[] {
 }
 
 function countMentions(state: any) : number {
-    let result : number = 0;
+    let entitiesCount : number = 0;
+    let eventsCount : number = 0;
+    let sourcesCount : number = 0;
+    let topicsCount : number = 0;
     state.entities.forEach((entity: any) => {
-        result += entity.mentioncount;
+        entitiesCount += entity.mentioncount;
     });
     state.events.forEach((event: any) => {
-        result += event.mentioncount;
+        eventsCount += event.mentioncount;
     });
     state.sources.forEach((source: any) => {
-        result += source.mentioncount;
+        sourcesCount += source.mentioncount;
     });
     state.topics.forEach((topic: any) => {
-        result += topic.mentioncount;
+        topicsCount += topic.mentioncount;
     });
-    return result;
+
+    const min = [entitiesCount, eventsCount, sourcesCount, topicsCount].filter((x) => { return x !== 0; })
+    .reduce((a, b) => { return Math.min(a, b); }, Infinity);
+
+    const max = Math.max(entitiesCount, eventsCount, sourcesCount, topicsCount);
+
+    if (min < max) {
+        return -min;
+    } else {
+        return max;
+    }
 }
 
 function createQueryString(state: any) : string {
@@ -84,7 +95,7 @@ function createQueryString(state: any) : string {
     return result;
 }
 
-export const queryReducer =  (state: any = initstate, action: IGenericAction) => {
+export const queryReducer =  (state: any, action: IGenericAction) => {
     if (action.type === CLEAR_QUERY) {
         return Object.assign({}, initstate);
     } else if (action.type === BUILD_QUERY) {
@@ -106,7 +117,12 @@ export const queryReducer =  (state: any = initstate, action: IGenericAction) =>
             newQueryState.topics = aggregateSelected(state.topics, state.topics[1]);
         }
 
-        newQueryState.selectedMentionCount = countMentions(newQueryState);
+        let mentions = countMentions(newQueryState);
+        if (mentions === undefined) {
+            mentions = 0;
+        }
+        newQueryState.selectedMentionCount = mentions;
+
         newQueryState.queryString = createQueryString(newQueryState);
 
         return newQueryState;
@@ -118,6 +134,9 @@ export const queryReducer =  (state: any = initstate, action: IGenericAction) =>
         return Object.assign({}, state.queryState, {isQueryBuildDialogOpen: false});
     } else if (action.type === CLOSE_CLEAR_QUERY_DIALOG) {
         return Object.assign({}, state.queryState, {isQueryClearDialogOpen: false});
+    } else if (action.type === CHANGE_QUERY_TEXT) {
+        const newtext = action.payload.newtext;
+        return Object.assign({}, state.queryState, {queryString: newtext});
     } else if (action.type === STORE_QUERY) {
         //Needs something done
         return state.queryState;

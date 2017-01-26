@@ -5,7 +5,7 @@ import { textSearch }                           from './textSearch';
 import { textSearchResultReceived }             from './textSearchResultReceived';
 
 export interface IDatabaseNumberRecord {
-    parentID: number;
+    myID: number;
 }
 
 export const textSearchThunk = (table: string, input: string) => {
@@ -21,7 +21,7 @@ export const textSearchThunk = (table: string, input: string) => {
 
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseNumberRecord) => {
-                return dbrecord.parentID as number;
+                return dbrecord.myID as number;
             };
 
             const nodes: number[] = dbrecords.map(convert);

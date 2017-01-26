@@ -70,6 +70,8 @@ export const STORE_QUERY = 'STORE_QUERY';
 export interface IStoreQueryAction {
     type: 'STORE_QUERY';
     payload: {
+        username: string,
+        query: string
     };
 }
 
@@ -116,5 +118,29 @@ export interface ITextSearchResultReceivedAction {
     payload: {
         table: string,
         nodes: number[]
+    };
+}
+
+export const CHANGE_QUERY_TEXT = 'CHANGE_QUERY_TEXT';
+export interface IChangeQueryTextAction {
+    type: 'CHANGE_QUERY_TEXT';
+    payload: {
+        input: string
+    };
+}
+
+export const GET_DAEMON_STATUS = 'GET_DAEMON_STATUS';
+export interface IGetDaemonStatusAction {
+    type: 'GET_DAEMON_STATUS';
+    payload: {
+        url: string,
+        port: number
+    };
+}
+
+export const GET_DAEMON_STATUS_RESULT_RECEIVED = 'GET_DAEMON_STATUS_RESULT_RECEIVED';
+export interface IGetDaemonStatusResultReceivedAction {
+    type: 'GET_DAEMON_STATUS_RESULT_RECEIVED';
+    payload: {
     };
 }

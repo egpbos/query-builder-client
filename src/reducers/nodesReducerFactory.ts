@@ -107,7 +107,7 @@ export const nodesReducerFactory = (table : string = '') => {
         if (action.type === ROOT_RECEIVED) {
             //RootRequestedThunk return point
             const root = action.payload.root;
-            return Object.assign({}, { [root.id]: root });
+            return Object.assign({}, initstate, { [root.id]: root });
         } else if (action.type === ROOT_REQUESTED) {
             return nodes;
         } else if (action.type === CHILDREN_RECEIVED) {
