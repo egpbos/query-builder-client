@@ -1,6 +1,6 @@
-import * as React   from 'react';
-import { connect }  from 'react-redux';
-import { Dispatch } from 'react-redux';
+import * as React                         from 'react';
+import { connect }                        from 'react-redux';
+import { Dispatch }                       from 'react-redux';
 
 import { childrenRequestedThunk }         from '../actions';
 import { collapseFolderWasClicked }       from '../actions';
@@ -54,12 +54,10 @@ const mapDispatchToProps = (dispatch: Dispatch<GenericAction>) => {
     };
 
     const onClickFile = (dbid: number) => {
-        console.log('clicked file with dbid=' + dbid.toString());
         dispatch(toggleFileSelectedWasClicked(dbid));
     };
 
     const onClickCheckbox = (dbid: number) => {
-        console.log('clicked checkbox with dbid=' + dbid.toString());
         dispatch(toggleFolderSelectedWasClicked(dbid));
     };
 

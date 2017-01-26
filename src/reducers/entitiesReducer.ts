@@ -15,13 +15,14 @@ import { propagateSelectionStateUpward }      from '../utils';
 
 const initstate: Entities = {
     [-1]: {
-        children: undefined,
-        dbid:     -1,
-        expanded: false,
-        isfile:   false,
-        name:     'root',
-        parent:   undefined,
-        selected: Selected.None
+        children:    undefined,
+        dbid:        -1,
+        expanded:    false,
+        highlighted: false,
+        isfile:      false,
+        name:        'root',
+        parent:      undefined,
+        selected:    Selected.None
     }
 };
 

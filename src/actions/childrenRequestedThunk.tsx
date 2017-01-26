@@ -21,13 +21,14 @@ export const childrenRequestedThunk = (dbid: number) => {
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: DatabaseRecord) => {
                 return {
-                    children: undefined,
-                    dbid:     dbrecord.id,
-                    expanded: false,
-                    isfile:   dbrecord.isinstance === 1 ? true : false,
-                    name:     dbrecord.name,
-                    parent:   dbrecord.childof,
-                    selected: Selected.None
+                    children:    undefined,
+                    dbid:        dbrecord.id,
+                    expanded:    false,
+                    isfile:      dbrecord.isinstance === 1 ? true : false,
+                    highlighted: false,
+                    name:        dbrecord.name,
+                    parent:      dbrecord.childof,
+                    selected:    Selected.None
                 };
             };
 
