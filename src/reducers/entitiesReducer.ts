@@ -73,8 +73,11 @@ export const entitiesReducer = (entities: Entities = initstate, action: GenericA
 
     } else if (action.type === TOGGLE_FILE_SELECTED_WAS_CLICKED) {
 
-        const change = threewayToggleSelection(entities, action.payload.dbid);
-        return deepCopyWithChange(entities, action.payload.dbid, change);
+        const { dbid } = action.payload;
+        const change = threewayToggleSelection(entities, dbid);
+        entities = deepCopyWithChange(entities, dbid, change);
+        entities = propagateSelectionStateUpward(entities, dbid);
+        return entities;
 
     } else if (action.type === TOGGLE_FOLDER_SELECTED_WAS_CLICKED) {
 
