@@ -31,10 +31,10 @@ export const entitiesReducer = (entities: Entities = initstate, action: GenericA
 
     if (action.type === CHILDREN_RECEIVED) {
         const payloadChildren = action.payload.entities;
-        const parentId = payloadChildren[0].parent;
+        const dbidParent = payloadChildren[0].parent;
 
         //Copy the parent node
-        const oldParent = entities[parentId];
+        const oldParent = entities[dbidParent];
         const newParent = Object.assign({}, oldParent);
 
         //With a deep copy of its children array.
@@ -51,13 +51,17 @@ export const entitiesReducer = (entities: Entities = initstate, action: GenericA
             newParent.children.push(payloadChild.dbid);
         });
 
-        const newEntities = Object.assign({}, entities, { [parentId]: newParent});
+        let newEntities = Object.assign({}, entities, { [dbidParent]: newParent});
 
         // Finally, the payloadChildren need to be added to the list of
         // entities, using the dbid of the payloadEntity as the key.
         payloadChildren.forEach((payloadChild: any) => {
             newEntities[payloadChild.dbid] = payloadChild;
         });
+
+        const { selected } = entities[dbidParent];
+        newEntities = applySelectionStateDownward(newEntities, dbidParent, selected);
+
         return newEntities;
 
     } else if (action.type === CHILDREN_REQUESTED) {
