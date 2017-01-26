@@ -9,6 +9,7 @@ const initstate: any = {
     sources: {},
     topics: {},
     queryState: {
+        daemonState: 'unmodified',
         isQueryDialogOpen: false,
         selectedMentionCount: 0,
         queryString: ''

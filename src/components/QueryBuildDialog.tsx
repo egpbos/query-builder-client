@@ -24,6 +24,7 @@ interface IQueryBuildDialogDispatchProps {
 export interface IQueryBuildDialog {
     query: any;
     dialogOpen: boolean;
+    daemonStatus: number;
 }
 
 export class UnconnectedQueryBuildDialog extends React.Component<IQueryBuildDialog & IQueryBuildDialogDispatchProps, {}> {
@@ -38,7 +39,8 @@ export class UnconnectedQueryBuildDialog extends React.Component<IQueryBuildDial
     static mapStateToProps(state: IStore) { //state: IStore) {
         return {
             query: state.queryState,
-            dialogOpen: state.queryState.isQueryBuildDialogOpen
+            dialogOpen: state.queryState.isQueryBuildDialogOpen,
+            daemonStatus: state.queryState.daemonStatus
         };
     }
 
@@ -110,23 +112,11 @@ export class UnconnectedQueryBuildDialog extends React.Component<IQueryBuildDial
             mentionClass = 'safe_query';
         }
 
-        // <div>
-        //     {(queryEntities.length > 0) ? <b>Entities</b> : <div />}
-        //     {(queryEntities.length > 0) ? queryEntities : <div />}
-
-        //     {(queryEvents.length > 0) ? <b>Events</b> : <div />}
-        //     {(queryEvents.length > 0) ? queryEvents : <div />}
-
-        //     {(querySources.length > 0) ? <b>Sources</b> : <div />}
-        //     {(querySources.length > 0) ? querySources : <div />}
-
-        //     {(queryTopics.length > 0) ? <b>Topics</b> : <div />}
-        //     {(queryTopics.length > 0) ? queryTopics : <div />}
-        // </div>
         return (
             <Dialog key="buildDialog" open={this.props.dialogOpen} onCancel={this.handleCloseDialog}>
                 <DialogTitle component="h4">Do you want to send the following query to the KnowledgeStore?</DialogTitle>
                 <DialogContent>
+                    <div> Daemon status: {this.props.daemonStatus} </div>
                     <div>
                         Number of mentions selected:
                         <span className={mentionClass}>

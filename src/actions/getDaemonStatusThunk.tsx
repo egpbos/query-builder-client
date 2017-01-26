@@ -4,7 +4,7 @@ import { IGenericAction }                       from '../actions';
 import { getDaemonStatus }                      from './getDaemonStatus';
 import { getDaemonStatusResultReceived }        from './getDaemonStatusResultReceived';
 
-export const getDaemonStatusThunk = (url: string, port: number) => {
+export const getDaemonStatusThunk = () => {
     return (dispatch: Dispatch<IGenericAction>) => {
         const handleTheStatus = (response: Response) => {
             if (response.ok) {
@@ -15,17 +15,17 @@ export const getDaemonStatusThunk = (url: string, port: number) => {
             }
         };
 
-        const handleTheData = (response: Response) => {
-            dispatch(getDaemonStatusResultReceived(response.statusText));
+        const handleTheData = (status: any) => {
+            dispatch(getDaemonStatusResultReceived(status));
         };
 
         const handleAnyErrors = (err: Error) => {
             dispatch(getDaemonStatusResultReceived(err.message));
         };
 
-        dispatch(getDaemonStatus(url, port));
+        dispatch(getDaemonStatus());
 
-        const myurl: string = url + ':' + port.toString() + '/status';
+        const myurl: string = 'http://localhost:4567/status';
 
         fetch(myurl, {method: 'get'})
                 .then(handleTheStatus)

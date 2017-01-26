@@ -6,6 +6,7 @@ import { Dispatch }                 from 'redux';
 import { IGenericAction }           from '../actions';
 import { buildQuery }               from '../actions';
 import { openBuildQueryDialog }     from '../actions';
+import { getDaemonStatusThunk }     from '../actions';
 
 import { QueryBuildDialog }         from './QueryBuildDialog';
 
@@ -17,6 +18,9 @@ import './queryBuildButton.css';
 import './queryDialog.css';
 
 interface IQueryBuildButtonDispatchProps {
+    getDaemonStatus: () => void;
+    // getDaemonStatus: (url: string, port: number) => void;
+
     buildQuery: () => void;
     openDialog: () => void;
 }
@@ -50,6 +54,9 @@ export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButt
 
     static mapDispatchToProps(dispatch: Dispatch<IGenericAction>) {
         return {
+            getDaemonStatus: () => {
+                dispatch(getDaemonStatusThunk());
+            },
             buildQuery: () => {
                 dispatch(buildQuery());
             },
@@ -60,6 +67,7 @@ export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButt
     }
 
     public onClick() {
+        this.props.getDaemonStatus();
         this.props.buildQuery();
         this.props.openDialog();
     }

@@ -132,15 +132,11 @@ export interface IChangeQueryTextAction {
 export const GET_DAEMON_STATUS = 'GET_DAEMON_STATUS';
 export interface IGetDaemonStatusAction {
     type: 'GET_DAEMON_STATUS';
-    payload: {
-        url: string,
-        port: number
-    };
+    payload: {};
 }
 
 export const GET_DAEMON_STATUS_RESULT_RECEIVED = 'GET_DAEMON_STATUS_RESULT_RECEIVED';
 export interface IGetDaemonStatusResultReceivedAction {
     type: 'GET_DAEMON_STATUS_RESULT_RECEIVED';
-    payload: {
-    };
+    payload: {};
 }

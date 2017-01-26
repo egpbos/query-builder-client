@@ -6,6 +6,8 @@ import { OPEN_CLEAR_QUERY_DIALOG }      from '../actions';
 import { CLOSE_BUILD_QUERY_DIALOG }     from '../actions';
 import { CLOSE_CLEAR_QUERY_DIALOG }     from '../actions';
 import { CHANGE_QUERY_TEXT }            from '../actions';
+import { GET_DAEMON_STATUS }            from '../actions';
+import { GET_DAEMON_STATUS_RESULT_RECEIVED }    from '../actions';
 
 import { IGenericAction } from '../actions';
 
@@ -98,6 +100,10 @@ function createQueryString(state: any) : string {
 export const queryReducer =  (state: any, action: IGenericAction) => {
     if (action.type === CLEAR_QUERY) {
         return Object.assign({}, initstate);
+    } else if (action.type === GET_DAEMON_STATUS) {
+        return state.queryState;
+    } else if (action.type === GET_DAEMON_STATUS_RESULT_RECEIVED) {
+        return Object.assign({}, state.queryState, { daemonStatus: action.payload.message });
     } else if (action.type === BUILD_QUERY) {
         const newQueryState = Object.assign({}, state.queryState);
 
