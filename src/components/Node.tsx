@@ -80,8 +80,8 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
     render() {
         if (this.props.isinstance) {
             return (
-                <Cell col={6}>
-                    <NodeInstance table={this.props.table} nodeID={this.props.id} />
+                <Cell col={ 6 }>
+                    <NodeInstance table={ this.props.table } nodeID={ this.props.id } />
                 </Cell>
             );
         } else {
@@ -89,16 +89,16 @@ export class UnconnectedNode extends React.Component<IExtraProps & INode, {}> {
             if (this.props.children !== undefined) {
                 const temp: number[] = this.props.children;
                 childNodes = temp.map((child: number) =>
-                    <Node key={child} table={this.props.table} nodeID={child} />// tslint:disable-line
+                    <Node key={ child } table={ this.props.table } nodeID={child} />// tslint:disable-line
                 );
             }
             return (
-                <Grid className={this.props.highlighted ? 'mdl-cell--12-col category highlighted' : 'mdl-cell--12-col category'}>
-                    <Cell col={12} className="categoryTitleBar">
-                        <NodeCheckbox table={this.props.table} nodeID={this.props.id} />
-                        <NodeCategory table={this.props.table} nodeID={this.props.id} />
+                <Grid className={ this.props.highlighted ? 'mdl-cell--12-col category highlighted' : 'mdl-cell--12-col category' }>
+                    <Cell col={ 12 } className="categoryTitleBar">
+                        <NodeCheckbox table={ this.props.table } nodeID={ this.props.id } />
+                        <NodeCategory table={ this.props.table } nodeID={ this.props.id } />
                     </Cell>
-                    {this.props.isexpanded && (childNodes.length > 0) ? childNodes : <div />}
+                    { this.props.isexpanded && (childNodes.length > 0) ? childNodes : <div /> }
                 </Grid>
             );
         }

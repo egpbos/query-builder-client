@@ -10,7 +10,7 @@ export interface IMentionCounter {
     selectedMentionCount: number;
 }
 
-export class UnconnectedMentionCounter extends React.Component<IMentionCounter, {}> {
+export class UnconnectedMentionCounter extends React.Component<IMentionCounter, { }> {
     constructor() {
         super();
     }

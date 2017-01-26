@@ -23,7 +23,7 @@ export interface IQueryClearButton {
     buttonActive: boolean;
 }
 
-export class UnconnectedQueryClearButton extends React.Component<IQueryClearButton & IQueryClearButtonDispatchProps, {}> {
+export class UnconnectedQueryClearButton extends React.Component<IQueryClearButton & IQueryClearButtonDispatchProps, { }> {
     constructor() {
         super();
 
@@ -61,7 +61,7 @@ export class UnconnectedQueryClearButton extends React.Component<IQueryClearButt
     render() {
         return (
             <div>
-                <Button raised disabled={!this.props.buttonActive} accent onClick={this.onClick}>
+                <Button raised disabled={ !this.props.buttonActive } accent onClick={ this.onClick }>
                     Clear Query
                 </Button>
                 <QueryClearDialog />

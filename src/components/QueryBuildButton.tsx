@@ -25,7 +25,7 @@ export interface IQueryBuildButton {
     buttonActive: boolean;
 }
 
-export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButton & IQueryBuildButtonDispatchProps, {}> {
+export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButton & IQueryBuildButtonDispatchProps, { }> {
     constructor() {
         super();
 
@@ -67,7 +67,7 @@ export class UnconnectedQueryBuildButton extends React.Component<IQueryBuildButt
     render() {
         return (
             <div>
-                <Button raised disabled={!this.props.buttonActive} colored onClick={this.onClick}>
+                <Button raised disabled={ !this.props.buttonActive } colored onClick={ this.onClick }>
                     Build Query
                 </Button>
                 <QueryBuildDialog />
