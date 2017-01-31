@@ -1,1 +1,1 @@
-export { entitiesReducer } from './entitiesReducer';
+export { treeReducer } from './treeReducer';

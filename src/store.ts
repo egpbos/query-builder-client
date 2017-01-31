@@ -5,7 +5,7 @@ import thunk                       from 'redux-thunk';
 
 import { childrenRequestedThunk }  from './actions';
 import { collections }             from './config';
-import { entitiesReducer }         from './reducers';
+import { treeReducer }             from './reducers';
 import { Entities }                from './types';
 import { GenericCollectionAction } from './types';
 import { Selected }                from './types';
@@ -34,7 +34,7 @@ const commonReducerGenerator = (collection = '', commonReducer: any) => {
 
 const collectionReducers: any = {};
 collections.forEach((collection: string) => {
-    collectionReducers[collection] = commonReducerGenerator(collection, entitiesReducer);
+    collectionReducers[collection] = commonReducerGenerator(collection, treeReducer);
 });
 
 const combinedReducers = combineReducers(collectionReducers);

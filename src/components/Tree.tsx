@@ -18,12 +18,12 @@ export class UnconnectedTree extends React.Component<any, any> {
 
     render(): JSX.Element {
         const dbidRoot = -1;
-        const { entities, onClickFolder, onClickFile, onClickCheckbox } = this.props;
+        const { nodes, onClickFolder, onClickFile, onClickCheckbox } = this.props;
         return (
             <FolderContents
                 key={dbidRoot}
                 dbid={dbidRoot}
-                entities={entities}
+                nodes={nodes}
                 onClickFolder={onClickFolder}
                 onClickFile={onClickFile}
                 onClickCheckbox={onClickCheckbox}
@@ -36,7 +36,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
     const { collection } = ownProps;
     return {
-        entities: state[collection]
+        nodes: state[collection]
     };
 };
 

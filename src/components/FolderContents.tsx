@@ -11,19 +11,19 @@ export class FolderContents extends React.Component<any, any> {
 
     render(): JSX.Element {
 
-        const { entities, dbid, onClickFolder, onClickFile, onClickCheckbox } = this.props;
-        const hasChildren = entityHasChildren(entities, dbid);
+        const { nodes, dbid, onClickFolder, onClickFile, onClickCheckbox } = this.props;
+        const hasChildren = entityHasChildren(nodes, dbid);
 
         let children: JSX.Element[] = [];
 
         if (hasChildren) {
-            children = entities[dbid].children.map((childId: number) => {
-                if (entities.hasOwnProperty(childId)) {
-                    if (entities[childId].isfile !== true) {
+            children = nodes[dbid].children.map((childId: number) => {
+                if (nodes.hasOwnProperty(childId)) {
+                    if (nodes[childId].isfile !== true) {
                         return (<Folder
                             key={childId}
                             dbid={childId}
-                            entities={entities}
+                            nodes={nodes}
                             onClickFolder={onClickFolder}
                             onClickFile={onClickFile}
                             onClickCheckbox={onClickCheckbox}
@@ -32,7 +32,7 @@ export class FolderContents extends React.Component<any, any> {
                         return (<File
                             key={childId}
                             dbid={childId}
-                            entities={entities}
+                            nodes={nodes}
                             onClickFile={onClickFile}
                         />);
                     }

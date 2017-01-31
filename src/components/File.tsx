@@ -18,7 +18,7 @@ export class File extends React.Component<any, any> {
 
     render(): JSX.Element {
 
-        const { name } = this.props.entities[this.props.dbid];
+        const { name } = this.props.nodes[this.props.dbid];
 
         return (
             <Button onClick={this.onClickFile}>

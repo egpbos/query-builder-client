@@ -26,16 +26,16 @@ const initstate: Entities = {
     }
 };
 
-export const entitiesReducer = (entities: Entities = initstate, action: GenericCollectionAction) => {
+export const treeReducer = (nodes: Entities = initstate, action: GenericCollectionAction) => {
 
     console.log(new Date().toISOString().slice(11, 19), action.type);
 
     if (action.type === CHILDREN_RECEIVED) {
-        const payloadChildren = action.payload.entities;
+        const payloadChildren = action.payload.nodes;
         const dbidParent = payloadChildren[0].parent;
 
         //Copy the parent node
-        const oldParent = entities[dbidParent];
+        const oldParent = nodes[dbidParent];
         const newParent = Object.assign({}, oldParent);
 
         //With a deep copy of its children array.
@@ -52,49 +52,49 @@ export const entitiesReducer = (entities: Entities = initstate, action: GenericC
             newParent.children.push(payloadChild.dbid);
         });
 
-        let newEntities = Object.assign({}, entities, { [dbidParent]: newParent});
+        let newEntities = Object.assign({}, nodes, { [dbidParent]: newParent});
 
         // Finally, the payloadChildren need to be added to the list of
-        // entities, using the dbid of the payloadEntity as the key.
+        // nodes, using the dbid of the payloadEntity as the key.
         payloadChildren.forEach((payloadChild: any) => {
             newEntities[payloadChild.dbid] = payloadChild;
         });
 
-        const { selected } = entities[dbidParent];
+        const { selected } = nodes[dbidParent];
         newEntities = applySelectionStateDownward(newEntities, dbidParent, selected);
 
         return newEntities;
 
     } else if (action.type === CHILDREN_REQUESTED) {
-        return entities;
+        return nodes;
 
     } else if (action.type === EXPAND_FOLDER_WAS_CLICKED) {
 
-        return deepCopyWithChange(entities, action.payload.dbid, {expanded: true});
+        return deepCopyWithChange(nodes, action.payload.dbid, {expanded: true});
 
     } else if (action.type === COLLAPSE_FOLDER_WAS_CLICKED) {
 
-        return deepCopyWithChange(entities, action.payload.dbid, {expanded: false});
+        return deepCopyWithChange(nodes, action.payload.dbid, {expanded: false});
 
     } else if (action.type === TOGGLE_FILE_SELECTED_WAS_CLICKED) {
 
         const { dbid } = action.payload;
-        const change = threewayToggleSelection(entities, dbid);
-        entities = deepCopyWithChange(entities, dbid, change);
-        entities = propagateSelectionStateUpward(entities, dbid);
-        return entities;
+        const change = threewayToggleSelection(nodes, dbid);
+        nodes = deepCopyWithChange(nodes, dbid, change);
+        nodes = propagateSelectionStateUpward(nodes, dbid);
+        return nodes;
 
     } else if (action.type === TOGGLE_FOLDER_SELECTED_WAS_CLICKED) {
 
         const { dbid } = action.payload;
-        const change = threewayToggleSelection(entities, dbid);
-        entities = deepCopyWithChange(entities, action.payload.dbid, change);
-        entities = applySelectionStateDownward(entities, dbid, change.selected);
-        entities = propagateSelectionStateUpward(entities, dbid);
-        return entities;
+        const change = threewayToggleSelection(nodes, dbid);
+        nodes = deepCopyWithChange(nodes, action.payload.dbid, change);
+        nodes = applySelectionStateDownward(nodes, dbid, change.selected);
+        nodes = propagateSelectionStateUpward(nodes, dbid);
+        return nodes;
 
     } else {
-        return entities;
+        return nodes;
 
     }
 };

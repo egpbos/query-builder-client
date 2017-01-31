@@ -33,8 +33,8 @@ export const childrenRequestedThunk = (collection: string, dbid: number) => {
                 };
             };
 
-            const entities = dbrecords.map(convert);
-            dispatch(childrenReceived(collection, entities));
+            const nodes = dbrecords.map(convert);
+            dispatch(childrenReceived(collection, nodes));
             dispatch(expandFolderWasClicked(collection, dbid));
         };
 

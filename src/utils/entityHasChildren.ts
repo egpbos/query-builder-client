@@ -1,17 +1,17 @@
 import { Entities } from '../types';
 
-export const entityHasChildren = (entities: Entities, dbid: number): boolean => {
-    const exists = entities.hasOwnProperty(dbid);
+export const entityHasChildren = (nodes: Entities, dbid: number): boolean => {
+    const exists = nodes.hasOwnProperty(dbid);
     if (!exists) {
-        console.warn('That \'dbid\' (' + dbid.toString() + ') does not exist in \'entities\'.');
+        console.warn('That \'dbid\' (' + dbid.toString() + ') does not exist in \'nodes\'.');
     }
-    const hasChildrenProperty = entities[dbid].hasOwnProperty('children');
+    const hasChildrenProperty = nodes[dbid].hasOwnProperty('children');
     if (!hasChildrenProperty) {
-        console.warn('\'entities[' + dbid.toString() + ']\' has no property \'children\'.');
+        console.warn('\'nodes[' + dbid.toString() + ']\' has no property \'children\'.');
     }
-    const childrenIsUndefined = entities[dbid].children === undefined;
+    const childrenIsUndefined = nodes[dbid].children === undefined;
     if (childrenIsUndefined) {
-        console.warn('Property \'children\' on \'entities[' + dbid.toString() + ']\' is \'undefined\'.');
+        console.warn('Property \'children\' on \'nodes[' + dbid.toString() + ']\' is \'undefined\'.');
     }
     return exists && hasChildrenProperty && !childrenIsUndefined;
 };

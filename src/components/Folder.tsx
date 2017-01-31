@@ -19,9 +19,9 @@ export class Folder extends React.Component<any, any> {
     }
 
     onClickFolder() {
-        const { dbid, entities } = this.props;
-        const { expanded } = entities[dbid];
-        const hasChildren = entityHasChildren(entities, dbid);
+        const { dbid, nodes } = this.props;
+        const { expanded } = nodes[dbid];
+        const hasChildren = entityHasChildren(nodes, dbid);
         this.props.onClickFolder(dbid, expanded, hasChildren);
     }
 
@@ -31,14 +31,14 @@ export class Folder extends React.Component<any, any> {
 
     public renderFolderContents(expanded: boolean): JSX.Element {
 
-        const { dbid, entities} = this.props;
+        const { dbid, nodes} = this.props;
         const { onClickFolder, onClickFile, onClickCheckbox } = this.props;
 
         if (expanded) {
             return (
                 <FolderContents
                     dbid={dbid}
-                    entities={entities}
+                    nodes={nodes}
                     onClickFolder={onClickFolder}
                     onClickFile={onClickFile}
                     onClickCheckbox={onClickCheckbox}
@@ -50,7 +50,7 @@ export class Folder extends React.Component<any, any> {
 
     render(): JSX.Element {
 
-        const { name, expanded, selected } = this.props.entities[this.props.dbid];
+        const { name, expanded, selected } = this.props.nodes[this.props.dbid];
         const checked = selected === Selected.All;
         return (
             <div>

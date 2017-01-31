@@ -1,8 +1,8 @@
 import { Entities } from '../types';
 import { Selected } from '../types';
 
-export const threewayToggleSelection = (entities: Entities, dbid: number) => {
-    const selected = entities[dbid].selected;
+export const threewayToggleSelection = (nodes: Entities, dbid: number) => {
+    const selected = nodes[dbid].selected;
     if (selected === Selected.None) {
         return {selected: Selected.All};
     } else if (selected === Selected.Partial) {

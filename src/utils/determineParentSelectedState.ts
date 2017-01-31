@@ -2,17 +2,17 @@ import { Entities } from '../types';
 import { Selected } from '../types';
 
 // the code snippet below is a function which will be used to traverse the tree
-// and determine the state of the parent based on the selection state of me and 
-// my siblings
-export const determineParentSelectedState = (entities: Entities, dbid: number) => {
+// and determine the state of the parent based on the selection state of a node 
+// and its siblings
+export const determineParentSelectedState = (nodes: Entities, dbid: number) => {
 
-    const dbidParent = entities[dbid].parent;
+    const dbidParent = nodes[dbid].parent;
     if (dbidParent !== undefined) {
-        if (entities[dbidParent].hasOwnProperty('children')) {
-            const childIds = entities[dbidParent].children;
+        if (nodes[dbidParent].hasOwnProperty('children')) {
+            const childIds = nodes[dbidParent].children;
             if (childIds !== undefined) {
                 const selectedArray = childIds.map((childId: number) => {
-                    return entities[childId].selected;
+                    return nodes[childId].selected;
                 });
                 const allSelected = selectedArray.every((selected: Selected) => {
                     return selected === Selected.All;
