@@ -5,6 +5,7 @@ import { EXPAND_FOLDER_WAS_CLICKED }          from '../actions';
 import { TOGGLE_FILE_SELECTED_WAS_CLICKED }   from '../actions';
 import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
+import { Node }                               from '../types';
 import { Nodes }                              from '../types';
 import { GenericCollectionAction }            from '../types';
 import { Selected }                           from '../types';
@@ -45,7 +46,7 @@ export const treeReducer = (nodes: Nodes = initstate, action: GenericCollectionA
         }
 
         // Add the dbid of each payloadChild to the parent's list of children
-        payloadChildren.forEach((payloadChild: any) => {
+        payloadChildren.forEach((payloadChild: Node) => {
             if (newParent.children === undefined) {
                 newParent.children = [];
             }
@@ -56,7 +57,7 @@ export const treeReducer = (nodes: Nodes = initstate, action: GenericCollectionA
 
         // Finally, the payloadChildren need to be added to the list of
         // nodes, using the dbid of the payloadNode as the key.
-        payloadChildren.forEach((payloadChild: any) => {
+        payloadChildren.forEach((payloadChild: Node) => {
             newNodes[payloadChild.dbid] = payloadChild;
         });
 

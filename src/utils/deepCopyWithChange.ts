@@ -1,6 +1,6 @@
 import { Nodes } from '../types';
 
-export const deepCopyWithChange = (nodes: Nodes, dbid: number, change: any): any => {
+export const deepCopyWithChange = (nodes: Nodes, dbid: number, change: any): Nodes => {
         const oldNode = nodes[dbid];
         const newNode = Object.assign({}, oldNode, change);
         // deep copy of nonprimitive property 'children'

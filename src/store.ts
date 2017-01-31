@@ -24,7 +24,7 @@ const commonReducerGenerator = (collection = '', commonReducer: any) => {
             selected:    Selected.None
         }
     };
-    return (state: any = initstate, action: GenericCollectionAction) => {
+    return (state: Nodes = initstate, action: GenericCollectionAction) => {
         if (action.collection !== collection) {
             return state;
         }
