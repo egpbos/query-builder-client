@@ -1,8 +1,8 @@
-import { Entities }          from '../types';
+import { Nodes }             from '../types';
 import { Selected }          from '../types';
 import { deepCopyWithChange} from '../utils';
 
-export const applySelectionStateDownward = (nodes: Entities, dbid: number, selected: Selected): Entities => {
+export const applySelectionStateDownward = (nodes: Nodes, dbid: number, selected: Selected): Nodes => {
 
     const childIds = nodes[dbid].children;
     if (childIds !== undefined) {

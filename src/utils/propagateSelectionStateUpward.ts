@@ -1,8 +1,8 @@
-import { Entities }                     from '../types';
+import { Nodes }                        from '../types';
 import { deepCopyWithChange }           from '../utils';
 import { determineParentSelectedState } from '../utils';
 
-export const propagateSelectionStateUpward = (nodes: Entities, dbid: number): Entities => {
+export const propagateSelectionStateUpward = (nodes: Nodes, dbid: number): Nodes => {
 
     console.log(dbid);
 

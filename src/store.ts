@@ -6,13 +6,13 @@ import thunk                       from 'redux-thunk';
 import { childrenRequestedThunk }  from './actions';
 import { collections }             from './config';
 import { treeReducer }             from './reducers';
-import { Entities }                from './types';
+import { Nodes }                   from './types';
 import { GenericCollectionAction } from './types';
 import { Selected }                from './types';
 
 const commonReducerGenerator = (collection = '', commonReducer: any) => {
 
-    const initstate: Entities = {
+    const initstate: Nodes = {
         [-1]: {
             children:    undefined,
             dbid:        -1,

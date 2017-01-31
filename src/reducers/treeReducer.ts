@@ -5,7 +5,7 @@ import { EXPAND_FOLDER_WAS_CLICKED }          from '../actions';
 import { TOGGLE_FILE_SELECTED_WAS_CLICKED }   from '../actions';
 import { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from '../actions';
 
-import { Entities }                           from '../types';
+import { Nodes }                              from '../types';
 import { GenericCollectionAction }            from '../types';
 import { Selected }                           from '../types';
 import { deepCopyWithChange }                 from '../utils';
@@ -13,7 +13,7 @@ import { threewayToggleSelection }            from '../utils';
 import { applySelectionStateDownward }        from '../utils';
 import { propagateSelectionStateUpward }      from '../utils';
 
-const initstate: Entities = {
+const initstate: Nodes = {
     [-1]: {
         children:    undefined,
         dbid:        -1,
@@ -26,7 +26,7 @@ const initstate: Entities = {
     }
 };
 
-export const treeReducer = (nodes: Entities = initstate, action: GenericCollectionAction) => {
+export const treeReducer = (nodes: Nodes = initstate, action: GenericCollectionAction) => {
 
     console.log(new Date().toISOString().slice(11, 19), action.type);
 
@@ -52,18 +52,18 @@ export const treeReducer = (nodes: Entities = initstate, action: GenericCollecti
             newParent.children.push(payloadChild.dbid);
         });
 
-        let newEntities = Object.assign({}, nodes, { [dbidParent]: newParent});
+        let newNodes = Object.assign({}, nodes, { [dbidParent]: newParent});
 
         // Finally, the payloadChildren need to be added to the list of
         // nodes, using the dbid of the payloadEntity as the key.
         payloadChildren.forEach((payloadChild: any) => {
-            newEntities[payloadChild.dbid] = payloadChild;
+            newNodes[payloadChild.dbid] = payloadChild;
         });
 
         const { selected } = nodes[dbidParent];
-        newEntities = applySelectionStateDownward(newEntities, dbidParent, selected);
+        newNodes = applySelectionStateDownward(newNodes, dbidParent, selected);
 
-        return newEntities;
+        return newNodes;
 
     } else if (action.type === CHILDREN_REQUESTED) {
         return nodes;

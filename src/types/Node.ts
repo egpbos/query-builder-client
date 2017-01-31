@@ -1,6 +1,6 @@
 import { Selected } from '../types';
 
-export type Entity = {
+export type Node = {
     children:    number[] | undefined;
     dbid:        number;
     expanded:    boolean;

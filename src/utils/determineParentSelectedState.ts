@@ -1,10 +1,10 @@
-import { Entities } from '../types';
+import { Nodes }    from '../types';
 import { Selected } from '../types';
 
 // the code snippet below is a function which will be used to traverse the tree
 // and determine the state of the parent based on the selection state of a node 
 // and its siblings
-export const determineParentSelectedState = (nodes: Entities, dbid: number) => {
+export const determineParentSelectedState = (nodes: Nodes, dbid: number) => {
 
     const dbidParent = nodes[dbid].parent;
     if (dbidParent !== undefined) {

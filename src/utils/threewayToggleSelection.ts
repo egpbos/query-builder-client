@@ -1,7 +1,7 @@
-import { Entities } from '../types';
+import { Nodes }    from '../types';
 import { Selected } from '../types';
 
-export const threewayToggleSelection = (nodes: Entities, dbid: number) => {
+export const threewayToggleSelection = (nodes: Nodes, dbid: number) => {
     const selected = nodes[dbid].selected;
     if (selected === Selected.None) {
         return {selected: Selected.All};
