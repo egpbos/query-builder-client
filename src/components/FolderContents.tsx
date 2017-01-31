@@ -1,8 +1,8 @@
-import * as React            from 'react';
+import * as React          from 'react';
 
-import { Folder }            from '../components';
-import { File }              from '../components';
-import { entityHasChildren } from '../utils';
+import { Folder }          from '../components';
+import { File }            from '../components';
+import { nodeHasChildren } from '../utils';
 
 export class FolderContents extends React.Component<any, any> {
     constructor() {
@@ -12,7 +12,7 @@ export class FolderContents extends React.Component<any, any> {
     render(): JSX.Element {
 
         const { nodes, dbid, onClickFolder, onClickFile, onClickCheckbox } = this.props;
-        const hasChildren = entityHasChildren(nodes, dbid);
+        const hasChildren = nodeHasChildren(nodes, dbid);
 
         let children: JSX.Element[] = [];
 

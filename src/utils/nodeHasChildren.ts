@@ -1,6 +1,6 @@
 import { Nodes } from '../types';
 
-export const entityHasChildren = (nodes: Nodes, dbid: number): boolean => {
+export const nodeHasChildren = (nodes: Nodes, dbid: number): boolean => {
     const exists = nodes.hasOwnProperty(dbid);
     if (!exists) {
         console.warn('That \'dbid\' (' + dbid.toString() + ') does not exist in \'nodes\'.');
