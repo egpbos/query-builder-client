@@ -55,7 +55,7 @@ export const treeReducer = (nodes: Nodes = initstate, action: GenericCollectionA
         let newNodes = Object.assign({}, nodes, { [dbidParent]: newParent});
 
         // Finally, the payloadChildren need to be added to the list of
-        // nodes, using the dbid of the payloadEntity as the key.
+        // nodes, using the dbid of the payloadNode as the key.
         payloadChildren.forEach((payloadChild: any) => {
             newNodes[payloadChild.dbid] = payloadChild;
         });
