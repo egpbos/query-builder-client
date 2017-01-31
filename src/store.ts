@@ -1,10 +1,10 @@
 import { applyMiddleware }         from 'redux';
 import { createStore }             from 'redux';
-import { combineReducers }         from 'redux';
 import thunk                       from 'redux-thunk';
 
 import { childrenRequestedThunk }  from './actions';
 import { collections }             from './config';
+import { queryReducer }            from './reducers';
 import { treeReducer }             from './reducers';
 import { Nodes }                   from './types';
 import { GenericCollectionAction } from './types';
@@ -37,9 +37,23 @@ collections.forEach((collection: string) => {
     collectionReducers[collection] = commonReducerGenerator(collection, treeReducer);
 });
 
-const combinedReducers = combineReducers(collectionReducers);
+const overallInitstate: any = {
+    query: {}
+};
 
-export const store = createStore(combinedReducers, applyMiddleware(thunk));
+/* Function needed to give only _part_ of the state to the individual trees, 
+    but the _whole_ state to the queryReducer     
+*/
+const allReducers = (state: Nodes = overallInitstate, action: GenericCollectionAction) => {
+    const result : any = {};
+    Object.keys(collectionReducers).forEach((collectionElementKey : any) => {
+        result[collectionElementKey] = collectionReducers[collectionElementKey](state[collectionElementKey], action);
+    });
+    result.query = queryReducer(state, action);
+    return result;
+};
+
+export const store = createStore(allReducers, applyMiddleware(thunk));
 
 // whenever the store has changed, print the new state
 store.subscribe(() => {

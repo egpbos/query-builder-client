@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Button } from 'react-mdl';
 
-import '../../node_modules/react-mdl/extra/material.css';
-import '../../node_modules/react-mdl/extra/material.js';
+import '../../../node_modules/react-mdl/extra/material.css';
+import '../../../node_modules/react-mdl/extra/material.js';
 
 import './File.css';
 

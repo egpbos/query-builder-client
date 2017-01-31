@@ -2,9 +2,9 @@ import * as React          from 'react';
 import { Cell, Grid }      from 'react-mdl';
 import { Checkbox }        from 'react-mdl';
 
-import { FolderContents }  from '../components';
-import { Selected }        from '../types';
-import { nodeHasChildren } from '../utils';
+import { FolderContents }  from '../';
+import { Selected }        from '../../types';
+import { nodeHasChildren } from '../../utils';
 
 import './Folder.css';
 

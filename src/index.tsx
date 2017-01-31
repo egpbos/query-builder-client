@@ -1,11 +1,15 @@
-import * as React      from 'react';
-import * as ReactDOM   from 'react-dom';
-import { Cell, Grid }  from 'react-mdl';
-import { Provider }    from 'react-redux';
+import * as React           from 'react';
+import * as ReactDOM        from 'react-dom';
+import { Cell, Grid }       from 'react-mdl';
+import { Provider }         from 'react-redux';
 
-import { Tree }        from './components';
-import { collections } from './config';
-import { store }       from './store';
+import { MentionCounter }   from './components';
+import { QueryBuildButton } from './components';
+import { QueryClearButton } from './components';
+import { Searchbox }        from './components';
+import { Tree }             from './components';
+import { collections }      from './config';
+import { store }            from './store';
 
 const colwidth = Math.ceil(12 / collections.length);
 
@@ -20,9 +24,25 @@ const trees = collections.map((collection: string, indexOf: number) => {
 
 ReactDOM.render(
     <Provider store={store} >
-        <Grid className={'mdl-cell--12-col category'}>
-            {trees}
-        </Grid>
+        <div>
+            <Grid>
+                <Cell col={ 3 }>
+                    <QueryClearButton />
+                </Cell>
+                <Cell col={ 3 }>
+                    <Searchbox />
+                </Cell>
+                <Cell col={ 3 }>
+                    <MentionCounter />
+                </Cell>
+                <Cell col={ 3 }>
+                    <QueryBuildButton />
+                </Cell>
+            </Grid>
+            <Grid className={'mdl-cell--12-col category'}>
+                {trees}
+            </Grid>
+        </div>
     </Provider>,
     document.getElementById('root')
 );

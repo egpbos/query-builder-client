@@ -1,12 +1,12 @@
 import { Dispatch }                from 'redux';
 
-import { childrenReceived }        from '../actions';
-import { childrenRequested }       from '../actions';
-import { expandFolderWasClicked }  from '../actions';
-import { baseurl }                 from '../config';
-import { GenericCollectionAction } from '../types';
-import { DatabaseRecord }          from '../types';
-import { Selected }                from '../types';
+import { childrenReceived }        from '../';
+import { childrenRequested }       from '../';
+import { expandFolderWasClicked }  from '../';
+import { baseurl }                 from '../../config';
+import { GenericCollectionAction } from '../../types';
+import { DatabaseRecord }          from '../../types';
+import { Selected }                from '../../types';
 
 export const childrenRequestedThunk = (collection: string, dbid: number) => {
     return (dispatch: Dispatch<GenericCollectionAction>) => {
