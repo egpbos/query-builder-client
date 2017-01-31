@@ -29,15 +29,12 @@ export const determineParentSelectedState = (nodes: Nodes, dbid: number) => {
                     return Selected.Partial;
                 }
             } else {
-                console.log('asd1');
                 return Selected.None;
             }
         } else {
-            console.log('asd2');
             return Selected.None;
         }
     } else {
-        console.log('asd3');
         return Selected.None;
     }
 };

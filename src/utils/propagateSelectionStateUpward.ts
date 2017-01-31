@@ -4,8 +4,6 @@ import { determineParentSelectedState } from '../utils';
 
 export const propagateSelectionStateUpward = (nodes: Nodes, dbid: number): Nodes => {
 
-    console.log(dbid);
-
     const dbidRoot = -1;
     if (dbid !== dbidRoot) {
         const dbidParent = nodes[dbid].parent;
