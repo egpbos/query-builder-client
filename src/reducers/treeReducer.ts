@@ -32,8 +32,6 @@ const initstate: Nodes = {
 
 export const treeReducer = (nodes: Nodes = initstate, action: GenericCollectionAction, textSearchState: any) => {
 
-    console.log(new Date().toISOString().slice(11, 19), action.type);
-
     if (action.type === CHILDREN_RECEIVED) {
         const payloadChildren = action.payload.nodes;
         const dbidParent = payloadChildren[0].parent;

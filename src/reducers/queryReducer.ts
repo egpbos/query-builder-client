@@ -5,6 +5,7 @@ import { OPEN_BUILD_QUERY_DIALOG }      from '../actions';
 import { OPEN_CLEAR_QUERY_DIALOG }      from '../actions';
 import { CLOSE_BUILD_QUERY_DIALOG }     from '../actions';
 import { CLOSE_CLEAR_QUERY_DIALOG }     from '../actions';
+import { QUERY_TEXT_CHANGED }           from '../actions';
 
 import { GenericAction }  from '../types';
 import { Node }           from '../types';
@@ -107,19 +108,19 @@ export const queryReducer = (state: any = initstate, action: GenericAction) => {
         const newquery = Object.assign({}, state.query);
 
         if (state.entities[1]) {
-            newquery.entities = aggregateSelected(state.entities, state.entities[1]);
+            newquery.entities = aggregateSelected(state.entities, state.entities[-1]);
         }
 
         if (state.events[1]) {
-            newquery.events = aggregateSelected(state.events, state.events[1]);
+            newquery.events = aggregateSelected(state.events, state.events[-1]);
         }
 
         if (state.sources[1]) {
-            newquery.sources = aggregateSelected(state.sources, state.sources[1]);
+            newquery.sources = aggregateSelected(state.sources, state.sources[-1]);
         }
 
         if (state.entities[1]) {
-            newquery.topics = aggregateSelected(state.topics, state.topics[1]);
+            newquery.topics = aggregateSelected(state.topics, state.topics[-1]);
         }
 
         newquery.selectedMentionCount = countMentions(newquery);
@@ -134,10 +135,17 @@ export const queryReducer = (state: any = initstate, action: GenericAction) => {
         return Object.assign({}, state.query, {isQueryBuildDialogOpen: false});
     } else if (action.type === CLOSE_CLEAR_QUERY_DIALOG) {
         return Object.assign({}, state.query, {isQueryClearDialogOpen: false});
+    } else if (action.type === QUERY_TEXT_CHANGED) {
+        const { newtext } = action.payload;
+        return Object.assign({}, state.query, {queryString: newtext});
     } else if (action.type === STORE_QUERY_WAS_CLICKED) {
-        //Needs something done
+        //Needs something done, like a spinner or something.
         return state.query;
     } else {
-        return initstate;
+        if (!state.query || !state.query.queryString) {
+            return Object.assign({}, initstate);
+        } else {
+            return state.query;
+        }
     }
 };

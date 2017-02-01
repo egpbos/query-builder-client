@@ -12,6 +12,9 @@ const overallInitstate: any = {};
     but the _whole_ state to the queryReducer     
 */
 export const combinedReducer = (state: any = overallInitstate, action: GenericCollectionAction) => {
+
+    console.log(new Date().toISOString().slice(11, 19), action.type);
+
     const collectionReducers: any = {};
     collections.forEach((collection: string) => {
         collectionReducers[collection] = collectionBasedTreeReducerGenerator(collection, treeReducer);

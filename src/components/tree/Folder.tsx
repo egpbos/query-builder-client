@@ -54,10 +54,10 @@ export class Folder extends React.Component<any, any> {
         return (
             <Grid className={highlighted ? 'mdl-cell mdl-cell--12-col category highlighted' : 'mdl-cell mdl-cell--12-col category'}>
                 <Cell col={12} className="categoryTitleBar">
+                    <TristateCheckbox onChange={this.onClickCheckbox} checked={checked} indeterminate={indeterminate}/>
                     <span className="categoryText" onClick={this.onClickFolder} >
                         {name}
                     </span>
-                    <TristateCheckbox onChange={this.onClickCheckbox} checked={checked} indeterminate={indeterminate}/>
                 </Cell>
                 {this.renderFolderContents(expanded)}
             </Grid>
