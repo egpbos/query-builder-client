@@ -4,6 +4,7 @@ import { connect }          from 'react-redux';
 import { Dispatch }         from 'redux';
 
 import { textSearchThunk }  from '../../actions';
+import { collections }      from '../../config';
 import { GenericAction }    from '../../types';
 
 import { Textfield }        from 'react-mdl';
@@ -15,7 +16,7 @@ interface ISearchboxDispatchProps {
 }
 
 export interface ISearchbox {
-    id: number;
+    textFieldContents: string;
 }
 
 export class UnconnectedSearchbox extends React.Component<ISearchbox & ISearchboxDispatchProps, { }> {
@@ -24,19 +25,18 @@ export class UnconnectedSearchbox extends React.Component<ISearchbox & ISearchbo
         this.handleTextChange = this.handleTextChange.bind(this);
     }
 
-    static mapStateToProps() { //state: IStore) {
+    static mapStateToProps(state: any) {
         return {
-            id:  -1
+            textFieldContents: state.textSearch.textSearchString
         };
     }
 
     static mapDispatchToProps(dispatch: Dispatch<GenericAction>) {
         return {
             textSearch: (input: string) => {
-                dispatch(textSearchThunk('entities', input));
-                dispatch(textSearchThunk('events', input));
-                dispatch(textSearchThunk('sources', input));
-                dispatch(textSearchThunk('topics', input));
+                collections.forEach((collection: string) => {
+                    dispatch(textSearchThunk(collection, input));
+                });
             }
         };
     }
@@ -52,6 +52,7 @@ export class UnconnectedSearchbox extends React.Component<ISearchbox & ISearchbo
                 key="SearchboxTextfield"
                 onChange={ this.handleTextChange }
                 label="Search for..."
+                value={ this.props.textFieldContents }
                 style={ {width: '200px'} }
             />
         );

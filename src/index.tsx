@@ -15,9 +15,9 @@ const colwidth = Math.ceil(12 / collections.length);
 
 const trees = collections.map((collection: string, indexOf: number) => {
     return (
-        <Cell key={indexOf} col={colwidth} className="categoryTitleBar">
-            <h1>{collection}</h1>
-            <Tree collection={collection}/>
+        <Cell key={indexOf} col={colwidth} className="categoryTitleBar mdl-grid">
+            <Cell col={12} ><h1>{collection}</h1></Cell>
+            <Cell col={12} ><Tree collection={collection}/></Cell>
         </Cell>
         );
 });
@@ -39,7 +39,7 @@ ReactDOM.render(
                     <QueryBuildButton />
                 </Cell>
             </Grid>
-            <Grid className={'mdl-cell--12-col category'}>
+            <Grid>
                 {trees}
             </Grid>
         </div>

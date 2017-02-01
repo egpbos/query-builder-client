@@ -1,8 +1,8 @@
-import { BUILD_QUERY_IS_NEEDED }    from '../authorized-actions';
+import { INITIATE_BUILD_QUERY }    from '../authorized-actions';
 
 export const buildQueryIsNeeded = () => {
     return {
-        type: BUILD_QUERY_IS_NEEDED,
+        type: INITIATE_BUILD_QUERY,
         payload: {}
     };
 };

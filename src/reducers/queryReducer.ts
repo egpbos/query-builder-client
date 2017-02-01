@@ -1,5 +1,5 @@
 import { CLEAR_QUERY_WAS_CLICKED }      from '../actions';
-import { BUILD_QUERY_IS_NEEDED }        from '../actions';
+import { INITIATE_BUILD_QUERY }         from '../actions';
 import { STORE_QUERY_WAS_CLICKED }      from '../actions';
 import { OPEN_BUILD_QUERY_DIALOG }      from '../actions';
 import { OPEN_CLEAR_QUERY_DIALOG }      from '../actions';
@@ -39,20 +39,33 @@ function aggregateSelected(nodes : any, node: Node) : Node[] {
 }
 
 function countMentions(state: any) : number {
-    let result : number = 0;
+    let entitiesCount : number = 0;
+    let eventsCount : number = 0;
+    let sourcesCount : number = 0;
+    let topicsCount : number = 0;
     state.entities.forEach((entity: any) => {
-        result += entity.mentioncount;
+        entitiesCount += entity.mentioncount;
     });
     state.events.forEach((event: any) => {
-        result += event.mentioncount;
+        eventsCount += event.mentioncount;
     });
     state.sources.forEach((source: any) => {
-        result += source.mentioncount;
+        sourcesCount += source.mentioncount;
     });
     state.topics.forEach((topic: any) => {
-        result += topic.mentioncount;
+        topicsCount += topic.mentioncount;
     });
-    return result;
+
+    const min = [entitiesCount, eventsCount, sourcesCount, topicsCount].filter((x) => { return x !== 0; })
+    .reduce((a, b) => { return Math.min(a, b); }, Infinity);
+
+    const max = Math.max(entitiesCount, eventsCount, sourcesCount, topicsCount);
+
+    if (min < max) {
+        return -min;
+    } else {
+        return max;
+    }
 }
 
 function createQueryString(state: any) : string {
@@ -90,7 +103,7 @@ function createQueryString(state: any) : string {
 export const queryReducer = (state: any = initstate, action: GenericAction) => {
     if (action.type === CLEAR_QUERY_WAS_CLICKED) {
         return Object.assign({}, initstate);
-    } else if (action.type === BUILD_QUERY_IS_NEEDED) {
+    } else if (action.type === INITIATE_BUILD_QUERY) {
         const newquery = Object.assign({}, state.query);
 
         if (state.entities[1]) {

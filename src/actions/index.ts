@@ -9,12 +9,13 @@ export { TOGGLE_FOLDER_SELECTED_WAS_CLICKED } from './authorized-actions';
 
 // Query related
 export { CLEAR_QUERY_WAS_CLICKED }            from './authorized-actions';
-export { BUILD_QUERY_IS_NEEDED }              from './authorized-actions';
+export { INITIATE_BUILD_QUERY }               from './authorized-actions';
 export { STORE_QUERY_WAS_CLICKED }            from './authorized-actions';
 export { OPEN_BUILD_QUERY_DIALOG }            from './authorized-actions';
 export { CLOSE_BUILD_QUERY_DIALOG }           from './authorized-actions';
 export { OPEN_CLEAR_QUERY_DIALOG }            from './authorized-actions';
 export { CLOSE_CLEAR_QUERY_DIALOG }           from './authorized-actions';
+export { QUERY_TEXT_CHANGED }                 from './authorized-actions';
 
 // Searchbox related
 export { TEXT_SEARCH_INPUT_CHANGED }          from './authorized-actions';
@@ -37,6 +38,7 @@ export { openBuildQueryDialog }               from './query/openBuildQueryDialog
 export { closeBuildQueryDialog }              from './query/closeBuildQueryDialog';
 export { openClearQueryDialog }               from './query/openClearQueryDialog';
 export { closeClearQueryDialog }              from './query/closeClearQueryDialog';
+export { queryTextChanged }                   from './query/queryTextChanged';
 
 // Searchbox related
 export { textSearchInputChanged }             from './searchbox/textSearchInputChanged';
@@ -46,3 +48,4 @@ export { textSearchResultReceived }           from './searchbox/textSearchResult
 // Tree related
 export { childrenRequestedThunk }             from './tree/childrenRequestedThunk';
 export { textSearchThunk }                    from './searchbox/textSearchThunk';
+export { storeQueryThunk }                    from './query/storeQueryThunk';

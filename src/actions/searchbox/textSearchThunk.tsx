@@ -5,10 +5,10 @@ import { textSearchInputChanged }               from './textSearchInputChanged';
 import { textSearchResultReceived }             from './textSearchResultReceived';
 
 export interface IDatabaseNumberRecord {
-    parentID: number;
+    myID: number;
 }
 
-export const textSearchThunk = (table: string, input: string) => {
+export const textSearchThunk = (collection: string, input: string) => {
     return (dispatch: Dispatch<GenericAction>) => {
         const handleTheStatus = (response: Response) => {
             if (response.ok) {
@@ -21,21 +21,20 @@ export const textSearchThunk = (table: string, input: string) => {
 
         const handleTheData = (dbrecords: any) => {
             const convert = (dbrecord: IDatabaseNumberRecord) => {
-                return dbrecord.parentID as number;
+                return dbrecord.myID as number;
             };
 
-            const nodes: number[] = dbrecords.map(convert);
-            dispatch(textSearchResultReceived(table, nodes));
+            const dbIDs: number[] = dbrecords.map(convert);
+            dispatch(textSearchResultReceived(collection, dbIDs));
         };
 
         const handleAnyErrors = () => {
-            dispatch(textSearchResultReceived(table, []));
-            // throw new Error('Errors occured. ' + err.message + err.stack);
+            dispatch(textSearchResultReceived(collection, []));
         };
 
-        dispatch(textSearchInputChanged(table, input));
+        dispatch(textSearchInputChanged(input));
 
-        const url: string = 'http://localhost:5000/search/' + table + '/' + input;
+        const url: string = 'http://localhost:5000/search/' + collection + '/' + input;
 
         fetch(url, {method: 'get'})
                 .then(handleTheStatus)
